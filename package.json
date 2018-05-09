@@ -1,0 +1,42 @@
+{
+  "name": "mgnify",
+  "version": "0.0.1",
+  "description": "A Backbone-JS API to consume the European Bioinformatic Institute's MGnify API for metagenomic data, in addition to a widget library to visualise the data",
+  "main": "mgnify.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EBI-Metagenomics/ebi-metagenomics-webkit.git"
+  },
+  "keywords": [
+    "EBI",
+    "EMBL",
+    "Metagenomics",
+    "MGnify",
+    "Webpack",
+    "Backbone",
+    "BackboneJS",
+    "Biology",
+    "Molecular",
+    "Widget",
+    "Webkit",
+    "API"
+  ],
+  "author": "Miguel d'Arcangues Boland",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EBI-Metagenomics/ebi-metagenomics-webkit/issues"
+  },
+  "homepage": "https://github.com/EBI-Metagenomics/ebi-metagenomics-webkit#readme",
+  "devDependencies": {
+    "backbone": "^1.3.3",
+    "eslint-config-google": "^0.9.1",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
