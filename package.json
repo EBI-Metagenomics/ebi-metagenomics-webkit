@@ -1,6 +1,6 @@
 {
   "name": "mgnify",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A Backbone-JS API to consume the European Bioinformatic Institute's MGnify API for metagenomic data, in addition to a widget library to visualise the data",
   "main": "mgnify.js",
   "scripts": {
