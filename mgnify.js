@@ -2,7 +2,7 @@
 define([], function() {
     // Define the module value by returning a value.
     return {
-        api: require('./lib/api'),
-        util: require('./lib/util')
+        api: require('./src/api'),
+        util: require('./src/util')
     };
 });
