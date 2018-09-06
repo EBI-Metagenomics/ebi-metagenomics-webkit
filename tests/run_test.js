@@ -98,6 +98,15 @@ define(['api'], function(api) {
                     console.error(c);
                 });
             });
+            it('Should set parameters for future use', function() {
+                const studyAcc = 'ERP001736';
+                const sampleAcc = 'ERS1231123';
+                const collection = new api.RunsCollection(
+                    {study_accession: studyAcc, sample_accession: sampleAcc});
+                expect(collection.params).to.not.equal(null);
+                expect(collection.study_accession).to.equal(studyAcc);
+                expect(collection.sample_accession).to.equal(sampleAcc);
+            });
         });
         context('Run analyses', function() {
             it('Should only retrieve analyses of experiment type other than assembly', function() {

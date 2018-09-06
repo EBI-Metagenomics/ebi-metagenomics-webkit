@@ -10,6 +10,7 @@ define(['api'], function(api) {
                 console.error(c);
             });
             it('Models should have expected fields', function() {
+                this.timeout(5000);
                 let expectedAttributes = [
                     'study_accession',
                     'study_url',
@@ -68,14 +69,47 @@ define(['api'], function(api) {
                 });
             });
         });
-        // context('Taxonomy', function() {
-        //     it('Should retrieve taxonomy data', function() {
-        //         const taxonomy = new api.Taxonomy({id: 'MGYA00011845', type: '/ssu'});
-        //         taxonomy.fetch().done(() => {
-        //             console.log(taxonomy);
-        //         });
-        //     });
-        // });
+        context('Taxonomy', function() {
+            it('Should retrieve taxonomy data', function() {
+                const taxonomy = new api.Taxonomy({id: 'MGYA00136035', type: '/ssu'});
+                taxonomy.fetch().done((taxonomies) => {
+                    expect(taxonomies.length).to.equal(490);
+                    taxonomies.forEach((tax) => {
+                        const attr = tax.attributes;
+                        expect(attr).to.contain
+                            .keys('count', 'domain', 'hierarchy', 'lineage', 'name', 'parent',
+                                'pipeline-version', 'rank');
+                    });
+                });
+            });
+        });
+        context('Interpro identifiers', function() {
+            it('Should retrieve interpro data', function() {
+                this.timeout(50000);
+                const interproData = new api.InterproIden({id: 'MGYA00141547'});
+                return interproData.fetch().done((interproResults) => {
+                    expect(interproResults.length).to.equal(10587);
+                    interproResults.forEach((tax) => {
+                        const attr = tax.attributes;
+                        expect(attr).to.contain
+                            .keys('accession', 'count', 'description');
+                    });
+                });
+            });
+        });
+        context('Go-slim annotations', function() {
+            it('Should retrieve goslim  data', function() {
+                const goSlimData = new api.GoSlim({id: 'MGYA00141547'});
+                return goSlimData.fetch().done(() => {
+                    const goSlimIdentifiers = goSlimData.attributes.data;
+                    expect(goSlimIdentifiers.length).to.equal(116);
+                    goSlimIdentifiers.forEach((tax) => {
+                        const attr = tax.attributes;
+                        expect(attr).to.contain
+                            .keys('accession', 'count', 'description', 'lineage');
+                    });
+                });
+            });
+        });
     });
-
 });

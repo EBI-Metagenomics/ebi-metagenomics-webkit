@@ -5,10 +5,6 @@ const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 
-// const Backbone = require('backbone');
-// const _ = require('underscore');
-// const util = require('./util');
-
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
@@ -163,12 +159,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             url() {
                 return API_URL + 'biomes/' + this.id;
             },
-            // initialize(data) {
-            //     if (data.hasOwnProperty('lineage')) {
-            //         this.url = this.url + '/' + this.lineage;
-            //     }
-            //     this.lineage = data['lineage'];
-            // },
             parse(data) {
                 // Work-around when requesting root biome
                 if (data.data) {
@@ -405,8 +395,8 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
                         }
                         $.when(...requests).done(function() {
                             _.each(requests, function(response) {
-                                if (response.responseJSON !== undefined ||
-                                    response.responseJSON.data !== undefined) {
+                                if (response.hasOwnProperty('responseJSON') &&
+                                    response.responseJSON.hasOwnProperty('data')) {
                                     data = data.concat(response.responseJSON.data);
                                 }
                             });
