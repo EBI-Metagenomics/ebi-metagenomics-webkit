@@ -30,7 +30,7 @@ define(['api'], function(api) {
                         expect(model.attributes).to.have.property(attr);
                         expect(model.attributes[attr]).to.not.equal(null);
                     });
-                })
+                });
             });
             it('Should construct urls correctly', function() {
                 return fetch.always(() => {
@@ -82,7 +82,7 @@ define(['api'], function(api) {
                             expect(model.attributes).to.have.property(attr);
                         });
                     });
-                })
+                });
             });
         });
     });

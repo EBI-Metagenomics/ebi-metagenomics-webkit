@@ -1,5 +1,5 @@
-var tests = [];
-for (var file in window.__karma__.files) {
+let tests = [];
+for (let file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         if (/tests\/.*_test\.js$/.test(file)) {
             tests.push(file);
