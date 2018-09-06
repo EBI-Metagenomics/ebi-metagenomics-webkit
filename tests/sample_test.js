@@ -5,11 +5,7 @@ define(['api'], function(api) {
 
             const sampleAccession = 'ERS1474797';
             const model = new api.Sample({id: sampleAccession});
-            const fetch = model.fetch().fail((a, b, c) => {
-                console.error(a);
-                console.error(b);
-                console.error(c);
-            });
+            const fetch = model.fetch();
             it('Should have expected fields', function() {
                 let expectedAttributes = [
                     'biosample_url',
@@ -29,19 +25,15 @@ define(['api'], function(api) {
                     'latitude',
                     'longitude'
                 ];
-                return fetch.done(() => {
+                return fetch.always(() => {
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
                         expect(model.attributes[attr]).to.not.equal(null);
                     });
-                }).fail((a, b, c) => {
-                    console.error(a);
-                    console.error(b);
-                    console.error(c);
-                });
+                })
             });
             it('Should construct urls correctly', function() {
-                return fetch.done(() => {
+                return fetch.always(() => {
                     expect(model.attributes['biosample_url'])
                         .to.equal('https://www.ebi.ac.uk/biosamples/samples/SAMEA27511918');
                     expect(model.attributes['sample_url'])
@@ -53,11 +45,7 @@ define(['api'], function(api) {
             it('Should provide load metadata', function() {
                 const sampleAccession = 'ERS434640';
                 const model = new api.Sample({id: sampleAccession});
-                model.fetch().fail((a, b, c) => {
-                    console.error(a);
-                    console.error(b);
-                    console.error(c);
-                }).done(() => {
+                model.fetch().always(() => {
                     const metadatas = model.attributes['metadatas'];
                     expect(metadatas.length).to.equal(16);
                     metadatas.forEach(function(name) {
@@ -68,11 +56,7 @@ define(['api'], function(api) {
         });
         context('Sample collection tests', function() {
             const collection = new api.SamplesCollection();
-            const fetch = collection.fetch().fail((a, b, c) => {
-                console.error(a);
-                console.error(b);
-                console.error(c);
-            });
+            const fetch = collection.fetch();
             it('Models should have expected fields', function() {
                 let expectedAttributes = [
                     'biosample_url',
@@ -92,17 +76,13 @@ define(['api'], function(api) {
                     'latitude',
                     'longitude'
                 ];
-                return fetch.done(() => {
+                return fetch.always(() => {
                     collection.models.forEach((model) => {
                         expectedAttributes.forEach((attr) => {
                             expect(model.attributes).to.have.property(attr);
                         });
                     });
-                }).fail((a, b, c) => {
-                    console.error(a);
-                    console.error(b);
-                    console.error(c);
-                });
+                })
             });
         });
     });

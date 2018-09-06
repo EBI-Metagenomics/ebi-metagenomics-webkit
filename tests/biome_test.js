@@ -4,11 +4,7 @@ define(['api'], function(api) {
         context('Model tests', function() {
             const lineage = 'root:Engineered';
             const model = new api.Biome({id: lineage});
-            const fetch = model.fetch().fail((a, b, c) => {
-                console.error(a);
-                console.error(b);
-                console.error(c);
-            });
+            const fetch = model.fetch();
             it('Should have expected fields', function() {
                 let expectedAttributes = [
                     'name',
@@ -16,19 +12,15 @@ define(['api'], function(api) {
                     'lineage',
                     'samples_count',
                     'biome_studies_url'];
-                return fetch.done(() => {
+                return fetch.always(() => {
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
                         expect(model.attributes[attr]).to.not.equal(null);
                     });
-                }).fail((a, b, c) => {
-                    console.error(a);
-                    console.error(b);
-                    console.error(c);
                 });
             });
             it('Should construct urls correctly', function() {
-                return fetch.done(() => {
+                return fetch.always(() => {
                     expect(model.attributes['biome_studies_url'])
                         .to.equal('/metagenomics/browse?lineage=' + lineage + '#studies');
                 });
@@ -41,33 +33,21 @@ define(['api'], function(api) {
                 'biome_studies_url'];
             describe('Biome collection tests', function() {
                 const collection = new api.BiomeCollection();
-                const fetch = collection.fetch().fail((a, b, c) => {
-                    console.error(a);
-                    console.error(b);
-                    console.error(c);
-                });
+                const fetch = collection.fetch();
                 it('Models should have expected fields', function() {
-                    return fetch.done(() => {
+                    return fetch.always(() => {
                         collection.models.forEach((model) => {
                             expectedAttributes.forEach((attr) => {
                                 expect(model.attributes).to.have.property(attr);
                             });
                         });
-                    }).fail((a, b, c) => {
-                        console.error(a);
-                        console.error(b);
-                        console.error(c);
                     });
                 });
             });
             describe('BiomeWithChildren collection tests', function() {
                 it('Should default to root biome', function() {
                     const collection = new api.BiomeWithChildren({});
-                    return collection.fetch().fail((a, b, c) => {
-                        console.error(a);
-                        console.error(b);
-                        console.error(c);
-                    }).done(() => {
+                    return collection.fetch().always(() => {
                         collection.models.forEach((model) => {
                             expectedAttributes.forEach((attr) => {
                                 expect(model.attributes).to.have.property(attr);
@@ -78,11 +58,7 @@ define(['api'], function(api) {
                 it('Should return lineage with children', function() {
                     const lineage = 'root:Engineered';
                     const collection = new api.BiomeWithChildren({rootLineage: lineage});
-                    return collection.fetch().fail((a, b, c) => {
-                        console.error(a);
-                        console.error(b);
-                        console.error(c);
-                    }).done(() => {
+                    return collection.fetch().always(() => {
                         collection.models.forEach((model) => {
                             expectedAttributes.forEach((attr) => {
                                 expect(model.attributes).to.have.property(attr);
