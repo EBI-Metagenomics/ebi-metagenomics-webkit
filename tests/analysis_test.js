@@ -121,20 +121,20 @@ define(['api'], function(api) {
         context('QCChart data', function() {
             it('Should load valid sequence length data', function() {
                 const qcData = new api.QcChartData({id: 'MGYA00141547', type: 'seq-length'});
-                return qcData.fetchData().always((response) => {
+                return qcData.fetch({dataType: 'text'}).always((response) => {
                     expect(response).to.equal('100\t1997827\n');
                 });
             });
             it('Should load valid gc-distribution data', function() {
                 const gcData = new api.QcChartData({id: 'MGYA00141547', type: 'gc-distribution'});
-                return gcData.fetchData().always((response) => {
+                return gcData.fetch({dataType: 'text'}).always((response) => {
                     expect(response).to.match(/(([0-9]*[.])?[0-9]+\t\d+\n)*/);
                 });
             });
             it('Should load valid nucleotide-distrib data', function() {
                 const nucData = new api.QcChartData(
                     {id: 'MGYA00141547', type: 'nucleotide-distribution'});
-                return nucData.fetchData().always((response) => {
+                return nucData.fetch({dataType: 'text'}).always((response) => {
                     expect(response).to
                         .match(/((pos\tN\tG\tC\tT\tA\n)(\d+\t([0-9]+[.][0-9]+[\t\n]){5})+)/);
                 });
@@ -143,7 +143,7 @@ define(['api'], function(api) {
         context('QCChart stats', function() {
             it('Should load summary data', function() {
                 const stats = new api.QcChartStats({id: 'MGYA00141547'});
-                return stats.fetchData().always((response) => {
+                return stats.fetch({dataType: 'text'}).always((response) => {
                     expect(response).to.match(/(\w+\t([0-9]*[.])?[0-9]+\n?)+/);
                 });
             });
