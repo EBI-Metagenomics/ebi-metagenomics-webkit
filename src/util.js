@@ -7,7 +7,6 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     }
 }(typeof self !== 'undefined' ? self : this, function() {
 
-    let subfolder = (typeof process !== 'undefined') ? process.env.DEPLOYMENT_SUBFOLDER : '';
 
     /**
      * Retrieve biome from lineage
@@ -146,7 +145,6 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     }
 
     return {
-        subfolder,
         lineageToBiome,
         formatDate,
         formatLineage,

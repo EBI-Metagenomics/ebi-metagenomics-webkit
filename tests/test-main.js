@@ -1,13 +1,11 @@
 var tests = [];
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
-        if (/.*_test\.js$/.test(file)) {
-            console.log(file);
+        if (/tests\/.*_test\.js$/.test(file)) {
             tests.push(file);
         }
     }
 }
-console.log(tests);
 requirejs.config({
     baseUrl: '/base',
     paths: {
@@ -15,7 +13,7 @@ requirejs.config({
         'util': './src/util',
         'jquery': './node_modules/jquery/dist/jquery',
         'backbone': './node_modules/backbone/backbone',
-        'underscore': './node_modules/underscore/underscore',
+        'underscore': './node_modules/underscore/underscore'
     },
     // ask Require.js to load these files (all our tests)
     deps: tests,

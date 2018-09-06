@@ -39,10 +39,19 @@ module.exports = function(config) {
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: ['progress', 'coverage'],
 
-        coverageReporter: [
-            {type: 'html', dir: 'coverage/'},
-            {type: 'lcov', subdir: 'report-lcov'}],
+        plugins: [
+            'karma-mocha',
+            'karma-requirejs',
+            'karma-chai',
+            'karma-chrome-launcher',
+            'karma-coverage'
+        ],
 
+        coverageReporter: {
+            dir: 'coverage/',
+            reporters: [
+                {type: 'lcov'}]
+        },
         // web server port
         port: 9876,
 
@@ -72,7 +81,9 @@ module.exports = function(config) {
 
         // Concurrency level
         // how many browser should be started simultaneous
-        concurrency: Infinity
+        concurrency: Infinity,
+
+        browserDisconnectTimeout: 5000,
     };
     if (process.env.TRAVIS) {
         configuration.browsers = ['Chrome_travis_ci'];
