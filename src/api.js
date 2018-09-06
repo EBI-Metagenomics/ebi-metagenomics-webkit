@@ -141,16 +141,18 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
         const RunsCollection = Backbone.Collection.extend({
             url: API_URL + 'runs',
             model: Run,
-            initialize(data) {
+            initialize(params) {
                 // Project/sample ID
-                if (data.hasOwnProperty(('study_accession'))) {
-                    this.study_accession = data.study_accession;
+                if (typeof(params) !== 'undefined') {
+                    if (params.hasOwnProperty(('study_accession'))) {
+                        this.study_accession = params.study_accession;
+                    }
+                    // Sample ID
+                    if (params.hasOwnProperty(('sample_accession'))) {
+                        this.sample_accession = params.sample_accession;
+                    }
+                    this.params = params;
                 }
-                // Sample ID
-                if (data.hasOwnProperty(('sample_accession'))) {
-                    this.sample_accession = data.sample_accession;
-                }
-                this.params = data;
             },
             parse(response) {
                 return response.data;
