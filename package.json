@@ -82,5 +82,5 @@
     "test:single": "node_modules/.bin/karma start karma.conf.js --single-run --log-level debug",
     "coverage": "cat coverage/*/lcov.info | codacy-coverage"
   },
-  "version": "0.1.23"
+  "version": "0.2.0"
 }
