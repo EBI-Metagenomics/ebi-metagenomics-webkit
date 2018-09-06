@@ -154,7 +154,7 @@ define(['api'], function(api) {
                 const ssu = '/ssu';
                 const url = api.getKronaURL(analysis, ssu);
                 expect(url).to
-                    .equal(api.API_URL + '/analyses/' + analysis + '/krona' + ssu + '?collapse');
+                    .equal(api.API_URL + 'analyses/' + analysis + '/krona' + ssu + '?collapse=false');
             });
         });
     });
