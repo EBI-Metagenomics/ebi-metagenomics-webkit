@@ -548,9 +548,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             },
             url() {
                 return API_URL + 'analyses/' + this.id + '/' + this.type;
-            },
-            fetchData() {
-                return this.fetch({dataType: 'text'});
             }
         });
 
