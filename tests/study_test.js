@@ -128,14 +128,16 @@ define(['api'], function(api) {
                     expect(data).to.contain.keys(...pipelineVersions);
                     pipelineVersions.forEach((version) => {
                         for (let groupName in data[version]) {
-                            const downloadEntries = data[version][groupName];
-                            downloadEntries.forEach((entry) => {
-                                const attr = entry.attributes;
-                                expect(attr).to.contain
-                                    .keys('alias', 'description', 'file-format', 'group-type');
-                                expect(attr['group-type'].toLowerCase()).to
-                                    .equal(groupName.toLowerCase());
-                            });
+                            if (data[version].hasOwnProperty(groupName)) {
+                                const downloadEntries = data[version][groupName];
+                                downloadEntries.forEach((entry) => {
+                                    const attr = entry.attributes;
+                                    expect(attr).to.contain
+                                        .keys('alias', 'description', 'file-format', 'group-type');
+                                    expect(attr['group-type'].toLowerCase()).to
+                                        .equal(groupName.toLowerCase());
+                                });
+                            }
                         }
                     });
                 });

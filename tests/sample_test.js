@@ -2,7 +2,6 @@ define(['api'], function(api) {
     api = api({API_URL: 'http://localhost:9000/metagenomics/api/v1/', SUBFOLDER: '/metagenomics'});
     describe('Sample tests', function() {
         context('Model tests', function() {
-
             const sampleAccession = 'ERS1474797';
             const model = new api.Sample({id: sampleAccession});
             const fetch = model.fetch();

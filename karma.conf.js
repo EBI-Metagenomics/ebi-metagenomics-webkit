@@ -4,7 +4,7 @@
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config) {
-    var configuration = {
+    let configuration = {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
@@ -59,7 +59,6 @@ module.exports = function(config) {
         colors: true,
 
         // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_INFO,
 
         // enable / disable watching file and executing tests whenever any file changes
@@ -83,7 +82,7 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        browserDisconnectTimeout: 5000,
+        browserDisconnectTimeout: 5000
     };
     if (process.env.TRAVIS) {
         configuration.browsers = ['Chrome_travis_ci'];

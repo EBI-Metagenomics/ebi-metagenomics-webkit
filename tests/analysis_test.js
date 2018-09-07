@@ -106,14 +106,16 @@ define(['api'], function(api) {
                     const data = downloads.attributes['downloadGroups'];
                     expect(data).to.contain.keys('Sequence data');
                     for (let groupName in data) {
-                        const downloadEntries = data[groupName];
-                        downloadEntries.forEach((entry) => {
-                            const attr = entry.attributes;
-                            expect(attr).to.contain
-                                .keys('alias', 'description', 'file-format', 'group-type');
-                            expect(attr['group-type'].toLowerCase()).to
-                                .equal(groupName.toLowerCase());
-                        });
+                        if (data.hasOwnProperty(groupName)) {
+                            const downloadEntries = data[groupName];
+                            downloadEntries.forEach((entry) => {
+                                const attr = entry.attributes;
+                                expect(attr).to.contain
+                                    .keys('alias', 'description', 'file-format', 'group-type');
+                                expect(attr['group-type'].toLowerCase()).to
+                                    .equal(groupName.toLowerCase());
+                            });
+                        }
                     }
                 });
             });
@@ -154,7 +156,8 @@ define(['api'], function(api) {
                 const ssu = '/ssu';
                 const url = api.getKronaURL(analysis, ssu);
                 expect(url).to
-                    .equal(api.API_URL + 'analyses/' + analysis + '/krona' + ssu + '?collapse=false');
+                    .equal(api.API_URL + 'analyses/' + analysis + '/krona' + ssu +
+                        '?collapse=false');
             });
         });
     });

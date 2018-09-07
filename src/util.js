@@ -6,8 +6,6 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         define(factory);
     }
 }(typeof self !== 'undefined' ? self : this, function() {
-
-
     /**
      * Retrieve biome from lineage
      * @param {string} lineage
@@ -43,7 +41,8 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
     /**
      * Simplify a list of biomes by grouping them on the biome icon
-     * @params biomes
+     * @params [object] biomes
+     * @return [object] simplified list of biomes
      */
     function simplifyBiomeIcons(biomes) {
         const groupedBiomes = {};

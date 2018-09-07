@@ -38,20 +38,6 @@ define(['api'], function(api) {
                         .to.equal('https://www.ebi.ac.uk/ena/data/view/' + runAccession);
                 });
             });
-            // it('Should provide  related studies', function() {
-            //     return fetch.always(() => {
-            //         const relatedStudies = model.attributes['related_studies'];
-            //         expect(relatedStudies.length).to.equal(1);
-            //     });
-            // });
-            // it('Should return empty relatedStudies list', function() {
-            //     const studyAcc = 'MGYS00002217';
-            //     const model = new api.Study({id: studyAcc});
-            //     const fetch = model.fetch().always(() => {
-            //         expect(model.attributes['related_studies'].length).to.equals(0);
-            //     });
-            // });
-
         });
         context('Run collection tests', function() {
             const collection = new api.RunsCollection();
