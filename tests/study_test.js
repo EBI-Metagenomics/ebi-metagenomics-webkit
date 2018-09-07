@@ -49,7 +49,7 @@ define(['api'], function(api) {
             it('Should return empty relatedStudies list', function() {
                 const studyAcc = 'MGYS00002217';
                 const model = new api.Study({id: studyAcc});
-                const fetch = model.fetch().always(() => {
+                return model.fetch().always(() => {
                     expect(model.attributes['related_studies'].length).to.equals(0);
                 });
             });
