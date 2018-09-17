@@ -3,6 +3,7 @@ define([], function() {
     // Define the module value by returning a value.
     return {
         api: require('./src/api'),
+        charts: require('./src/charts'),
         util: require('./src/util')
     };
 });

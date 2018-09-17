@@ -18,6 +18,8 @@ module.exports = function(config) {
             {pattern: 'tests/test-main.js', included: true},
             {pattern: 'src/*.js', included: false},
             {pattern: 'tests/*_test.js', included: false},
+            {pattern: 'src/charts/*.js', included: false},
+            {pattern: 'tests/charts/*_test.js', included: false},
             {pattern: 'node_modules/underscore/underscore.js', included: false},
             {pattern: 'node_modules/backbone/backbone.js', included: false},
             {pattern: 'node_modules/jquery/*/*.js', included: false},
@@ -31,7 +33,8 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'src/*.js': 'coverage'
+            'src/*.js': 'coverage',
+            'src/*/*.js': 'coverage'
         },
 
         // test results reporter to use

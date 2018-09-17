@@ -1,11 +1,21 @@
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-(function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(factory);
-    }
-}(typeof self !== 'undefined' ? self : this, function() {
+define(['underscore'], function(_) {
+
+    const TAXONOMY_COLOURS = [
+        '#058dc7',
+        '#82d23d',
+        '#e26736',
+        '#fbe300',
+        '#24cbe5',
+        '#c49ecc',
+        '#ffc08a',
+        '#708090',
+        '#6af9c4',
+        '#caae74',
+        '#cccccc'
+    ];
+
     /**
      * Retrieve biome from lineage
      * @param {string} lineage
@@ -143,12 +153,97 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
             }());
     }
 
+    /**
+     * Cluster data by depth
+     * @param {[*]} data
+     * @param {number} depth
+     * @return {[*]}≈
+     */
+    function clusterData(data, depth) {
+        let clusteredData = {};
+        _.each(data, function(d) {
+            const attr = d.attributes;
+            let lineage = attr.lineage.split(':');
+            // Remove empty strings
+            let category;
+            if (lineage.length < depth) {
+                category = lineage[lineage.length - 1];
+            } else {
+                category = lineage[depth];
+            }
+
+            if (depth > 0 &&
+                ['', 'Bacteria', 'Eukaryota', 'other_sequences', undefined].indexOf(category) >
+                -1) {
+                if (lineage[0] === 'Bacteria') {
+                    category = 'Unassigned Bacteria';
+                } else {
+                    category = 'Unassigned';
+                }
+            }
+
+            let val = attr.count;
+            if (clusteredData.hasOwnProperty(category)) {
+                clusteredData[category]['v'] += val;
+            } else {
+                clusteredData[category] = {
+                    v: val,
+                    l: lineage
+                };
+            }
+        });
+        clusteredData = _.map(clusteredData, function(values, k) {
+            return {
+                name: k,
+                y: values.v,
+                lineage: values.l
+            };
+        });
+        return clusteredData;
+    }
+
+    function groupTaxonomyData(data, depth) {
+        return _.sortBy(clusterData(data, depth), function(o) {
+            return o.y;
+        }).reverse();
+    }
+
+    /**
+     * Group all data after index n into single category
+     * @param {[*]} clusteredData
+     * @param {number} n index after which to group data
+     * @return {[*]} grouped data
+     */
+    function groupAfterN(clusteredData, n) {
+        if (clusteredData.length > n) {
+            const top10 = clusteredData.slice(0, n);
+            const others = {
+                name: 'Other',
+                lineage: [],
+                y: 0
+            };
+            _.each(clusteredData.slice(n, clusteredData.length), function(d) {
+                others.y += d.y;
+                if (others.lineage.indexOf(d.lineage[0]) === -1) {
+                    others.lineage.push(d.lineage[0]);
+                }
+            });
+            others.lineage = others.lineage.join(', ');
+            top10.push(others);
+            clusteredData = top10;
+        }
+        return clusteredData;
+    }
+
     return {
+        TAXONOMY_COLOURS,
         lineageToBiome,
         formatDate,
         formatLineage,
         simplifyBiomeIcons,
         getBiomeIconData,
-        getBiomeIcon
+        getBiomeIcon,
+        groupTaxonomyData,
+        groupAfterN
     };
-}));
+});
