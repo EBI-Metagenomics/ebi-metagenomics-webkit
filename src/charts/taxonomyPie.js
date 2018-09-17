@@ -34,8 +34,8 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
 
             this.dataReady.done(() => {
                 const categories = [];
-                this.data = util.groupTaxonomyData(this.data, this.groupingDepth);
-                this.data = util.groupAfterN(this.data, 10);
+                this.clusteredData = util.groupTaxonomyData(this.data, this.groupingDepth);
+                this.data = util.groupAfterN(this.clusteredData, 10);
                 this.data.forEach(function(e) {
                     categories.push(e.name);
                 });
