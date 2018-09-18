@@ -1,12 +1,13 @@
 define(['../api'], function(api) {
     /**
-     *
+     * Generic chart class to
      */
     class GenericChart {
         /**
-         *
-         * @param containerId
-         * @param options
+         * Class constructor to load / fetch data
+         * @param {string} containerId for HTML element into which chart will be inserted
+         * @param {object} options required to fetch underlying data from MGnify api
+         * or provide it directly
          */
         constructor(containerId, options) {
             this.dataReady = $.Deferred();
@@ -22,9 +23,10 @@ define(['../api'], function(api) {
         }
 
         /**
-         *
+         * Abstract class, subclasses must implement a method of fetching the data from MGnify API
+         * @param {object} params
          */
-        fetchModel() {
+        fetchModel(params) {
             console.error('Method is not implemented or superclass instantiated!');
         }
     }

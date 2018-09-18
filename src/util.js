@@ -1,7 +1,6 @@
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 define(['underscore'], function(_) {
-
     const TAXONOMY_COLOURS = [
         '#058dc7',
         '#82d23d',
@@ -50,9 +49,9 @@ define(['underscore'], function(_) {
     }
 
     /**
-     * Simplify a list of biomes by grouping them on the biome icon
-     * @params [object] biomes
-     * @return [object] simplified list of biomes
+     * Simplify a list of biomes by grouping them by biome icon
+     * @param {[object]} biomes list of biomes
+     * @return {[object]} list of biomes grouped by biome icon
      */
     function simplifyBiomeIcons(biomes) {
         const groupedBiomes = {};
@@ -202,6 +201,12 @@ define(['underscore'], function(_) {
         return clusteredData;
     }
 
+    /**
+     * Group taxonomy data by lineage at depth and sort by decreasing value
+     * @param {[object]} data
+     * @param {int} depth of lineage at which to group data
+     * @return {[object]} sorted list of data grouped and summed by lineage
+     */
     function groupTaxonomyData(data, depth) {
         return _.sortBy(clusterData(data, depth), function(o) {
             return o.y;
@@ -235,6 +240,11 @@ define(['underscore'], function(_) {
         return clusteredData;
     }
 
+    /**
+     * Sum data by parameter
+     * @param {[object]} data
+     * @return {number} sum of parameters y in array
+     */
     function sumData(data) {
         let sum = 0;
         data.forEach(function(e) {

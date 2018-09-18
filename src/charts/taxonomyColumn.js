@@ -1,4 +1,3 @@
-
 define(['highcharts', '../util', './genericChart'], function(Highcharts, util, GenericChart) {
     /**
      * Generic taxonomy pie chart class, configurable to
@@ -60,10 +59,6 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                     tooltip: {
                         formatter() {
                             let perc = 100 * this.y / util.sumData(this.series.data);
-                            // let title = this.x;
-                            // if (title === '0' || title === 0) {
-                            //     title = this.series.name;
-                            // }
                             return this.x + '<br/>' + '<b>' + this.y +
                                 '</b> ' + chartOptions['seriesName'] + ' (' + (perc).toFixed(2) +
                                 '%)';
@@ -73,14 +68,12 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                         enabled: false
                     }
                 };
-                // if (chartOptions) {
-                //     options = $.extend(true, options, chartOptions);
-                // }
                 if (typeof chartOptions !== 'undefined') {
                     if (typeof chartOptions['subtitle'] === 'undefined' ||
                         chartOptions['subtitle']) {
                         options.subtitle = {
-                            text: 'Total: ' + util.sumData(this.data) + ' ' + chartOptions['seriesName']
+                            text: 'Total: ' + util.sumData(this.data) + ' ' +
+                            chartOptions['seriesName']
                         };
                     }
                 }

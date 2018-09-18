@@ -1,5 +1,4 @@
 define(['highcharts', './genericChart'], function(Highcharts, GenericChart) {
-
     /**
      * Container for QCChart
      */
@@ -79,11 +78,12 @@ define(['highcharts', './genericChart'], function(Highcharts, GenericChart) {
 
         /**
          * Fetch relevant models from MGnift API
-         * @param params
+         * @param {object} params required to fetch data
+         * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const analysis = new this.api.Analysis({id: 'MGYA00141547'});
-            const qcStats = new this.api.QcChartStats({id: 'MGYA00141547'});
+            const analysis = new this.api.Analysis({id: params['accession']});
+            const qcStats = new this.api.QcChartStats({id: params['accession']});
 
             return $.when(analysis.fetch(), qcStats.fetch({dataType: 'text'})).done(() => {
                 this.data = analysis['attributes']['analysis_summary'];

@@ -15,7 +15,7 @@ requirejs.config({
         'jquery': './node_modules/jquery/dist/jquery',
         'backbone': './node_modules/backbone/backbone',
         'underscore': './node_modules/underscore/underscore',
-        'highcharts': './node_modules/highcharts/highcharts.src',
+        'highcharts': './node_modules/highcharts/highcharts.src'
     },
     // ask Require.js to load these files (all our tests)
     deps: tests,

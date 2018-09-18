@@ -1,5 +1,4 @@
 define(['highcharts', '../util', './genericChart'], function(Highcharts, util, GenericChart) {
-
     /**
      * Reformat data into multiple series
      * @param {object} data
@@ -46,7 +45,7 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                 });
                 const sumData = util.sumData(this.clusteredData);
                 let titleText;
-                if (typeof chartOptions !== 'undefined' && chartOptions.hasOwnProperty('title')){
+                if (typeof chartOptions !== 'undefined' && chartOptions.hasOwnProperty('title')) {
                     titleText = chartOptions['title'];
                 } else {
                     titleText = '';
