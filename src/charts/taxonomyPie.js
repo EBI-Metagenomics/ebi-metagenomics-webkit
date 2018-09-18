@@ -16,7 +16,6 @@ function duplicateLastColor(colours, data) {
 }
 
 define(['highcharts', '../util', './genericChart'], function(Highcharts, util, GenericChart) {
-
     /**
      * Generic taxonomy pie chart class, configurable to
      */
@@ -86,7 +85,8 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                     if (typeof chartOptions['subtitle'] === 'undefined' ||
                         chartOptions['subtitle']) {
                         options.subtitle = {
-                            text: 'Total: ' + this.data.sum('y') + ' ' + chartOptions['seriesName']
+                            text: 'Total: ' + util.sumData(this.data) + ' ' +
+                            chartOptions['seriesName']
                         };
                     }
                     if (chartOptions['legend']) {
@@ -107,9 +107,9 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                         };
                         options.plotOptions.pie.showInLegend = true;
                     }
-                    this.chart = Highcharts.chart(containerId, options);
-                    this.loaded.resolve();
                 }
+                this.chart = Highcharts.chart(containerId, options);
+                this.loaded.resolve();
             });
         }
 

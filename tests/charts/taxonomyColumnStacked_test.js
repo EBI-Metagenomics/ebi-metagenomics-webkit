@@ -1,4 +1,4 @@
-define(['charts/taxonomyPie'], function(TaxonomyPie) {
+define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
     const taxonomyData = [
         {
             'type': 'organisms',
@@ -78,14 +78,14 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
     }
 
-    describe('Taxonomy pie chart', function() {
+    describe('Taxonomy stacked column chart', function() {
         context('Data loading source', function() {
-            it('Should load taxonomy pie from data', function(done) {
+            it('Should load taxonomy column from data', function(done) {
                 this.timeout(5000);
                 createDiv();
-                const chart = new TaxonomyPie(containerID, {data: taxonomyData});
-                chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Archaea.+: 100\.00 %/);
+                const chart = new TaxonomyColumnStacked(containerID, {data: taxonomyData});
+                chart.loaded.always(() => {
+                    expect($('#' + containerID).html()).to.match(/Total:\s+13 reads/);
                     done();
                 });
             });
@@ -93,47 +93,37 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Bacteria.+: 77\.35 %/);
+                    expect($('#' + containerID).html()).to.match(/Total:\s+1916873 reads/);
                     done();
                 });
             });
         });
         context('Chart parametrisation', function() {
-            it('Should group at default depth (0)', function(done) {
-                this.timeout(5000);
-                createDiv();
-                const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
-                    {accession: accession, type: '/ssu', apiConfig: apiConfig});
-                chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Bacteria.+: 77\.35 %/);
-                    done();
-                });
-            });
-            it('Should group at depth 2', function(done) {
-                this.timeout(5000);
-                createDiv();
-                const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
-                    {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
-                chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Spirochaetes.+: 12\.53 %/);
-                    done();
-                });
-            });
             it('Should display title', function(done) {
-                const title = 'Domain composition';
+                const title = 'Phylum composition';
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {title: title});
                 chart.loaded.done(() => {
                     expect($('#' + containerID).html()).to.contain(title);
+                    done();
+                });
+            });
+            it('Should not display title', function(done) {
+                const title = 'Phylum composition';
+                this.timeout(5000);
+                createDiv();
+                const accession = 'MGYA00141547';
+                const chart = new TaxonomyColumnStacked(containerID,
+                    {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
+                chart.loaded.done(() => {
+                    expect($('#' + containerID).html()).not.to.contain(title);
                     done();
                 });
             });
@@ -142,27 +132,13 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {seriesName: seriesName});
                 chart.loaded.done(() => {
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html()).to.contain(seriesName);
-                    done();
-                });
-            });
-            it('Should display legend', function(done) {
-                this.timeout(5000);
-                createDiv();
-                const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
-                    {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
-                    {legend: true});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
-                        .trigger('mouseover');
-                    expect($('.highcharts-legend').html()).to.contain('Bacteroidetes');
                     done();
                 });
             });

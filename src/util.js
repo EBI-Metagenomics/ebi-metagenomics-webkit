@@ -235,6 +235,14 @@ define(['underscore'], function(_) {
         return clusteredData;
     }
 
+    function sumData(data) {
+        let sum = 0;
+        data.forEach(function(e) {
+            sum += e.y;
+        });
+        return sum;
+    }
+
     return {
         TAXONOMY_COLOURS,
         lineageToBiome,
@@ -244,6 +252,7 @@ define(['underscore'], function(_) {
         getBiomeIconData,
         getBiomeIcon,
         groupTaxonomyData,
-        groupAfterN
+        groupAfterN,
+        sumData
     };
 });

@@ -1,4 +1,4 @@
-define(['charts/taxonomyPie'], function(TaxonomyPie) {
+define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
     const taxonomyData = [
         {
             'type': 'organisms',
@@ -78,14 +78,16 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
     }
 
-    describe('Taxonomy pie chart', function() {
+    describe('Taxonomy column chart', function() {
         context('Data loading source', function() {
-            it('Should load taxonomy pie from data', function(done) {
+            beforeEach(function() {
                 this.timeout(5000);
                 createDiv();
-                const chart = new TaxonomyPie(containerID, {data: taxonomyData});
-                chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Archaea.+: 100\.00 %/);
+            });
+            it('Should load taxonomy column from data', function(done) {
+                const chart = new TaxonomyColumn(containerID, {data: taxonomyData});
+                chart.loaded.always(() => {
+                    expect($('#' + containerID).html()).to.contain('Archaea');
                     done();
                 });
             });
@@ -93,10 +95,10 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Bacteria.+: 77\.35 %/);
+                    expect($('#' + containerID).html()).to.contain('Bacteria');
                     done();
                 });
             });
@@ -106,10 +108,10 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Bacteria.+: 77\.35 %/);
+                    expect($('#' + containerID).html()).to.contain('Bacteria');
                     done();
                 });
             });
@@ -117,10 +119,10 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
                 chart.loaded.done(() => {
-                    expect($('#' + containerID).html()).to.match(/Spirochaetes.+: 12\.53 %/);
+                    expect($('#' + containerID).html()).to.contain('Proteobacteria');
                     done();
                 });
             });
@@ -129,7 +131,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {title: title});
                 chart.loaded.done(() => {
@@ -142,7 +144,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {seriesName: seriesName});
                 chart.loaded.done(() => {
@@ -152,20 +154,31 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                     done();
                 });
             });
-            it('Should display legend', function(done) {
+            it('Should not display sub title', function(done) {
+                const title = 'Domain composition';
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';
-                const chart = new TaxonomyPie(containerID,
+                const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
-                    {legend: true});
+                    {subtitle: false});
                 chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
-                        .trigger('mouseover');
-                    expect($('.highcharts-legend').html()).to.contain('Bacteroidetes');
+                    expect($('#' + containerID).html()).to.not.contain('Total:');
                     done();
                 });
             });
+            // it('Should display legend', function(done) {
+            //     this.timeout(5000);
+            //     createDiv();
+            //     const accession = 'MGYA00141547';
+            //     const chart = new TaxonomyColumn(containerID,
+            //         {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
+            //         {legend: true});
+            //     chart.loaded.done(() => {
+            //         expect($('.highcharts-legend').html()).to.contain('Bacteroidetes');
+            //         done();
+            //     });
+            // });
         });
     });
 });
