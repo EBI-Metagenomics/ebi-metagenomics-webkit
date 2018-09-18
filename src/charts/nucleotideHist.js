@@ -1,4 +1,8 @@
-define(['highcharts', '../util', './genericChart'], function(Highcharts, util, GenericChart) {
+define([
+    '../util', './genericChart', 'highcharts', 'highcharts/modules/exporting'
+], function(util, GenericChart, Highcharts, exporting) {
+    exporting(Highcharts);
+
     /**
      * Container for nucleotide histogram chart
      */
@@ -32,9 +36,19 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                         });
                     }
                 });
-                dataOptions = {
+                let urlToFile;
+                if (typeof this.model !== 'undefined') {
+                    if (typeof this.model.url === 'function') {
+                        urlToFile = this.model.url();
+                    } else {
+                        urlToFile = this.model.url;
+                    }
+                } else {
+                    urlToFile = '';
+                }
+                const options = {
                     chart: {
-                        // renderTo: 'nucleotide',
+                        renderTo: containerId,
                         type: 'area',
                         style: {
                             fontFamily: 'Helvetica'
@@ -48,7 +62,8 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                         }
                     },
                     subtitle: {
-                        text: (typeof chartOptions !== 'undefined' && chartOptions['isFromSubset'])
+                        text: (typeof chartOptions !== 'undefined' &&
+                            chartOptions['isFromSubset'])
                             ? 'A subset of the sequences was used to generate this chart'
                             : undefined
                     },
@@ -91,10 +106,9 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
                             y: -10
                         }
                     },
-                    exporting: util.getExportingStructure(
-                        typeof chartOptions !== 'undefined' ? chartOptions['urlToFile'] : '')
+                    exporting: util.getExportingStructure(urlToFile)
                 };
-                this.chart = new Highcharts.Chart(containerId, dataOptions);
+                this.chart = new Highcharts.Chart(options);
                 this.loaded.resolve();
             });
         }
@@ -105,9 +119,9 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const model = new this.api.QcChartData(
+            this.model = new this.api.QcChartData(
                 {id: params['accession'], type: 'nucleotide-distribution'});
-            return model.fetch({dataType: 'text'}).then((data) => {
+            return this.model.fetch({dataType: 'text'}).then((data) => {
                 this.data = data;
             });
         }

@@ -1,4 +1,8 @@
-define(['highcharts', './genericChart'], function(Highcharts, GenericChart) {
+define([
+    './genericChart', 'highcharts', 'highcharts/modules/exporting'
+], function(GenericChart, Highcharts, exporting) {
+    exporting(Highcharts);
+
     /**
      * Container for QCChart
      */

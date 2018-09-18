@@ -1,4 +1,7 @@
-define(['highcharts', '../util', './genericChart'], function(Highcharts, util, GenericChart) {
+define([
+    '../util', './genericChart', 'highcharts', 'highcharts/modules/exporting'
+], function(util, GenericChart, Highcharts, exporting) {
+    exporting(Highcharts);
     /**
      * Reformat data into multiple series
      * @param {object} data

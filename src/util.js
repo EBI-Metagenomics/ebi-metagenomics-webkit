@@ -259,7 +259,7 @@ define(['underscore'], function(_) {
                 contextButton: {
                     menuItems: [
                         {
-                            textKey: 'downloadData',
+                            text: 'Download data',
                             onclick: function() {
                                 if (typeof content === 'undefined') {
                                     window.location = urlToFile;
