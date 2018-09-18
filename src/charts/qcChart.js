@@ -77,7 +77,7 @@ define(['highcharts', './genericChart'], function(Highcharts, GenericChart) {
         }
 
         /**
-         * Fetch relevant models from MGnift API
+         * Fetch relevant models from MGnify API
          * @param {object} params required to fetch data
          * @return {jQuery.promise}
          */

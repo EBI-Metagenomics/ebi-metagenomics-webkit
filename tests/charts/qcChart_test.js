@@ -1,9 +1,8 @@
-define(['charts/qcChart', 'api'], function(QcChart, api) {
+define(['charts/qcChart'], function(QcChart) {
     const apiConfig = {
         API_URL: 'http://localhost:9000/metagenomics/api/v1/',
         SUBFOLDER: '/metagenomics'
     };
-    api = api(apiConfig);
     const containerID = 'chart-container';
 
     describe('QC charts', function() {

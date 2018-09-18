@@ -6,12 +6,12 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
         /**
          * Instantiate chart
          * @param {string} containerId chart container element
-         * @param {[*]} dataParams
-         * @param {[*]} chartOptions
+         * @param {object} dataOptions parameters to fetch or provide chart data
+         * @param {object} chartOptions parameters to customise highcharts chart options
          */
-        constructor(containerId, dataParams, chartOptions) {
-            super(containerId, dataParams);
-            this.groupingDepth = dataParams['groupingDepth'] || 0;
+        constructor(containerId, dataOptions, chartOptions) {
+            super(containerId, dataOptions);
+            this.groupingDepth = dataOptions['groupingDepth'] || 0;
             this.loaded = $.Deferred();
 
             this.dataReady.done(() => {

@@ -23,12 +23,12 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
         /**
          * Instantiate chart
          * @param {string} containerId chart container element
-         * @param {[*]} dataParams
+         * @param {[*]} dataOptions
          * @param {[*]} chartOptions
          */
-        constructor(containerId, dataParams, chartOptions) {
-            super(containerId, dataParams);
-            this.groupingDepth = dataParams['groupingDepth'] || 0;
+        constructor(containerId, dataOptions, chartOptions) {
+            super(containerId, dataOptions);
+            this.groupingDepth = dataOptions['groupingDepth'] || 0;
             this.loaded = $.Deferred();
 
             this.dataReady.done(() => {

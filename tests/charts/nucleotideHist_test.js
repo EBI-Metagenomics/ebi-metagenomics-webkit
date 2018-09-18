@@ -1,9 +1,8 @@
-define(['charts/nucleotideHist', 'api'], function(NucleotideHist, api) {
+define(['charts/nucleotideHist'], function(NucleotideHist) {
     const apiConfig = {
         API_URL: 'http://localhost:9000/metagenomics/api/v1/',
         SUBFOLDER: '/metagenomics'
     };
-    api = api(apiConfig);
     const containerID = 'chart-container';
 
     describe('Nucleotide histogram charts', function() {

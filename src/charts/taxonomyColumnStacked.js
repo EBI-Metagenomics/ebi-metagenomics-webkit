@@ -23,11 +23,11 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
         /**
          * Instantiate chart
          * @param {string} containerId chart container element
-         * @param {[*]} dataParams
+         * @param {[*]} dataOptions
          * @param {[*]} chartOptions
          */
-        constructor(containerId, dataParams, chartOptions) {
-            super(containerId, dataParams);
+        constructor(containerId, dataOptions, chartOptions) {
+            super(containerId, dataOptions);
             this.loaded = $.Deferred();
             if (!chartOptions) {
                 chartOptions = {};

@@ -19,16 +19,6 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 'parent': 'Halobacteriales',
                 'rank': 'family',
                 'pipeline-version': '4.0'
-            },
-            'relationships': {
-                'analyses': {
-                    'links': {
-                        'related': 'http://localhost:9000/metagenomics/api/v1/annotations/organisms/Archaea::Euryarchaeota:Halobacteria:Halobacteriales:Halobacteriaceae/analyses'
-                    }
-                }
-            },
-            'links': {
-                'self': 'http://localhost:9000/metagenomics/api/v1/annotations/organisms/Archaea%253A%253AEuryarchaeota%253AHalobacteria%253AHalobacteriales%253AHalobacteriaceae'
             }
         },
         {
@@ -36,7 +26,8 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             'id': 'Archaea::Euryarchaeota:Halobacteria:Halobacteriales:Halobacteriaceae:Halococcus',
             'attributes': {
                 'count': 6,
-                'lineage': 'Archaea::Euryarchaeota:Halobacteria:Halobacteriales:Halobacteriaceae:Halococcus',
+                'lineage': 'Archaea::Euryarchaeota:Halobacteria:Halobacteriales:' +
+                'Halobacteriaceae:Halococcus',
                 'hierarchy': {
                     'super kingdom': 'Archaea',
                     'kingdom': '',
@@ -51,16 +42,6 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 'parent': 'Halobacteriaceae',
                 'rank': 'genus',
                 'pipeline-version': '4.0'
-            },
-            'relationships': {
-                'analyses': {
-                    'links': {
-                        'related': 'http://localhost:9000/metagenomics/api/v1/annotations/organisms/Archaea::Euryarchaeota:Halobacteria:Halobacteriales:Halobacteriaceae:Halococcus/analyses'
-                    }
-                }
-            },
-            'links': {
-                'self': 'http://localhost:9000/metagenomics/api/v1/annotations/organisms/Archaea%253A%253AEuryarchaeota%253AHalobacteria%253AHalobacteriales%253AHalobacteriaceae%253AHalococcus'
             }
         }
     ];
@@ -155,7 +136,6 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 });
             });
             it('Should not display sub title', function(done) {
-                const title = 'Domain composition';
                 this.timeout(5000);
                 createDiv();
                 const accession = 'MGYA00141547';

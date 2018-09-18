@@ -4,10 +4,10 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
      */
     class NucleotideHist extends GenericChart {
         /**
-         * 
-         * @param containerId
-         * @param dataOptions
-         * @param chartOptions
+         *
+         * @param {string} containerId for HTML element into which chart will be inserted
+         * @param {object} dataOptions parameters to fetch or provide chart data
+         * @param {object} chartOptions parameters to customise highcharts chart options
          */
         constructor(containerId, dataOptions, chartOptions) {
             super(containerId, dataOptions);
@@ -99,6 +99,11 @@ define(['highcharts', '../util', './genericChart'], function(Highcharts, util, G
             });
         }
 
+        /**
+         * Fetch relevant models from MGnify API
+         * @param {object} params required to fetch data
+         * @return {jQuery.promise}
+         */
         fetchModel(params) {
             const model = new this.api.QcChartData(
                 {id: params['accession'], type: 'nucleotide-distribution'});
