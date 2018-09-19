@@ -57,7 +57,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 const chart = new ReadsLengthHist(containerID,
                     {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
                 chart.loaded.done(() => {
-                    expect($('svg').length).to.contain('A subset of the sequences was used');
+                    expect($('svg').html()).to.contain('A subset of the sequences was used');
                     done();
                 });
             });

@@ -386,24 +386,28 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             $.get({
                 url: that.url(),
                 success(response) {
-                    data = data.concat(response.data);
-                    const numPages = response.meta.pagination.pages;
-                    if (numPages > 1) {
-                        let requests = [];
-                        for (let x = 2; x <= numPages; x++) {
-                            requests.push($.get(that.url() + '?page=' + x));
-                        }
-                        $.when(...requests).done(function() {
-                            _.each(requests, function(response) {
-                                if (response.hasOwnProperty('responseJSON') &&
-                                    response.responseJSON.hasOwnProperty('data')) {
-                                    data = data.concat(response.responseJSON.data);
-                                }
+                    try {
+                        data = data.concat(response.data);
+                        const numPages = response.meta.pagination.pages;
+                        if (numPages > 1) {
+                            let requests = [];
+                            for (let x = 2; x <= numPages; x++) {
+                                requests.push($.get(that.url() + '?page=' + x));
+                            }
+                            $.when(...requests).done(function() {
+                                _.each(requests, function(response) {
+                                    if (response.hasOwnProperty('responseJSON') &&
+                                        response.responseJSON.hasOwnProperty('data')) {
+                                        data = data.concat(response.responseJSON.data);
+                                    }
+                                });
+                                deferred.resolve(data);
                             });
+                        } else {
                             deferred.resolve(data);
-                        });
-                    } else {
-                        deferred.resolve(data);
+                        }
+                    } catch (exception) {
+                        deferred.reject();
                     }
                 }
             });

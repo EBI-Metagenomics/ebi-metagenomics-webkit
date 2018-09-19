@@ -42,7 +42,7 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new GcDistributionChart(containerID, {data: data});
                 chart.loaded.done(() => {
-                    expect($('.highcharts-point').length).to.equal(5);
+                    expect($('.highcharts-series-group .highcharts-markers').length).to.equal(1);
                     done();
                 });
             });
@@ -53,7 +53,7 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 const chart = new GcDistributionChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('.highcharts-point').length).to.equal(101);
+                    expect($('.highcharts-series-group .highcharts-markers').length).to.equal(1);
                     done();
                 });
             });

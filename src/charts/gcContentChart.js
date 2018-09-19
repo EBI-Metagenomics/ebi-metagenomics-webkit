@@ -18,6 +18,11 @@ define([
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
                 this.data = util.tsv2dict(this.data);
+                // TODO fix once API no longer returns HTML error pages
+                if (!this.data.hasOwnProperty('average_gc_content')) {
+                    this.loaded.reject();
+                    return;
+                }
                 const that = this;
                 const options = {
                     chart: {
@@ -93,7 +98,6 @@ define([
                     exporting: {enabled: false}
                 };
                 this.chart = Highcharts.chart(containerId, options);
-            }).done(() => {
                 this.loaded.resolve();
             }).fail(() => {
                 this.loaded.reject();

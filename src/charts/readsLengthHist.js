@@ -38,11 +38,17 @@ define([
             this.dataReady.done(() => {
                 let urlToFile = util.getModelUrl();
                 try {
+                    // TODO fix once API no longer returns HTML error pages
+                    if (!this.data.hasOwnProperty('standard_deviation_length')) {
+                        this.loaded.reject();
+                        return;
+                    }
                     let lengthMax = Math.max.apply(null, this.data['series'].map(function(e) {
                         if (e) {
                             return e[0];
                         }
                     }));
+                    debugger;
                     const options = {
                         chart: {
                             marginLeft: 78,
