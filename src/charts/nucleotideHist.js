@@ -17,7 +17,7 @@ define([
             super(containerId, dataOptions);
             this.loaded = $.Deferred();
 
-            this.dataReady.done(() => {
+            this.dataReady.then(() => {
                 let data = {'pos': [], 'A': [], 'G': [], 'T': [], 'C': [], 'N': []};
                 let colors = {
                     'A': 'rgb(16, 150, 24)',
@@ -109,7 +109,10 @@ define([
                     exporting: util.getExportingStructure(urlToFile)
                 };
                 this.chart = new Highcharts.Chart(options);
+            }).done(() =>{
                 this.loaded.resolve();
+            }).fail(() => {
+                this.loaded.reject();
             });
         }
 

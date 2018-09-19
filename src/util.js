@@ -333,6 +333,21 @@ define(['underscore'], function(_) {
         };
     }
 
+    /**
+     * Convert a two-column tab-seperated-value string into dictionary
+     * @param {string} str representing tab seperated values
+     * @return {object}
+     */
+    function tsv2dict(str) {
+        return str.split('\n').reduce((map, row) => {
+            row = row.split('\t');
+            if (row[0].length > 0) {
+                map[row[0]] = parseFloat(row[1]);
+            }
+            return map;
+        }, {});
+    }
+
     return {
         TAXONOMY_COLOURS,
         lineageToBiome,
@@ -344,6 +359,7 @@ define(['underscore'], function(_) {
         groupTaxonomyData,
         groupAfterN,
         sumData,
-        getExportingStructure
+        getExportingStructure,
+        tsv2dict
     };
 });

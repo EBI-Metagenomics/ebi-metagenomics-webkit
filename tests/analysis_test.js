@@ -120,7 +120,7 @@ define(['api'], function(api) {
                 });
             });
         });
-        context('QCChart data', function() {
+        context('GcDistributionChart data', function() {
             it('Should load valid sequence length data', function() {
                 const qcData = new api.QcChartData({id: 'MGYA00141547', type: 'seq-length'});
                 return qcData.fetch({dataType: 'text'}).always((response) => {
@@ -142,7 +142,7 @@ define(['api'], function(api) {
                 });
             });
         });
-        context('QCChart stats', function() {
+        context('GcDistributionChart stats', function() {
             it('Should load summary data', function() {
                 const stats = new api.QcChartStats({id: 'MGYA00141547'});
                 return stats.fetch({dataType: 'text'}).always((response) => {

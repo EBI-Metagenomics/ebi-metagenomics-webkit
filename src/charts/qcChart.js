@@ -4,11 +4,11 @@ define([
     exporting(Highcharts);
 
     /**
-     * Container for QCChart
+     * Container for GcDistributionChart
      */
     class QCChart extends GenericChart {
         /**
-         * Constructor for QCChart; provide accession OR data to generate chart.
+         * Constructor for GcDistributionChart; provide accession OR data to generate chart.
          * @param {string} containerId id (without #) of container
          * @param {object} options to configure chart data source (data or fetch parameters)
          */
@@ -76,7 +76,10 @@ define([
                         }]
                 };
                 this.chart = Highcharts.chart(containerId, chartOptions);
+            }).done(() => {
                 this.loaded.resolve();
+            }).fail(() => {
+                this.loaded.reject();
             });
         }
 

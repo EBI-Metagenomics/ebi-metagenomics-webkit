@@ -113,7 +113,10 @@ define([
                     }
                 }
                 this.chart = Highcharts.chart(containerId, options);
+            }).done(() => {
                 this.loaded.resolve();
+            }).fail(() => {
+                this.loaded.reject();
             });
         }
 

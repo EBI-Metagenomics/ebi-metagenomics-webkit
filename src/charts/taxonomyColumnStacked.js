@@ -2,6 +2,7 @@ define([
     '../util', './genericChart', 'highcharts', 'highcharts/modules/exporting'
 ], function(util, GenericChart, Highcharts, exporting) {
     exporting(Highcharts);
+
     /**
      * Reformat data into multiple series
      * @param {object} data
@@ -105,7 +106,10 @@ define([
                     series: this.data
                 };
                 this.chart = Highcharts.chart(containerId, options);
+            }).done(() => {
                 this.loaded.resolve();
+            }).fail(() => {
+                this.loaded.reject();
             });
         }
 

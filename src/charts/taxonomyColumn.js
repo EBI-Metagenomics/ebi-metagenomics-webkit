@@ -2,6 +2,7 @@ define([
     '../util', './genericChart', 'highcharts', 'highcharts/modules/exporting'
 ], function(util, GenericChart, Highcharts, exporting) {
     exporting(Highcharts);
+
     /**
      * Generic taxonomy pie chart class, configurable to
      */
@@ -81,7 +82,10 @@ define([
                     }
                 }
                 this.chart = Highcharts.chart(containerId, options);
+            }).done(() => {
                 this.loaded.resolve();
+            }).fail(() => {
+                this.loaded.reject();
             });
         }
 
