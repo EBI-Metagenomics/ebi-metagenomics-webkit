@@ -7,7 +7,7 @@ define(['charts/qcChart'], function(QcChart) {
 
     describe('QC charts', function() {
         context('Data source tests', function() {
-            it('Should load qc chart from raw data', function(done) {
+            it('Should load chart from raw data', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const data = {

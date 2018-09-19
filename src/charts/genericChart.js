@@ -13,9 +13,7 @@ define(['../api'], function(api) {
             this.dataReady = $.Deferred();
             if (typeof options['accession'] !== 'undefined') {
                 this.api = api(options['apiConfig']);
-                this.fetchModel(options).done(() => {
-                    this.dataReady.resolve();
-                });
+                this.dataReady = this.fetchModel(options);
             } else {
                 this.data = options['data'];
                 this.dataReady.resolve();

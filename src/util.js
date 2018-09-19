@@ -253,6 +253,12 @@ define(['underscore'], function(_) {
         return sum;
     }
 
+    /**
+     * Generate button menu for chart downloads
+     * @param {string} urlToFile
+     * @param {string} content
+     * @return {object}
+     */
     function getExportingStructure(urlToFile, content) {
         return {
             buttons: {
@@ -348,6 +354,24 @@ define(['underscore'], function(_) {
         }, {});
     }
 
+    /**
+     * Retrieve model url from Backbone model
+     * @return {string}
+     */
+    function getModelUrl() {
+        let urlToFile;
+        if (typeof this.model !== 'undefined') {
+            if (typeof this.model.url === 'function') {
+                urlToFile = this.model.url();
+            } else {
+                urlToFile = this.model.url;
+            }
+        } else {
+            urlToFile = '';
+        }
+        return urlToFile;
+    }
+
     return {
         TAXONOMY_COLOURS,
         lineageToBiome,
@@ -360,6 +384,7 @@ define(['underscore'], function(_) {
         groupAfterN,
         sumData,
         getExportingStructure,
-        tsv2dict
+        tsv2dict,
+        getModelUrl
     };
 });

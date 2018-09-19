@@ -130,12 +130,12 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const seqLength = new this.api.QcChartData(
+            const summary = new this.api.QcChartData(
                 {id: params['accession'], type: 'summary'});
             const gcDistribution = new this.api.QcChartData(
                 {id: params['accession'], type: 'gc-distribution'});
 
-            return $.when(seqLength.fetch({dataType: 'text'}),
+            return $.when(summary.fetch({dataType: 'text'}),
                 gcDistribution.fetch({dataType: 'text'})
             ).done((...args) => {
                 const seqLengthData = util.tsv2dict(args[0][0]);

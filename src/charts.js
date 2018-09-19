@@ -9,7 +9,7 @@ define([], function() {
         SeqFeatSumChart: require('./charts/seqFeatSumChart'),
         GcContentChart: require('./charts/gcContentChart'),
         GcDistributionChart: require('./charts/gcDistributionChart'),
-        // ReadsLengthHist: require('./charts/readsLengthHist'),
-        // SeqLengthChart: require('./charts/seqLengthChart')
+        ReadsLengthHist: require('./charts/readsLengthHist'),
+        SeqLengthChart: require('./charts/seqLengthChart')
     };
 });

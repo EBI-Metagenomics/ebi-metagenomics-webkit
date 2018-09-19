@@ -37,13 +37,12 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
     };
     describe('GC Distribution chart', function() {
         context('Data source tests', function() {
-            it('Should load qc chart from raw data', function(done) {
+            it('Should load chart from raw data', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new GcDistributionChart(containerID, {data: data});
                 chart.loaded.done(() => {
                     expect($('.highcharts-point').length).to.equal(5);
-                    done();
                     done();
                 });
             });
