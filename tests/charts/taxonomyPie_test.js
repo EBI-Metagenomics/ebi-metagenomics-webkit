@@ -73,7 +73,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
             it('Should fetch data from accession', function(done) {
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
@@ -86,7 +86,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
             it('Should group at default depth (0)', function(done) {
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
@@ -97,7 +97,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
             it('Should group at depth 2', function(done) {
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
                 chart.loaded.done(() => {
@@ -109,7 +109,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 const title = 'Domain composition';
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {title: title});
@@ -122,7 +122,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
                 const seriesName = 'reads';
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {seriesName: seriesName});
@@ -136,7 +136,7 @@ define(['charts/taxonomyPie'], function(TaxonomyPie) {
             it('Should display legend', function(done) {
                 this.timeout(10000);
                 createDiv();
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00136035';
                 const chart = new TaxonomyPie(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {legend: true});
