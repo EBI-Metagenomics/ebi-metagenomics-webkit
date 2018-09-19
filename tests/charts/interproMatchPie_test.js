@@ -26,14 +26,6 @@ define(['charts/interproMatchPie'], function(InterproMatchPie) {
                     done();
                 });
             });
-            it('Should reject loaded promise iff unable to fetch data', function(done) {
-                const accession = 'ILLEGAL_ACCESSION';
-                const chart = new InterproMatchPie(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.fail(() => {
-                    done();
-                });
-            });
         });
     });
 });

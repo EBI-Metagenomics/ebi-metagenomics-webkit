@@ -42,14 +42,6 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                     done();
                 });
             });
-            it('Should reject loaded promise iff unable to fetch data', function(done) {
-                const accession = 'ILLEGAL_ACCESSION';
-                const chart = new ReadsLengthHist(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.fail(() => {
-                    done();
-                });
-            });
             it('Should display subset subtitle', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
