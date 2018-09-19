@@ -73,7 +73,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
             it('Should fetch data from accession', function(done) {
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
@@ -87,7 +87,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
                 const title = 'Phylum composition';
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {title: title});
@@ -100,7 +100,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
                 const title = 'Phylum composition';
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
                 chart.loaded.done(() => {
@@ -112,7 +112,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
                 const seriesName = 'reads';
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {seriesName: seriesName});

@@ -75,7 +75,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             it('Should fetch data from accession', function(done) {
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
@@ -88,7 +88,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             it('Should group at default depth (0)', function(done) {
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig});
                 chart.loaded.done(() => {
@@ -99,7 +99,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             it('Should group at depth 2', function(done) {
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2});
                 chart.loaded.done(() => {
@@ -111,7 +111,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 const title = 'Domain composition';
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {title: title});
@@ -124,7 +124,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 const seriesName = 'reads';
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {seriesName: seriesName});
@@ -138,7 +138,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             it('Should not display sub title', function(done) {
                 this.timeout(60000);
                 createDiv();
-                const accession = 'MGYA00136035';
+                const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
                     {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
                     {subtitle: false});
@@ -150,7 +150,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             // it('Should display legend', function(done) {
             //     this.timeout(60000);
             //     createDiv();
-            //     const accession = 'MGYA00136035';
+            //     const accession = 'MGYA00141547';
             //     const chart = new TaxonomyColumn(containerID,
             //         {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
             //         {legend: true});
