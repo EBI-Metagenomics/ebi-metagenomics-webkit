@@ -41,86 +41,88 @@ define([
             }
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
-                let urlToFile;
-                if (typeof this.model !== 'undefined') {
-                    if (typeof this.model.url === 'function') {
-                        urlToFile = this.model.url();
+                try {
+                    let urlToFile;
+                    if (typeof this.model !== 'undefined') {
+                        if (typeof this.model.url === 'function') {
+                            urlToFile = this.model.url();
+                        } else {
+                            urlToFile = this.model.url;
+                        }
                     } else {
-                        urlToFile = this.model.url;
+                        urlToFile = '';
                     }
-                } else {
-                    urlToFile = '';
-                }
-                const options = {
-                    chart: {
-                        style: {
-                            fontFamily: 'Helvetica'
+                    const options = {
+                        chart: {
+                            style: {
+                                fontFamily: 'Helvetica'
+                            },
+                            zoomType: 'x'
                         },
-                        zoomType: 'x'
-                    },
-                    title: {
-                        text: 'Reads GC distribution',
-                        style: {
-                            fontSize: 16,
-                            fontWeight: 'bold'
-                        }
-                    },
-                    subtitle: {
-                        text: ( (typeof chartOptions !== 'undefined' &&
-                            chartOptions['isFromSubset'])
-                            ? 'A subset of the sequences was used to generate this chart. - '
-                            : '') + 'Click and drag in the plot area to zoom in'
-                    },
-                    yAxis: {
-                        title: {text: 'Number of reads'}
-                    },
-                    xAxis: {
-                        min: 0,
-                        max: 100,
+                        title: {
+                            text: 'Reads GC distribution',
+                            style: {
+                                fontSize: 16,
+                                fontWeight: 'bold'
+                            }
+                        },
+                        subtitle: {
+                            text: ( (typeof chartOptions !== 'undefined' &&
+                                chartOptions['isFromSubset'])
+                                ? 'A subset of the sequences was used to generate this chart. - '
+                                : '') + 'Click and drag in the plot area to zoom in'
+                        },
+                        yAxis: {
+                            title: {text: 'Number of reads'}
+                        },
+                        xAxis: {
+                            min: 0,
+                            max: 100,
 
-                        plotBands: (this.data === null) ? [] : [
-                            { // visualize the standard deviation
-                                from: this.data['average_gc_content'] -
-                                this.data['standard_deviation_gc_content'],
-                                to: this.data['average_gc_content'] +
-                                this.data['standard_deviation_gc_content'],
-                                color: 'rgba(128, 128, 128, .2)',
-                                borderColor: '#000000',
-                                label: {
-                                    text: 'Standard Deviation<br/>\u00B1' +
-                                    (this.data['standard_deviation_gc_content'].toFixed(2)),
-                                    style: {
-                                        color: '#666666',
-                                        fontSize: '0.8em'
+                            plotBands: (this.data === null) ? [] : [
+                                { // visualize the standard deviation
+                                    from: this.data['average_gc_content'] -
+                                    this.data['standard_deviation_gc_content'],
+                                    to: this.data['average_gc_content'] +
+                                    this.data['standard_deviation_gc_content'],
+                                    color: 'rgba(128, 128, 128, .2)',
+                                    borderColor: '#000000',
+                                    label: {
+                                        text: 'Standard Deviation<br/>\u00B1' +
+                                        (this.data['standard_deviation_gc_content'].toFixed(2)),
+                                        style: {
+                                            color: '#666666',
+                                            fontSize: '0.8em'
+                                        }
                                     }
-                                }
 
-                            }]
-                    },
-                    series: [
-                        {
-                            name: 'Reads',
-                            data: this.data['series'],
-                            color: (chartOptions['isFromSubset']) ? '#8dc7c7' : '#058dc7'
-                        }],
-                    legend: {enabled: false},
-                    credits: false,
-                    navigation: {
-                        buttonOptions: {
-                            height: 32,
-                            width: 32,
-                            symbolX: 16,
-                            symbolY: 16,
-                            y: -10
-                        }
-                    },
-                    exporting: util.getExportingStructure(urlToFile)
-                };
-                this.chart = Highcharts.chart(containerId, options);
-            }).done(() => {
-                this.loaded.resolve();
-            }).fail(() => {
-                this.loaded.reject();
+                                }]
+                        },
+                        series: [
+                            {
+                                name: 'Reads',
+                                data: this.data['series'],
+                                color: (chartOptions['isFromSubset']) ? '#8dc7c7' : '#058dc7'
+                            }],
+                        legend: {enabled: false},
+                        credits: false,
+                        navigation: {
+                            buttonOptions: {
+                                height: 32,
+                                width: 32,
+                                symbolX: 16,
+                                symbolY: 16,
+                                y: -10
+                            }
+                        },
+                        exporting: util.getExportingStructure(urlToFile)
+                    };
+                    this.chart = Highcharts.chart(containerId, options);
+                    this.loaded.resolve();
+                } catch (exception) {
+                    console.error(exception);
+                    this.loaded.reject();
+                }
             });
         }
 

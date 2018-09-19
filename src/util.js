@@ -1,6 +1,14 @@
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 define(['underscore'], function(_) {
+    Array.prototype.sum = function(prop) {
+        let total = 0;
+        for (let i = 0, _len = this.length; i < _len; i++) {
+            total += this[i][prop];
+        }
+        return total;
+    };
+
     const TAXONOMY_COLOURS = [
         '#058dc7',
         '#82d23d',
@@ -372,6 +380,23 @@ define(['underscore'], function(_) {
         return urlToFile;
     }
 
+    /**
+     * Extend reference array of colours such that last colour is duplicated for
+     * additional data point
+     * @param {[string]} colours
+     * @param {[*]} data
+     * @return {[string]} of colours with length === length of data
+     */
+    function duplicateLastColor(colours, data) {
+        let newColours = [];
+        let i = 0;
+        while (i < data.length) {
+            newColours.push(colours[Math.min(i, colours.length - 1)]);
+            i++;
+        }
+        return newColours;
+    }
+
     return {
         TAXONOMY_COLOURS,
         lineageToBiome,
@@ -385,6 +410,7 @@ define(['underscore'], function(_) {
         sumData,
         getExportingStructure,
         tsv2dict,
-        getModelUrl
+        getModelUrl,
+        duplicateLastColor
     };
 });
