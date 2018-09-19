@@ -62,7 +62,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
     describe('Taxonomy column chart', function() {
         context('Data loading source', function() {
             beforeEach(function() {
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
             });
             it('Should load taxonomy column from data', function(done) {
@@ -73,7 +73,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 });
             });
             it('Should fetch data from accession', function(done) {
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -86,7 +86,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
         });
         context('Chart parametrisation', function() {
             it('Should group at default depth (0)', function(done) {
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -97,7 +97,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 });
             });
             it('Should group at depth 2', function(done) {
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -109,7 +109,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             });
             it('Should display title', function(done) {
                 const title = 'Domain composition';
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -122,7 +122,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
             });
             it('Should display series name', function(done) {
                 const seriesName = 'reads';
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -136,7 +136,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 });
             });
             it('Should not display sub title', function(done) {
-                this.timeout(5000);
+                this.timeout(10000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumn(containerID,
@@ -148,7 +148,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                 });
             });
             // it('Should display legend', function(done) {
-            //     this.timeout(5000);
+            //     this.timeout(10000);
             //     createDiv();
             //     const accession = 'MGYA00141547';
             //     const chart = new TaxonomyColumn(containerID,

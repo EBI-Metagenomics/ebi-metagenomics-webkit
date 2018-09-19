@@ -47,6 +47,7 @@ define(['charts/gcContentChart'], function(GcContentChart) {
                 });
             });
             it('Should reject loaded promise iff unable to fetch data', function(done) {
+                this.timeout(20000);
                 const accession = 'ILLEGAL_ACCESSION';
                 const chart = new GcContentChart(containerID,
                     {accession: accession, apiConfig: apiConfig});

@@ -36,16 +36,8 @@ define([
                         });
                     }
                 });
-                let urlToFile;
-                if (typeof this.model !== 'undefined') {
-                    if (typeof this.model.url === 'function') {
-                        urlToFile = this.model.url();
-                    } else {
-                        urlToFile = this.model.url;
-                    }
-                } else {
-                    urlToFile = '';
-                }
+                let urlToFile = util.getModelUrl();
+
                 const options = {
                     chart: {
                         renderTo: containerId,
