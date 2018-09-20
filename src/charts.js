@@ -11,6 +11,8 @@ define([], function() {
         GcDistributionChart: require('./charts/gcDistributionChart'),
         ReadsLengthHist: require('./charts/readsLengthHist'),
         SeqLengthChart: require('./charts/seqLengthChart'),
-        InterproMatchPie: require('./charts/interproMatchPie')
+        InterproMatchPie: require('./charts/interproMatchPie'),
+        GoTermBarChart: require('./charts/goTermBarChart'),
+        GoTermPieChart: require('./charts/goTermPieChart')
     };
 });

@@ -24,6 +24,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     describe('Seq feat chart charts', function() {
         context('Data source tests', function() {
             it('Should load raw data', function(done) {
+                this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
@@ -36,6 +37,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
+                this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
@@ -49,7 +51,8 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                     done();
                 });
             });
-            it('Should display correct label for pipeline > 3.0', function(done) {
+            it('Should display correct label for pipeline >= 3.0', function(done) {
+                this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
@@ -59,7 +62,8 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                     done();
                 });
             });
-            it('Should display correct label for pipeline > 3.0', function(done) {
+            it('Should display correct label for pipeline < 3.0', function(done) {
+                this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const modData = data;

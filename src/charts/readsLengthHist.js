@@ -48,7 +48,6 @@ define([
                             return e[0];
                         }
                     }));
-                    debugger;
                     const options = {
                         chart: {
                             marginLeft: 78,

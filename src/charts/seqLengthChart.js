@@ -17,10 +17,6 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
-                if (!this.data.hasOwnProperty('average_length')) {
-                    this.loaded.reject();
-                    return;
-                }
                 const options = {
                     chart: {
                         type: 'bar',
@@ -114,8 +110,6 @@ define([
 
             return $.when(seqLength.fetch({dataType: 'text'})).done((data) => {
                 this.data = util.tsv2dict(data);
-            }).fail(() => {
-                console.log('FAIL');
             });
         }
     }
