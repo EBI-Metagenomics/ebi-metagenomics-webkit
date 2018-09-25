@@ -18,7 +18,7 @@ define([
             this.loaded = $.Deferred();
 
             this.dataReady.done(() => {
-                let totalCount = this.data.sum('y');
+                let totalCount = util.sumProp(this.data, 'y');
 
                 let options = {
                     chart: {
@@ -80,7 +80,7 @@ define([
                         y: attr['count']
                     };
                 });
-                let sumOthers = data.slice(10).sum('y');
+                let sumOthers = util.sumProp(data.slice(10), 'y');
                 const others = {
                     name: 'Other',
                     y: sumOthers

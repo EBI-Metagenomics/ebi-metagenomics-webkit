@@ -2,8 +2,8 @@ let tests = [];
 for (let file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         if (/tests\/.*_test\.js$/.test(file)) {
-        // if (/tests\/charts\/nucleotideHist_test\.js$/.test(file)) {
-                tests.push(file);
+            // if (/tests\/charts\/nucleotideHist_test\.js$/.test(file)) {
+            tests.push(file);
         }
     }
 }
@@ -16,7 +16,8 @@ requirejs.config({
         'jquery': './node_modules/jquery/dist/jquery',
         'backbone': './node_modules/backbone/backbone',
         'underscore': './node_modules/underscore/underscore',
-        'highcharts/modules/offline-exporting': './node_modules/highcharts/modules/offline-exporting',
+        'highcharts/modules/offline-exporting':
+            './node_modules/highcharts/modules/offline-exporting',
         'highcharts/modules/exporting': './node_modules/highcharts/modules/exporting',
         'highcharts': './node_modules/highcharts/highcharts'
     },

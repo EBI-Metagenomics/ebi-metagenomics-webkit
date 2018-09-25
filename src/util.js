@@ -1,13 +1,6 @@
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 define(['underscore'], function(_) {
-    Array.prototype.sum = function(prop) {
-        let total = 0;
-        for (let i = 0, _len = this.length; i < _len; i++) {
-            total += this[i][prop];
-        }
-        return total;
-    };
 
     const TAXONOMY_COLOURS = [
         '#058dc7',
@@ -23,6 +16,19 @@ define(['underscore'], function(_) {
         '#cccccc'
     ];
 
+    /**
+     * Get sum of property values in array
+     * @param {[object]} arr array of objects
+     * @param {string} prop property to sum over
+     * @return {number} sum of property vlaues in array
+     */
+    function sumProp(arr, prop){
+        let total = 0;
+        for (let i = 0, _len = arr.length; i < _len; i++) {
+            total += arr[i][prop];
+        }
+        return total;
+    }
     /**
      * Retrieve biome from lineage
      * @param {string} lineage
@@ -399,6 +405,7 @@ define(['underscore'], function(_) {
 
     return {
         TAXONOMY_COLOURS,
+        sumProp,
         lineageToBiome,
         formatDate,
         formatLineage,

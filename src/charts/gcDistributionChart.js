@@ -3,6 +3,11 @@ define([
 ], function(GenericChart, util, Highcharts, exporting) {
     exporting(Highcharts);
 
+    /**
+     * Convert data from string to 2d array
+     * @param {string} rawdata
+     * @return {[[number, number]]}
+     */
     function transformSeries(rawdata) {
         return rawdata.split('\n').map(function(line) {
             if (line.trim() !== '') {

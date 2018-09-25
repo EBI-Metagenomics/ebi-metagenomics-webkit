@@ -3,19 +3,24 @@ define([
 ], function(GenericChart, _, util, Highcharts, exporting) {
     exporting(Highcharts);
 
-    function transformData(data) {
-        data = data.map(function(d) {
+    /**
+     * Convert data from string to 2d array
+     * @param {string} rawdata
+     * @return {[[number, number]]}
+     */
+    function transformData(rawdata) {
+        rawdata = rawdata.map(function(d) {
             const attr = d.attributes;
             return {name: attr['description'], y: attr['count']};
         });
-        data = _.sortBy(data, function(d) {
+        rawdata = _.sortBy(rawdata, function(d) {
             return d.y;
         }).reverse();
-        data[10] = data.slice(10).reduce(function(others, d) {
+        rawdata[10] = rawdata.slice(10).reduce(function(others, d) {
             others.y += d.y;
             return others;
         }, {name: 'Others', y: 0});
-        return data.slice(0, 11);
+        return rawdata.slice(0, 11);
     }
 
     /**

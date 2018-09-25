@@ -1,26 +1,27 @@
 define(['api'], function(api) {
     api = api({API_URL: 'http://localhost:9000/metagenomics/api/v1/', SUBFOLDER: '/metagenomics'});
+
+    let expectedAttributes = [
+        'ena_url',
+        'sample_accession',
+        'sample_url',
+        'analysis_url',
+        'pipeline_versions',
+
+        'analysis_results',
+        'study_accession',
+        'study_url',
+        'experiment_type',
+        'run_accession',
+        'secondary_run_accession',
+        'instrument_platform',
+        'instrument_model'];
     describe('Run tests', function() {
         context('Model tests', function() {
             const runAccession = 'ERR770966';
             const model = new api.Run({id: runAccession});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
-                let expectedAttributes = [
-                    'ena_url',
-                    'sample_accession',
-                    'sample_url',
-                    'analysis_url',
-                    'pipeline_versions',
-
-                    'analysis_results',
-                    'study_accession',
-                    'study_url',
-                    'experiment_type',
-                    'run_accession',
-                    'secondary_run_accession',
-                    'instrument_platform',
-                    'instrument_model'];
                 return fetch.always(() => {
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
@@ -43,21 +44,6 @@ define(['api'], function(api) {
             const collection = new api.RunsCollection();
             const fetch = collection.fetch();
             it('Models should have expected fields', function() {
-                let expectedAttributes = [
-                    'ena_url',
-                    'sample_accession',
-                    'sample_url',
-                    'analysis_url',
-                    'pipeline_versions',
-
-                    'analysis_results',
-                    'study_accession',
-                    'study_url',
-                    'experiment_type',
-                    'run_accession',
-                    'secondary_run_accession',
-                    'instrument_platform',
-                    'instrument_model'];
                 return fetch.always(() => {
                     collection.models.forEach((model) => {
                         expectedAttributes.forEach((attr) => {
