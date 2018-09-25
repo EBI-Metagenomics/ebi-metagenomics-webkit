@@ -31,7 +31,7 @@ define([
                         text: 'InterPro match summary'
                     },
                     subtitle: {
-                        text: 'Total: ' + totalCount + ' reads'
+                        text: 'Total: ' + totalCount + ' InterPro matches'
                     },
                     tooltip: {
                         pointFormat: '<b>{point.y}</b> {series.name} ({point.percentage:.2f}%)'
