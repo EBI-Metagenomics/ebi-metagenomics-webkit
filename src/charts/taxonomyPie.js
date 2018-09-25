@@ -36,6 +36,8 @@ define([
             this.loaded = $.Deferred();
 
             this.dataReady.done(() => {
+                console.debug('Drawing taxonomyPie chart');
+
                 const categories = [];
                 this.clusteredData = util.groupTaxonomyData(this.data, this.groupingDepth);
                 this.data = util.groupAfterN(this.clusteredData, 10);

@@ -41,6 +41,8 @@ define([
             }
 
             this.dataReady.done(() => {
+                console.debug('Drawing taxonomy stacked column chart');
+
                 const categories = [];
                 this.clusteredData = util.groupTaxonomyData(this.data, 2);
                 this.data = transformData(this.clusteredData);

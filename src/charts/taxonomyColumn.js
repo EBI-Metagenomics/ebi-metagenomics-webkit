@@ -19,6 +19,8 @@ define([
             this.loaded = $.Deferred();
 
             this.dataReady.done(() => {
+                console.debug('Drawing taxonomy column chart');
+
                 const categories = [];
                 this.clusteredData = util.groupTaxonomyData(this.data, this.groupingDepth);
                 this.clusteredData.forEach(function(e) {

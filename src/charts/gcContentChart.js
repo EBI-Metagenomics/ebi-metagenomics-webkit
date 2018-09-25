@@ -113,7 +113,10 @@ define([
             const seqLength = new this.api.QcChartData(
                 {id: params['accession'], type: 'summary'});
 
-            return $.when(seqLength.fetch({dataType: 'text'})).done((data) => {
+            return $.when(seqLength.fetch({dataType: 'text'})).then((data) => {
+                if (data[0] === '\n') {
+                    return Promise.reject();
+                }
                 this.data = data;
             });
         }

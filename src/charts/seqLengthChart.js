@@ -17,6 +17,8 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
+                console.debug('Drawing seq length chart');
+
                 const options = {
                     chart: {
                         type: 'bar',
@@ -108,7 +110,10 @@ define([
             const seqLength = new this.api.QcChartData(
                 {id: params['accession'], type: 'summary'});
 
-            return $.when(seqLength.fetch({dataType: 'text'})).done((data) => {
+            return $.when(seqLength.fetch({dataType: 'text'})).then((data) => {
+                if (data[0]==='\n'){
+                    return Promise.reject();
+                }
                 this.data = util.tsv2dict(data);
             });
         }

@@ -36,6 +36,8 @@ define([
             }
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
+                console.debug('Drawing GC Distribution chart');
+
                 let urlToFile = util.getModelUrl();
                 try {
                     // TODO fix once API no longer returns HTML error pages
@@ -133,7 +135,10 @@ define([
                 {id: params['accession'], type: 'seq-length'});
             return $.when(summary.fetch({dataType: 'text'}),
                 this.model.fetch({dataType: 'text'})
-            ).done((...args) => {
+            ).then((...args) => {
+                if (args[0][0][0] === '\n' || args[1][0][0] === '\n') {
+                    return Promise.reject();
+                }
                 const summaryData = util.tsv2dict(args[0][0]);
                 const seqLenData = transformSeries(args[1][0]);
                 this.data = summaryData;

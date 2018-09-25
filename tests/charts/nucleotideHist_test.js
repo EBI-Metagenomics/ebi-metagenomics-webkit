@@ -114,7 +114,7 @@ define(['charts/nucleotideHist'], function(NucleotideHist) {
 
                 const chart = new NucleotideHist(containerID, {data: data, apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('#'+containerID).html()).to.contain('Nucleotide position histogram');
+                    expect($('#' + containerID).html()).to.contain('Nucleotide position histogram');
                     expect($('.highcharts-series').length).to.equal(5);
                     done();
                 });
@@ -126,7 +126,7 @@ define(['charts/nucleotideHist'], function(NucleotideHist) {
                 const chart = new NucleotideHist(containerID,
                     {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('#'+containerID).html()).to.contain('Nucleotide position histogram');
+                    expect($('#' + containerID).html()).to.contain('Nucleotide position histogram');
                     expect($('.highcharts-series').length).to.equal(5);
                     done();
                 });
@@ -138,7 +138,19 @@ define(['charts/nucleotideHist'], function(NucleotideHist) {
                 const chart = new NucleotideHist(containerID,
                     {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
                 chart.loaded.done(() => {
-                    expect($('#'+containerID).html()).to.contain('A subset of the sequences');
+                    expect($('#' + containerID).html()).to.contain('A subset of the sequences');
+                    done();
+                });
+            });
+            it('Should raise error if returned data is an HTML error page', function(done) {
+                this.timeout(6000000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = 'MGYA00136035';
+                const chart = new NucleotideHist(containerID,
+                    {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
+                chart.loaded.catch((e) =>{
+                    console.log('Caught');
                     done();
                 });
             });

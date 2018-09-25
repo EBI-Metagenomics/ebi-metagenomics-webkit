@@ -17,7 +17,8 @@ define([
             super(containerId, dataOptions);
             this.loaded = $.Deferred();
 
-            this.dataReady.then(() => {
+            this.dataReady.done(() => {
+                console.debug('Drawing nucleotide chart');
                 let data = {'pos': [], 'A': [], 'G': [], 'T': [], 'C': [], 'N': []};
                 let colors = {
                     'A': 'rgb(16, 150, 24)',
@@ -101,7 +102,7 @@ define([
                     exporting: util.getExportingStructure(urlToFile)
                 };
                 this.chart = new Highcharts.Chart(options);
-            }).done(() =>{
+            }).done(() => {
                 this.loaded.resolve();
             }).fail(() => {
                 this.loaded.reject();
@@ -116,9 +117,14 @@ define([
         fetchModel(params) {
             this.model = new this.api.QcChartData(
                 {id: params['accession'], type: 'nucleotide-distribution'});
-            return this.model.fetch({dataType: 'text'}).then((data) => {
-                this.data = data;
+            const fetch = this.model.fetch({dataType: 'text'}).then((data) => {
+                if (data[0] === '\n') {
+                    return Promise.reject();
+                } else {
+                    this.data = data;
+                }
             });
+            return fetch;
         }
     }
 

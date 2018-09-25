@@ -16,6 +16,8 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
+                console.debug('Drawing seq feat sum chart');
+
                 const seqData = this.data['analysis_summary'];
                 const pipelineVersion = this.data['pipeline_version'];
 

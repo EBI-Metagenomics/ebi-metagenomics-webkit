@@ -16,6 +16,8 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
+                console.debug('Drawing QC chart');
+
                 let remaining = [0, 0, 0, 0, 0];
                 let filtered = [0, 0, 0, 0, 0];
                 let subsampled = [0, 0, 0, 0, 0];

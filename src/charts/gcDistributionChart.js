@@ -131,12 +131,16 @@ define([
 
             return $.when(summary.fetch({dataType: 'text'}),
                 gcDistribution.fetch({dataType: 'text'})
-            ).done((...args) => {
+            ).then((...args) => {
+                if (args[0][0][0] === '\n' || args[1][0][0] === '\n') {
+                    return Promise.reject();
+                }
                 const seqLengthData = util.tsv2dict(args[0][0]);
                 const gcDistData = transformSeries(args[1][0]);
                 this.data = seqLengthData;
                 this.data['series'] = gcDistData;
             });
+
         }
     }
 
