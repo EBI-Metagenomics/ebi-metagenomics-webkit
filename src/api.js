@@ -21,7 +21,9 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 
     let init = function(options) {
         // Prioritize env variables over options
-        const API_URL = (typeof process !== 'undefined') ? process.env.API_URL : options['API_URL'];
+        const API_URL = (typeof process !== 'undefined' && typeof process.env !== 'undefined')
+            ? process.env.API_URL
+            : options['API_URL'];
         const subfolder = (typeof process !== 'undefined')
             ? process.env.DEPLOYMENT_SUBFOLDER
             : options['SUBFOLDER'];
