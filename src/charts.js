@@ -1,18 +1,33 @@
-define([], function() {
-    // Define the module value by returning a value.
+define([
+    './charts/qcChart',
+    './charts/taxonomyPie',
+    './charts/taxonomyColumn',
+    './charts/taxonomyColumnStacked',
+    './charts/nucleotideHist',
+    './charts/seqFeatSumChart',
+    './charts/gcContentChart',
+    './charts/gcDistributionChart',
+    './charts/readsLengthHist',
+    './charts/seqLengthChart',
+    './charts/interproMatchPie',
+    './charts/goTermBarChart',
+    './charts/goTermPieChart'], function(
+    QcChart, TaxonomyPie, TaxonomyColumn, TaxonomyColumnStacked, NucleotideHist, SeqFeatSumChart,
+    GcContentChart, GcDistributionChart, ReadsLengthHist, SeqLengthChart, InterproMatchPie,
+    GoTermBarChart, GoTermPieChart) {
     return {
-        QcChart: require('./charts/qcChart'),
-        TaxonomyPie: require('./charts/taxonomyPie'),
-        TaxonomyColumn: require('./charts/taxonomyColumn'),
-        TaxonomyColumnStacked: require('./charts/taxonomyColumnStacked'),
-        NucleotideHist: require('./charts/nucleotideHist'),
-        SeqFeatSumChart: require('./charts/seqFeatSumChart'),
-        GcContentChart: require('./charts/gcContentChart'),
-        GcDistributionChart: require('./charts/gcDistributionChart'),
-        ReadsLengthHist: require('./charts/readsLengthHist'),
-        SeqLengthChart: require('./charts/seqLengthChart'),
-        InterproMatchPie: require('./charts/interproMatchPie'),
-        GoTermBarChart: require('./charts/goTermBarChart'),
-        GoTermPieChart: require('./charts/goTermPieChart')
+        QcChart,
+        TaxonomyPie,
+        TaxonomyColumn,
+        TaxonomyColumnStacked,
+        NucleotideHist,
+        SeqFeatSumChart,
+        GcContentChart,
+        GcDistributionChart,
+        ReadsLengthHist,
+        SeqLengthChart,
+        InterproMatchPie,
+        GoTermBarChart,
+        GoTermPieChart
     };
 });

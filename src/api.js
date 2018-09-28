@@ -8,15 +8,7 @@ const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
-(function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['backbone', 'underscore', './util'], factory);
-        // } else {
-        // Browser globals
-        // root.amdWeb = factory(root.b);
-    }
-}(typeof self !== 'undefined' ? self : this, function(Backbone, underscore, util) {
+define(['backbone', 'underscore', './util'], function(Backbone, underscore, util) {
     const _ = underscore;
 
     let init = function(options) {
@@ -94,7 +86,6 @@ const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
         }
 
         let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-
 
         /**
          * Reformat included samples in response
@@ -666,4 +657,4 @@ const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
         };
     };
     return init;
-}));
+});
