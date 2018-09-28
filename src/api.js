@@ -4,7 +4,7 @@ const ENA_VIEW_URL = 'https://www.ebi.ac.uk/ena/data/view/';
 const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
-
+const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics/';
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
@@ -24,9 +24,138 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
         const API_URL = (typeof process !== 'undefined' && typeof process.env !== 'undefined')
             ? process.env.API_URL
             : options['API_URL'];
-        const subfolder = (typeof process !== 'undefined')
+        const subfolder = (typeof process !== 'undefined' && typeof process.env !== undefined)
             ? process.env.DEPLOYMENT_SUBFOLDER
-            : options['SUBFOLDER'];
+            : options['SUBFOLDER'] || MGNIFY_URL;
+
+        /**
+         * Raw jQuery method used when complete set of paginated data is required
+         * @param {object} that context for url fetching
+         * @return {Promise}
+         */
+        function multiPageFetch(that) {
+            const deferred = $.Deferred();
+            let data = [];
+            $.get({
+                url: that.url(),
+                success(response) {
+                    try {
+                        data = data.concat(response.data);
+                        const numPages = response.meta.pagination.pages;
+                        if (numPages > 1) {
+                            let requests = [];
+                            for (let x = 2; x <= numPages; x++) {
+                                requests.push($.get(that.url() + '?page=' + x));
+                            }
+                            $.when(...requests).done(function() {
+                                _.each(requests, function(response) {
+                                    if (response.hasOwnProperty('responseJSON') &&
+                                        response.responseJSON.hasOwnProperty('data')) {
+                                        data = data.concat(response.responseJSON.data);
+                                    }
+                                });
+                                deferred.resolve(data);
+                            });
+                        } else {
+                            deferred.resolve(data);
+                        }
+                    } catch (exception) {
+                        deferred.reject();
+                    }
+                }
+            });
+            return deferred.promise();
+        }
+
+        /**
+         * Cluster study download results by type and parts
+         * @param {[object]} downloads
+         * @return {[object]} grouped downloads
+         */
+        function clusterStudyDownloads(downloads) {
+            const pipelines = {};
+            _.each(downloads, function(download) {
+                const attr = download.attributes;
+                const group = attr['group-type'];
+                const pipeline = download.relationships.pipeline.data.id;
+
+                attr['link'] = download.links.self;
+                if (!pipelines.hasOwnProperty(pipeline)) {
+                    pipelines[pipeline] = {};
+                }
+                if (!pipelines[pipeline].hasOwnProperty(group)) {
+                    pipelines[pipeline][group] = [];
+                }
+
+                pipelines[pipeline][group] = pipelines[pipeline][group].concat(download);
+            });
+
+            return pipelines;
+        }
+
+        let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+
+
+        /**
+         * Reformat included samples in response
+         * @param {object} response
+         * @return {[object]}
+         */
+        function collectSamples(response) {
+            let samples;
+            if (response.hasOwnProperty('included')) {
+                samples = response.included.reduce(function(obj, x) {
+                    obj[x.id] = Sample.prototype.parse(x);
+                    return obj;
+                }, {});
+            } else {
+                samples = [];
+            }
+            return samples;
+        }
+
+        /**
+         * Cluster run download results by type and parts
+         * @param {[object]} downloads
+         * @return {[object]} grouped downloads
+         */
+        function clusterAnalysisDownloads(downloads) {
+            const groups = {};
+            _.each(downloads, function(download) {
+                const attr = download.attributes;
+                const group = attr['group-type'];
+                const label = attr.description.label;
+                const format = attr['file-format']['name'];
+                attr['links'] = [download.links.self];
+
+                if (!groups.hasOwnProperty(group)) {
+                    groups[group] = [];
+                }
+                if (attr['file-format']['compression']) {
+                    attr['file-format']['compExtension'] = attr.alias.split('.')
+                        .slice(-1)[0];
+                }
+                let grouped = false;
+                _.each(groups[group], function(d) {
+                    const groupLabel = d.attributes.description.label;
+                    const groupFormat = d.attributes['file-format']['name'];
+                    if (groupLabel === label && groupFormat === format) {
+                        d.attributes.links = d.attributes.links.concat(download.links.self);
+                        grouped = true;
+                    }
+                });
+                if (!grouped) {
+                    groups[group] = groups[group].concat(download);
+                }
+            });
+            _.each(groups, function(group) {
+                _.each(group, function(entry) {
+                    entry.attributes.links.sort(collator.compare);
+                });
+            });
+
+            return groups;
+        }
 
         // Model for an individual study
         const Study = Backbone.Model.extend({
@@ -81,10 +210,70 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             }
         });
 
+        const StudyGeoCoordinates = Backbone.Model.extend({
+            url() {
+                return API_URL + 'studies/' + this.id +
+                    '/geocoordinates?page_size=500';
+            }
+        });
+
         const SampleStudiesCollection = Backbone.Collection.extend({
             model: Study,
             initialize(params) {
                 this.url = API_URL + 'samples/' + params['sample_accession'] + '/studies';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const Sample = Backbone.Model.extend({
+            url() {
+                return API_URL + 'samples/' + this.id;
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+                const attr = data.attributes;
+
+                let metadatas = _.map(attr['sample-metadata'], function(el) {
+                    const key = el.key;
+                    return {
+                        name: key[0].toUpperCase() + key.slice(1),
+                        value: el.value,
+                        unit: el.unit
+                    };
+                });
+
+                // Adaption to handle 'includes' on API calls which would wrap the response
+                const biome = util.getBiomeIconData(data.relationships.biome.data);
+                const biomeName = data.relationships.biome.data.id;
+                return {
+                    biosample: attr['biosample'],
+                    biosample_url: EBI_BIOSAMPLE_URL + 'samples/' + attr['biosample'],
+                    biome: biome,
+                    biome_icon: util.getBiomeIcon(biomeName),
+                    biome_name: util.formatLineage(biomeName, true),
+                    sample_name: attr['sample-name'] || NO_DATA_MSG,
+                    sample_desc: attr['sample-desc'],
+                    sample_url: subfolder + '/samples/' + attr['accession'],
+                    ena_url: ENA_VIEW_URL + attr['accession'],
+                    sample_accession: attr['accession'] || NO_DATA_MSG,
+                    lineage: util.formatLineage(data.relationships.biome.data.id || NO_DATA_MSG,
+                        true),
+                    metadatas: metadatas,
+                    runs: d.included,
+                    last_update: util.formatDate(attr['last-update']),
+                    latitude: attr.latitude,
+                    longitude: attr.longitude
+                };
+            }
+        });
+
+        const SamplesCollection = Backbone.Collection.extend({
+            url: API_URL + 'samples',
+            model: Sample,
+            initialize(data) {
+                this.params = data || {};
             },
             parse(response) {
                 return response.data;
@@ -203,59 +392,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             }
         });
 
-        const Sample = Backbone.Model.extend({
-            url() {
-                return API_URL + 'samples/' + this.id;
-            },
-            parse(d) {
-                const data = d.data !== undefined ? d.data : d;
-                const attr = data.attributes;
-
-                let metadatas = _.map(attr['sample-metadata'], function(el) {
-                    const key = el.key;
-                    return {
-                        name: key[0].toUpperCase() + key.slice(1),
-                        value: el.value,
-                        unit: el.unit
-                    };
-                });
-
-                // Adaption to handle 'includes' on API calls which would wrap the response
-                const biome = util.getBiomeIconData(data.relationships.biome.data);
-                const biomeName = data.relationships.biome.data.id;
-                return {
-                    biosample: attr['biosample'],
-                    biosample_url: EBI_BIOSAMPLE_URL + 'samples/' + attr['biosample'],
-                    biome: biome,
-                    biome_icon: util.getBiomeIcon(biomeName),
-                    biome_name: util.formatLineage(biomeName, true),
-                    sample_name: attr['sample-name'] || NO_DATA_MSG,
-                    sample_desc: attr['sample-desc'],
-                    sample_url: subfolder + '/samples/' + attr['accession'],
-                    ena_url: ENA_VIEW_URL + attr['accession'],
-                    sample_accession: attr['accession'] || NO_DATA_MSG,
-                    lineage: util.formatLineage(data.relationships.biome.data.id || NO_DATA_MSG,
-                        true),
-                    metadatas: metadatas,
-                    runs: d.included,
-                    last_update: util.formatDate(attr['last-update']),
-                    latitude: attr.latitude,
-                    longitude: attr.longitude
-                };
-            }
-        });
-
-        const SamplesCollection = Backbone.Collection.extend({
-            url: API_URL + 'samples',
-            model: Sample,
-            initialize(data) {
-                this.params = data || {};
-            },
-            parse(response) {
-                return response.data;
-            }
-        });
-
         const Analysis = Backbone.Model.extend({
             url() {
                 return API_URL + 'analyses/' + this.id;
@@ -330,25 +466,7 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             }
         });
 
-        /**
-         * Reformat included samples in response
-         * @param {object} response
-         * @return {[object]}
-         */
-        function collectSamples(response) {
-            let samples;
-            if (response.hasOwnProperty('included')) {
-                samples = response.included.reduce(function(obj, x) {
-                    obj[x.id] = Sample.prototype.parse(x);
-                    return obj;
-                }, {});
-            } else {
-                samples = [];
-            }
-            return samples;
-        }
-
-// Retrieve analyses of a study
+        // Retrieve analyses of a study
         const StudyAnalyses = Backbone.Collection.extend({
             initialize(data) {
                 this.id = data.id;
@@ -376,45 +494,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
                 return analyses;
             }
         });
-
-        /**
-         * Raw jQuery method used when complete set of paginated data is required
-         * @param {object} that context for url fetching
-         * @return {Promise}
-         */
-        function multiPageFetch(that) {
-            const deferred = $.Deferred();
-            let data = [];
-            $.get({
-                url: that.url(),
-                success(response) {
-                    try {
-                        data = data.concat(response.data);
-                        const numPages = response.meta.pagination.pages;
-                        if (numPages > 1) {
-                            let requests = [];
-                            for (let x = 2; x <= numPages; x++) {
-                                requests.push($.get(that.url() + '?page=' + x));
-                            }
-                            $.when(...requests).done(function() {
-                                _.each(requests, function(response) {
-                                    if (response.hasOwnProperty('responseJSON') &&
-                                        response.responseJSON.hasOwnProperty('data')) {
-                                        data = data.concat(response.responseJSON.data);
-                                    }
-                                });
-                                deferred.resolve(data);
-                            });
-                        } else {
-                            deferred.resolve(data);
-                        }
-                    } catch (exception) {
-                        deferred.reject();
-                    }
-                }
-            });
-            return deferred.promise();
-        }
 
         // Abstract class
         const GenericAnalysisResult = Backbone.Model.extend({
@@ -451,77 +530,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             }
         });
 
-        /**
-         * Cluster study download results by type and parts
-         * @param {[object]} downloads
-         * @return {[object]} grouped downloads
-         */
-        function clusterStudyDownloads(downloads) {
-            const pipelines = {};
-            _.each(downloads, function(download) {
-                const attr = download.attributes;
-                const group = attr['group-type'];
-                const pipeline = download.relationships.pipeline.data.id;
-
-                attr['link'] = download.links.self;
-                if (!pipelines.hasOwnProperty(pipeline)) {
-                    pipelines[pipeline] = {};
-                }
-                if (!pipelines[pipeline].hasOwnProperty(group)) {
-                    pipelines[pipeline][group] = [];
-                }
-
-                pipelines[pipeline][group] = pipelines[pipeline][group].concat(download);
-            });
-
-            return pipelines;
-        }
-
-        let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-
-        /**
-         * Cluster run download results by type and parts
-         * @param {[object]} downloads
-         * @return {[object]} grouped downloads
-         */
-        function clusterAnalysisDownloads(downloads) {
-            const groups = {};
-            _.each(downloads, function(download) {
-                const attr = download.attributes;
-                const group = attr['group-type'];
-                const label = attr.description.label;
-                const format = attr['file-format']['name'];
-                attr['links'] = [download.links.self];
-
-                if (!groups.hasOwnProperty(group)) {
-                    groups[group] = [];
-                }
-                if (attr['file-format']['compression']) {
-                    attr['file-format']['compExtension'] = attr.alias.split('.')
-                        .slice(-1)[0];
-                }
-                let grouped = false;
-                _.each(groups[group], function(d) {
-                    const groupLabel = d.attributes.description.label;
-                    const groupFormat = d.attributes['file-format']['name'];
-                    if (groupLabel === label && groupFormat === format) {
-                        d.attributes.links = d.attributes.links.concat(download.links.self);
-                        grouped = true;
-                    }
-                });
-                if (!grouped) {
-                    groups[group] = groups[group].concat(download);
-                }
-            });
-            _.each(groups, function(group) {
-                _.each(group, function(entry) {
-                    entry.attributes.links.sort(collator.compare);
-                });
-            });
-
-            return groups;
-        }
-
         const StudyDownloads = Backbone.Model.extend({
             url() {
                 return API_URL + 'studies/' + this.id + '/downloads';
@@ -537,13 +545,6 @@ const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
             },
             parse(response) {
                 this.attributes.downloadGroups = clusterAnalysisDownloads(response.data);
-            }
-        });
-
-        const StudyGeoCoordinates = Backbone.Model.extend({
-            url() {
-                return API_URL + 'studies/' + this.id +
-                    '/geocoordinates?page_size=500';
             }
         });
 
