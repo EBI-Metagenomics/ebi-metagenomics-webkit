@@ -4,7 +4,7 @@ const ENA_VIEW_URL = 'https://www.ebi.ac.uk/ena/data/view/';
 const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
-const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics/';
+const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
