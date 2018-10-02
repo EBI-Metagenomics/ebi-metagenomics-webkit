@@ -13,7 +13,7 @@ define(['charts/interproMatchPie'], function(InterproMatchPie) {
         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
     }
 
-    describe('Taxonomy pie chart', function() {
+    describe('Interpro match pie chart', function() {
         context('Data loading source', function() {
             it('Should fetch data from accession', function(done) {
                 this.timeout(60000);
