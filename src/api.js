@@ -315,21 +315,26 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
                 const rel = data.relationships;
-                const pipelines = rel.pipelines;
-                const sampleId = rel.sample.data.id;
-                const studyId = rel.study.data.id;
+                // const pipelines = rel.pipelines;
+                // const sampleId = rel.samples.data.id;
+                // const studyId = rel.study.data.id;
                 return {
                     assembly_id: attr['accession'],
                     ena_url: ENA_VIEW_URL + attr['accession'],
-                    analysis_url: util.subfolder + '/assemblies/' + attr.accession,
+                    analysis_url: subfolder + '/assemblies/' + attr.accession,
                     experiment_type: attr['experiment-type'],
-                    runs: runs.data.map(function(x) {
+                    runs: rel.runs.data.map(function(x) {
                         return x.id;
                     }),
-                    samples: samples.data.map(function(x) {
+                    samples: rel.samples.data.map(function(x) {
                         return x.id;
                     }),
                     analysis_results: 'TAXONOMIC / FUNCTION / DOWNLOAD',
+                    pipeline_versions: rel.pipelines.data.map(function(x) {
+                        return x.id;
+                    }),
+                    wgs_id: attr['wgs-accession'],
+                    legacy_id: attr['legacy-accession']
                 };
             }
         });
