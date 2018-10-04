@@ -306,6 +306,34 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const Assembly = Backbone.Model.extend({
+            url() {
+                return API_URL + 'assemblies/' + this.id;
+            },
+            parse(d) {
+                // Adaption to handle 'includes' on API calls which would wrap the response
+                const data = d.data !== undefined ? d.data : d;
+                const attr = data.attributes;
+                const rel = data.relationships;
+                const pipelines = rel.pipelines;
+                const sampleId = rel.sample.data.id;
+                const studyId = rel.study.data.id;
+                return {
+                    assembly_id: attr['accession'],
+                    ena_url: ENA_VIEW_URL + attr['accession'],
+                    analysis_url: util.subfolder + '/assemblies/' + attr.accession,
+                    experiment_type: attr['experiment-type'],
+                    runs: runs.data.map(function(x) {
+                        return x.id;
+                    }),
+                    samples: samples.data.map(function(x) {
+                        return x.id;
+                    }),
+                    analysis_results: 'TAXONOMIC / FUNCTION / DOWNLOAD',
+                };
+            }
+        });
+
         /**
          * Generate Krona URL
          * @param {string} analysisID ENA Run primary accession
@@ -319,6 +347,27 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const RunsCollection = Backbone.Collection.extend({
             url: API_URL + 'runs',
             model: Run,
+            initialize(params) {
+                // Project/sample ID
+                if (typeof(params) !== 'undefined') {
+                    if (params.hasOwnProperty(('study_accession'))) {
+                        this.study_accession = params.study_accession;
+                    }
+                    // Sample ID
+                    if (params.hasOwnProperty(('sample_accession'))) {
+                        this.sample_accession = params.sample_accession;
+                    }
+                    this.params = params;
+                }
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const AssembliesCollection = Backbone.Collection.extend({
+            url: API_URL + 'assemblies',
+            model: Assembly,
             initialize(params) {
                 // Project/sample ID
                 if (typeof(params) !== 'undefined') {
