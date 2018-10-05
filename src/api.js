@@ -324,10 +324,10 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     analysis_url: subfolder + '/assemblies/' + attr.accession,
                     experiment_type: attr['experiment-type'],
                     runs: rel.runs.data.map(function(x) {
-                        return x.id;
+                        return {id: x.id, url: subfolder + '/runs/' + x.id};
                     }),
                     samples: rel.samples.data.map(function(x) {
-                        return x.id;
+                        return {id: x.id, url: subfolder + '/samples/' + x.id};
                     }),
                     analysis_results: 'TAXONOMIC / FUNCTION / DOWNLOAD',
                     pipeline_versions: rel.pipelines.data.map(function(x) {
@@ -388,6 +388,21 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             },
             parse(response) {
                 return response.data;
+            }
+        });
+
+        const AssemblyAnalyses = Backbone.Collection.extend({
+            initialize(data) {
+                this.id = data.id;
+            },
+            url() {
+                return API_URL + 'assemblies/' + this.id + '/analyses';
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+                return _.map(data, (analysis) => {
+                    return Analysis.prototype.parse(analysis);
+                });
             }
         });
 
@@ -688,6 +703,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             Assembly,
             RunsCollection,
             AssembliesCollection,
+            AssemblyAnalyses,
             Biome,
             BiomeCollection,
             BiomeWithChildren,
