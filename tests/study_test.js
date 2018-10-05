@@ -12,6 +12,7 @@ define(['api'], function(api) {
                     'samples_url',
                     'ena_url',
                     'related_studies',
+                    'is_public',
 
                     'bioproject',
                     'samples_count',
@@ -63,6 +64,7 @@ define(['api'], function(api) {
                     'study_url',
                     'samples_url',
                     'ena_url',
+                    'is_public',
 
                     'bioproject',
                     'samples_count',
