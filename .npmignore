@@ -1,2 +1,8 @@
 .idea/
 .git/
+.nyc_output/
+coverage/
+tests/
+node_modules/
+cypress/
+travis/
