@@ -5,7 +5,7 @@ define(['charts/goTermPieChart'], function(GoTermPieChart) {
     };
     const containerID = 'chart-container';
 
-    describe('Go Term chart', function() {
+    describe('Go Term Pie chart', function() {
         context('Data source tests', function() {
             it('Should fetch data from MGnify api with accession', function(done) {
                 this.timeout(60000);
