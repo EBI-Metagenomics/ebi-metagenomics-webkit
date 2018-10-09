@@ -49,33 +49,15 @@ define(['api'], function(api) {
             });
         });
         context('Assembly analyses', function() {
-            it('Should only retrieve analyses of experiment type other than assembly', function() {
-                const assemblyAccession = 'ERR770966';
+            it('Should only retrieve analyses of experiment type  assembly', function(done) {
+                const assemblyAccession = 'ERZ477708';
                 const collection = new api.AssemblyAnalyses({id: assemblyAccession});
-                return collection.fetch().always(() => {
-                    expect(collection.models).to.not.be.empty;
-                    collection.models.forEach((model) => {
-                        expect(model.attributes.experiment_type).to.not.equal('assembly');
-                    });
-                });
-            });
-        });
-        context('Assembly assemblies', function() {
-            it('Should only retrieve analyses of experiment type assembly', function() {
-                const assemblyAccession = 'SRR873599';
-                const collection = new api.AssemblyAssemblies({id: assemblyAccession});
-                return collection.fetch().always(() => {
+                collection.fetch().done(() => {
                     expect(collection.models).to.not.be.empty;
                     collection.models.forEach((model) => {
                         expect(model.attributes.experiment_type).to.equal('assembly');
                     });
-                });
-            });
-            it('Should return empty list as assembly has no assemblies', function() {
-                const assemblyAccession = 'ERR770966';
-                const collection = new api.AssemblyAssemblies({id: assemblyAccession});
-                return collection.fetch().always(() => {
-                    expect(collection.models).to.be.empty;
+                    done();
                 });
             });
         });

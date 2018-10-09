@@ -150,7 +150,6 @@ define(['charts/nucleotideHist'], function(NucleotideHist) {
                 const chart = new NucleotideHist(containerID,
                     {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
                 chart.loaded.catch((e) =>{
-                    console.log('Caught');
                     done();
                 });
             });
