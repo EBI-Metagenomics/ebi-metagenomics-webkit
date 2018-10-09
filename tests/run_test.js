@@ -73,17 +73,10 @@ define(['api'], function(api) {
                     });
                 });
             });
-            it('Should return empty list as run has no assemblies', function() {
-                const runAccession = 'GCA_900217105';
-                const collection = new api.RunAnalyses({id: runAccession});
-                return collection.fetch().always(() => {
-                    expect(collection.models).to.be.empty;
-                });
-            });
         });
         context('Run assemblies', function() {
             it('Should only retrieve analyses of experiment type assembly', function() {
-                const runAccession = 'GCA_900217105';
+                const runAccession = 'SRR873599';
                 const collection = new api.RunAssemblies({id: runAccession});
                 return collection.fetch().always(() => {
                     expect(collection.models).to.not.be.empty;

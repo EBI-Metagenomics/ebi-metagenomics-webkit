@@ -513,17 +513,13 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 this.id = data.id;
             },
             url() {
-                return API_URL + 'runs/' + this.id + '/analyses';
+                return API_URL + 'runs/' + this.id + '/assemblies';
             },
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
-                let analyses = _.map(data, (analysis) => {
-                    return Analysis.prototype.parse(analysis);
+                return _.map(data, (analysis) => {
+                    return Assembly.prototype.parse(analysis);
                 });
-                analyses = _.filter(analyses, (analysis) => {
-                    return analysis['experiment_type'] === 'assembly';
-                });
-                return analyses;
             }
         });
 
