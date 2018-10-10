@@ -1,3 +1,4 @@
 .idea/
 node_modules/
 coverage/
+travis/emg_sql_fixtures/merged.sql
