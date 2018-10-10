@@ -16,9 +16,14 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
+
                 console.debug('Drawing seq feat sum chart');
 
                 const seqData = this.data['analysis_summary'];
+                if (Object.keys(seqData).length === 0) {
+                    this.loaded.reject();
+                    return;
+                }
                 const pipelineVersion = this.data['pipeline_version'];
 
                 const secondLabel = parseFloat(pipelineVersion) >= 3.0 ? 'Reads with predicted rRNA'

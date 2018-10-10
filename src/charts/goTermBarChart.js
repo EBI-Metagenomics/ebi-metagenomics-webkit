@@ -28,6 +28,11 @@ define([
                 return;
             }
             this.dataReady.done(() => {
+                if (this.data.length === 0) {
+                    this.loaded.reject();
+                    return;
+                }
+
                 let series = [];
                 let categories = [];
                 let total = 0;

@@ -42,7 +42,10 @@ define([
 
             this.dataReady.done(() => {
                 console.debug('Drawing taxonomy stacked column chart');
-
+                if (this.data.length === 0) {
+                    this.loaded.reject();
+                    return;
+                }
                 const categories = [];
                 this.clusteredData = util.groupTaxonomyData(this.data, 2);
                 this.data = transformData(this.clusteredData);
@@ -122,7 +125,7 @@ define([
          */
         fetchModel(params) {
             const model = new this.api.Taxonomy({id: params['accession'], type: params['type']});
-            return model.fetch().then((data) => {
+            return model.fetch().done((data) => {
                 this.data = data;
             });
         }

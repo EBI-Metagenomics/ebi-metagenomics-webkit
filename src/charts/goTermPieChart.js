@@ -48,6 +48,10 @@ define([
                 return;
             }
             this.dataReady.done(() => {
+                if (this.data.length === 0) {
+                    this.loaded.reject();
+                    return;
+                }
                 const categories = [];
                 this.data = transformData(this.data);
                 let total = 0;
