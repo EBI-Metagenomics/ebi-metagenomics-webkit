@@ -467,14 +467,17 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     obj[e['key']] = e['value'];
                     return obj;
                 }, {});
+                let assemblyID = data.relationships.assembly.data.id;
+
                 return {
                     study_accession: studyID,
                     study_url: subfolder + '/studies/' + studyID,
                     sample_accession: sampleID,
                     sample_url: subfolder + '/samples/' + sampleID,
                     run_accession: runID,
-                    run_url: subfolder +
-                    (attr['experiment-type'] === 'assembly' ? '/assemblies/' : '/runs/') + runID,
+                    run_url: subfolder + '/runs/' + runID,
+                    assembly_accession: assemblyID,
+                    assembly_url: subfolder + '/assemblies/' + assemblyID,
                     analysis_accession: data['id'],
                     analysis_url: subfolder + '/analyses/' + data['id'],
                     experiment_type: attr['experiment-type'],
