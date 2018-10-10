@@ -177,7 +177,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     '#samples-section',
                     ena_url: ENA_VIEW_URL + attr['secondary-accession'],
                     related_studies: relatedStudies,
-                    is_public: attr['is-public'] === 1,
+                    is_public: attr['is-public'],
 
                     // Standard fields
                     bioproject: attr['bioproject'],
