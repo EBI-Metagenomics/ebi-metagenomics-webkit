@@ -22,13 +22,14 @@ define(['underscore'], function(_) {
      * @param {string} prop property to sum over
      * @return {number} sum of property vlaues in array
      */
-    function sumProp(arr, prop){
+    function sumProp(arr, prop) {
         let total = 0;
         for (let i = 0, _len = arr.length; i < _len; i++) {
             total += arr[i][prop];
         }
         return total;
     }
+
     /**
      * Retrieve biome from lineage
      * @param {string} lineage
@@ -184,9 +185,11 @@ define(['underscore'], function(_) {
             } else {
                 category = lineage[depth];
             }
+            if (lineage[0] === 'Unusigned') {
+                category = 'Unassigned';
+            }
 
-            if (depth > 0 &&
-                ['', 'Bacteria', 'Eukaryota', 'other_sequences', undefined].indexOf(category) >
+            if (['', 'Bacteria', 'Eukaryota', 'other_sequences', undefined].indexOf(category) >
                 -1) {
                 if (lineage[0] === 'Bacteria') {
                     category = 'Unassigned Bacteria';
