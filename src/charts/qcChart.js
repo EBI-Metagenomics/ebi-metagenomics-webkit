@@ -94,10 +94,16 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             const qcStats = new this.api.QcChartStats({id: params['accession']});
 
-            return $.when(analysis.fetch(), qcStats.fetch({dataType: 'text'})).done(() => {
+            let fetchAnalysis = analysis.fetch().done(() => {
+                console.log(analysis);
+                if (parseFloat(analysis.attributes.pipeline_version) > 3.0) {
+                    fetchAnalysis.then(qcStats.fetch({dataType: 'text'})).done(() => {
+
+                    });
+                }
                 this.data = analysis['attributes']['analysis_summary'];
-                this.data['sequence_count'] = qcStats['attributes']['sequence_count'];
             });
+            return fetchAnalysis.promise();
         }
     }
 
