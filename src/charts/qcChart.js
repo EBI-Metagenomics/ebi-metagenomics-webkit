@@ -94,16 +94,15 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             const qcStats = new this.api.QcChartStats({id: params['accession']});
 
-            let fetchAnalysis = analysis.fetch().done(() => {
-                console.log(analysis);
-                if (parseFloat(analysis.attributes.pipeline_version) > 3.0) {
-                    fetchAnalysis.then(qcStats.fetch({dataType: 'text'})).done(() => {
-
-                    });
-                }
+            return $.when(analysis.fetch(), qcStats.fetch({dataType: 'text'})).then(() => {
                 this.data = analysis['attributes']['analysis_summary'];
+                if (qcStats.hasOwnProperty('attributes')) {
+                    this.data['sequence_count'] = qcStats['attributes']['sequence_count'];
+                } else if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
+                    console.warn(
+                        'Could not load qc stats for analysis, partial chart will be displayed.');
+                }
             });
-            return fetchAnalysis.promise();
         }
     }
 
