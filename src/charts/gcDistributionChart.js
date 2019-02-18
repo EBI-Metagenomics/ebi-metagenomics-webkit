@@ -49,7 +49,7 @@ define([
                 try {
                     let urlToFile = util.getModelUrl();
 
-                    const unit = this.is_assembly ? 'contigs' : 'reads';
+                    const unit = this.data.is_assembly ? 'contigs' : 'reads';
                     const capUnit = util.capitalize(unit);
                     const options = {
                         chart: {
