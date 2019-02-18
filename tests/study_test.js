@@ -1,5 +1,5 @@
 define(['api'], function(api) {
-    api = api({API_URL: 'http://localhost:9000/metagenomics/api/v1/', SUBFOLDER: '/metagenomics'});
+    api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
     describe('Study tests', function() {
         context('Model tests', function() {
             const studyAcc = 'MGYS00002072';

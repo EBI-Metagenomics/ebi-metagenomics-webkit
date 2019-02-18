@@ -34,20 +34,32 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'src/*.js': 'coverage',
-            'src/*/*.js': 'coverage'
+            'src/*/*.js': 'coverage',
+            '**/*.js': 'env'
         },
-
+        envPreprocessor: [
+            'API_URL'
+        ],
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
-
+        reporters: ['spec', 'coverage'],
+        specReporter: {
+            maxLogLines: 5, // limit number of lines logged per test
+            suppressErrorSummary: true, // do not print error summary
+            suppressFailed: false, // do not print information about failed tests
+            suppressPassed: false, // do not print information about passed tests
+            suppressSkipped: true, // do not print information about skipped tests
+            showSpecTiming: false // print the time elapsed for each spec
+        },
         plugins: [
             'karma-mocha',
             'karma-requirejs',
             'karma-chai',
             'karma-chrome-launcher',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-env-preprocessor',
+            'karma-spec-reporter'
         ],
 
         coverageReporter: {
@@ -85,7 +97,10 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        browserDisconnectTimeout: 5000
+        browserDisconnectTimeout: 20000,
+        browserConsoleLogOptions: {
+            'terminal': true
+        }
     };
     if (process.env.TRAVIS) {
         configuration.browsers = ['Chrome_travis_ci'];

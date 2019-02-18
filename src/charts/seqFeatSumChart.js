@@ -25,7 +25,7 @@ define([
                 }
                 const pipelineVersion = this.data['pipeline_version'];
 
-                const unit = this.is_assembly ? 'contigs' : 'reads';
+                const unit = this.data.is_assembly ? 'contigs' : 'reads';
                 const capUnit = util.capitalize(unit);
                 const secondLabel = capUnit +
                     (parseFloat(pipelineVersion) >= 3.0 ? ' with predicted rRNA'

@@ -50,7 +50,7 @@ define([
                             return e[0];
                         }
                     }));
-                    const unit = this.is_assembly ? 'contigs' : 'reads';
+                    const unit = this.data.is_assembly ? 'contigs' : 'reads';
                     const capUnit = util.capitalize(unit);
                     const options = {
                         chart: {
@@ -149,7 +149,8 @@ define([
                 const seqLenData = transformSeries(args[1][0]);
                 this.data = summaryData;
                 this.data['series'] = seqLenData;
-                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment_type'] === 'assembly';
+                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment-type'] ===
+                    'assembly';
             });
         }
     }

@@ -46,7 +46,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
         }
     ];
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -62,7 +62,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
     describe('Taxonomy stacked column chart', function() {
         context('Data loading source', function() {
             it('Should load taxonomy column from data', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const chart = new TaxonomyColumnStacked(containerID, {data: taxonomyData});
                 chart.loaded.always(() => {
@@ -71,7 +71,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
                 });
             });
             it('Should fetch data from accession', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
@@ -85,7 +85,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
         context('Chart parametrisation', function() {
             it('Should display title', function(done) {
                 const title = 'Phylum composition';
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
@@ -98,7 +98,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
             });
             it('Should not display title', function(done) {
                 const title = 'Phylum composition';
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,
@@ -110,7 +110,7 @@ define(['charts/taxonomyColumnStacked'], function(TaxonomyColumnStacked) {
             });
             it('Should display series name', function(done) {
                 const seriesName = 'reads';
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new TaxonomyColumnStacked(containerID,

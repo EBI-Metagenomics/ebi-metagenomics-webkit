@@ -33,7 +33,7 @@ define([
                 filtered[1] = remaining[0] - remaining[1];
                 filtered[4] = remaining[3] - remaining[4] - subsampled[4];
 
-                const unit = this.is_assembly ? 'contigs' : 'reads';
+                const unit = this.data.is_assembly ? 'contigs' : 'reads';
                 const capUnit = util.capitalize(unit);
                 let chartOptions = {
                     chart: {

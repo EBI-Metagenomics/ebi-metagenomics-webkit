@@ -1,6 +1,6 @@
 define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -24,7 +24,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     describe('Seq feat chart charts', function() {
         context('Data source tests', function() {
             it('Should load raw data', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
@@ -37,7 +37,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
@@ -52,7 +52,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should display correct label for pipeline >= 3.0', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
@@ -63,7 +63,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should display correct label for pipeline < 3.0', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const modData = data;
@@ -76,5 +76,22 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
         });
+        // context('Assembly labels', function() {
+        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
+        //         this.timeout(20000);
+        //         document.body.innerHTML = '<p></p>';
+        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+        //         const accession = 'MGYA00140023';
+        //         const chart = new SeqFeatSumChart(containerID,
+        //             {accession: accession, apiConfig: apiConfig});
+        //         chart.loaded.done(() => {
+        //             const $svg = $('svg').html();
+        //             expect($svg).to.contain('Contigs with predicted CDS');
+        //             expect($svg).to.contain('Contigs with predicted rRNA');
+        //             expect($svg).to.contain('Contigs with InterProScan match');
+        //             done();
+        //         });
+        //     });
+        // });
     });
 });

@@ -1,6 +1,6 @@
 define(['charts/interproMatchPie'], function(InterproMatchPie) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -16,7 +16,7 @@ define(['charts/interproMatchPie'], function(InterproMatchPie) {
     describe('Interpro match pie chart', function() {
         context('Data loading source', function() {
             it('Should fetch data from accession', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 createDiv();
                 const accession = 'MGYA00141547';
                 const chart = new InterproMatchPie(containerID,

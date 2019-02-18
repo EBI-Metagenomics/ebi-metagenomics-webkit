@@ -1,0 +1,36 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi5-196>
+Subject: Job 2455882: <MPNAUQ> in cluster <EBI> Done
+
+Job <MPNAUQ> was submitted from host <ebi6-088> by user <mitchell> in cluster <EBI>.
+Job was executed on host(s) <ebi5-196>, in queue <production-rh7>, as user <mitchell> in cluster <EBI>.
+</homes/mitchell> was used as the home directory.
+</hps/nobackup/production/metagenomics/alex/assembly_analysis> was used as the working directory.
+Started at Mon Nov  6 18:29:42 2017
+Results reported at Mon Nov  6 18:30:06 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/hps/nobackup/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/globalSummary.py -fc /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.fasta,/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_SSU.fasta,/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_LSU.fasta -statsFile /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_summary -seqDir /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation -sumFile /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_summary -orf /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS.faa -ipr /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_I5.tsv -exe /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/faselector/bin/faselector --extract_ipr_exe /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/extract_sig_coords/extract_sig_coords.py --fa_reheader_exe /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/map_fa_headers/bin/map_fa_headers
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               19.35 sec.
+    Max Memory :             38 MB
+    Average Memory :         14.00 MB
+    Total Requested Memory : 8192.00 MB
+    Delta Memory :           8154.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               544 MB
+
+    Max Processes :          4
+    Max Threads :            5
+
+The output (if any) is above this job summary.
+

@@ -49,7 +49,7 @@ define([
                 try {
                     let urlToFile = util.getModelUrl();
 
-                    const unit = this.is_assembly ? 'contigs' : 'reads';
+                    const unit = this.data.is_assembly ? 'contigs' : 'reads';
                     const capUnit = util.capitalize(unit);
                     const options = {
                         chart: {
@@ -149,7 +149,7 @@ define([
                 const gcDistData = transformSeries(args[1][0]);
                 this.data = seqLengthData;
                 this.data['series'] = gcDistData;
-                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment_type'] ===
+                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment-type'] ===
                     'assembly';
             });
         }
