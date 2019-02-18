@@ -101,7 +101,7 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             return analysis.fetch().done(() => {
                 this.data = analysis['attributes'];
-                this.data['is_assembly'] = analysis['attributes']['experiment-type'] === 'assembly';
+                this.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
             });
         }
     }

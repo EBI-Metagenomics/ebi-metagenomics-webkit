@@ -149,7 +149,7 @@ define([
                 const gcDistData = transformSeries(args[1][0]);
                 this.data = seqLengthData;
                 this.data['series'] = gcDistData;
-                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment-type'] ===
+                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment_type'] ===
                     'assembly';
             });
         }
