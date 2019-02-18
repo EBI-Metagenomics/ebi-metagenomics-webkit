@@ -1,6 +1,6 @@
 define(['charts/readsLengthHist'], function(ReadsLengthHist) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -57,5 +57,20 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 });
             });
         });
+        // context('Assembly labels', function() {
+        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
+        //         this.timeout(20000);
+        //         document.body.innerHTML = '<p></p>';
+        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+        //         const accession = 'MGYA00140023';
+        //         const chart = new ReadsLengthHist(containerID,
+        //             {accession: accession, apiConfig: apiConfig});
+        //         chart.loaded.done(() => {
+        //             expect($('svg').html()).to.contain('Contigs length histogram');
+        //             expect($('svg').html()).to.contain('Number of contigs');
+        //             done();
+        //         });
+        //     });
+        // });
     });
 });

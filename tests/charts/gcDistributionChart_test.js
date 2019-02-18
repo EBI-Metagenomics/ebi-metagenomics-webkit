@@ -1,6 +1,6 @@
 define(['charts/gcDistributionChart'], function(GcDistributionChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -58,5 +58,27 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 });
             });
         });
+        // context('Assembly labels', function() {
+        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
+        //         this.timeout(60000);
+        //         document.body.innerHTML = '<p></p>';
+        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+        //         const accession = 'MGYA00140023';
+        //         const chart = new GcDistributionChart(containerID,
+        //             {accession: accession, apiConfig: apiConfig});
+        //         chart.loaded.done(() => {
+        //             expect($('#' + containerID + ' text.highcharts-title > tspan')
+        //                 .text())
+        //                 .to
+        //                 .eq('Contigs GC distribution');
+        //             expect(
+        //                 $('#' + containerID + ' g.highcharts-axis.highcharts-yaxis > text > tspan')
+        //                     .text())
+        //                 .to
+        //                 .eq('Number of contigs');
+        //             done();
+        //         });
+        //     });
+        // });
     });
 });

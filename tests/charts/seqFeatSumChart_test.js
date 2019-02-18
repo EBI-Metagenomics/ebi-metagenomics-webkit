@@ -1,6 +1,6 @@
 define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -76,5 +76,22 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
         });
+        // context('Assembly labels', function() {
+        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
+        //         this.timeout(60000);
+        //         document.body.innerHTML = '<p></p>';
+        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+        //         const accession = 'MGYA00140023';
+        //         const chart = new SeqFeatSumChart(containerID,
+        //             {accession: accession, apiConfig: apiConfig});
+        //         chart.loaded.done(() => {
+        //             const labelsText = $('#' + containerID + ' .highcharts-xaxis-labels').text();
+        //             expect(labelsText).to.contain('Contigs with predicted CDS');
+        //             expect(labelsText).to.contain('Contigs with predicted rRNA');
+        //             expect(labelsText).to.contain('Contigs with InterProScan match');
+        //             done();
+        //         });
+        //     });
+        // });
     });
 });
