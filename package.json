@@ -39,7 +39,7 @@
   "description": "A Backbone-JS API to consume the European Bioinformatic Institute's MGnify API for metagenomic data, in addition to a widget library to visualise the data",
   "devDependencies": {
     "chai": "^4.1.2",
-    "codacy-coverage": "^3.0.0",
+    "codacy-coverage": "^3.4.0",
     "eslint-config-google": "^0.9.1",
     "istanbul": "^0.4.5",
     "karma": "^3.0.0",
@@ -80,5 +80,5 @@
     "test:single": "node_modules/.bin/karma start karma.conf.js --single-run --log-level debug",
     "coverage": "cat coverage/*/lcov.info | codacy-coverage"
   },
-  "version": "1.0.5"
+  "version": "1.0.6"
 }

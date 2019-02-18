@@ -22,13 +22,14 @@ define(['underscore'], function(_) {
      * @param {string} prop property to sum over
      * @return {number} sum of property vlaues in array
      */
-    function sumProp(arr, prop){
+    function sumProp(arr, prop) {
         let total = 0;
         for (let i = 0, _len = arr.length; i < _len; i++) {
             total += arr[i][prop];
         }
         return total;
     }
+
     /**
      * Retrieve biome from lineage
      * @param {string} lineage
@@ -403,6 +404,15 @@ define(['underscore'], function(_) {
         return newColours;
     }
 
+    /**
+     * Capitalises a string
+     * @param {string} str to capitalise
+     * @return {string} capitalised str
+     */
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     return {
         TAXONOMY_COLOURS,
         sumProp,
@@ -418,6 +428,7 @@ define(['underscore'], function(_) {
         getExportingStructure,
         tsv2dict,
         getModelUrl,
-        duplicateLastColor
+        duplicateLastColor,
+        capitalize
     };
 });

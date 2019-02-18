@@ -1,6 +1,6 @@
 define([
-    './genericChart', 'highcharts', 'highcharts/modules/exporting'
-], function(GenericChart, Highcharts, exporting) {
+    './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
+], function(GenericChart, Highcharts, exporting, util) {
     exporting(Highcharts);
 
     /**
@@ -33,12 +33,16 @@ define([
                 filtered[1] = remaining[0] - remaining[1];
                 filtered[4] = remaining[3] - remaining[4] - subsampled[4];
 
+                const unit = this.is_assembly ? 'contigs' : 'reads';
+                const capUnit = util.capitalize(unit);
                 let chartOptions = {
                     chart: {
                         type: 'bar'
                     },
                     title: {
-                        text: 'Number of sequence reads per QC step'
+                        text: 'Number of sequence ' +
+                        unit +
+                        ' per QC step'
                     },
                     yAxis: {
                         min: 0,
@@ -48,11 +52,11 @@ define([
                     },
                     xAxis: {
                         categories: [
-                            'Initial reads',
+                            'Initial ' + unit,
                             'Trimming',
                             'Length filtering',
                             'Ambiguous base filtering',
-                            'Reads subsampled for QC analysis']
+                            capUnit + ' subsampled for QC analysis']
                     },
                     plotOptions: {
                         series: {
@@ -64,15 +68,15 @@ define([
                     },
                     series: [
                         {
-                            name: 'Reads filtered out',
+                            name: capUnit + ' filtered out',
                             data: filtered,
                             color: '#CCCCD3'
                         }, {
-                            name: 'Reads remaining',
+                            name: capUnit + ' remaining',
                             data: remaining,
                             color: '#058DC7'
                         }, {
-                            name: 'Reads after sampling',
+                            name: capUnit + ' after sampling',
                             data: subsampled,
                             color: '#8dc7c7'
                         }]
@@ -97,6 +101,7 @@ define([
             const that = this;
             return analysis.fetch().then(function() {
                 that.data = analysis['attributes']['analysis_summary'];
+                that.data['is_assembly'] = analysis['attributes']['experiment-type'] === 'assembly';
                 if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
                     return qcStats.fetch({dataType: 'text'});
                 } else {

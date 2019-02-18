@@ -1,6 +1,6 @@
 define([
-    './genericChart', 'highcharts', 'highcharts/modules/exporting'
-], function(GenericChart, Highcharts, exporting) {
+    './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
+], function(GenericChart, Highcharts, exporting, util) {
     exporting(Highcharts);
 
     /**
@@ -16,7 +16,6 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
-
                 console.debug('Drawing seq feat sum chart');
 
                 const seqData = this.data['analysis_summary'];
@@ -26,12 +25,15 @@ define([
                 }
                 const pipelineVersion = this.data['pipeline_version'];
 
-                const secondLabel = parseFloat(pipelineVersion) >= 3.0 ? 'Reads with predicted rRNA'
-                    : 'Reads with predicted RNA';
+                const unit = this.is_assembly ? 'contigs' : 'reads';
+                const capUnit = util.capitalize(unit);
+                const secondLabel = capUnit +
+                    (parseFloat(pipelineVersion) >= 3.0 ? ' with predicted rRNA'
+                        : ' with predicted RNA');
                 const categories = [
-                    'Reads with predicted CDS',
+                    capUnit + ' with predicted CDS',
                     secondLabel,
-                    'Reads with InterProScan match',
+                    capUnit + ' with InterProScan match',
                     'Predicted CDS',
                     'Predicted CDS with InterProScan match'
                 ];
@@ -45,6 +47,7 @@ define([
                 ].map(function(e) {
                     return parseInt(e);
                 });
+
                 let options = {
                     chart: {
                         type: 'bar'
@@ -98,6 +101,7 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             return analysis.fetch().done(() => {
                 this.data = analysis['attributes'];
+                this.data['is_assembly'] = analysis['attributes']['experiment-type'] === 'assembly';
             });
         }
     }
