@@ -8,6 +8,7 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
     describe('Sequence length chart', function() {
         context('Data source tests', function() {
             beforeEach(function() {
+                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
             });
             it('Should load chart from raw data', function(done) {

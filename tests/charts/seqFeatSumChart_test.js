@@ -73,7 +73,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
             });
         });
         context('Assembly labels', function() {
-            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+            it('Should switch labels to contigs when displaying an assembly', function(done) {
                 this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');

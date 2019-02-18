@@ -8,6 +8,7 @@ define(['charts/qcChart'], function(QcChart) {
     describe('QC charts', function() {
         context('Data source tests', function() {
             beforeEach(function() {
+                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
             });
             it('Should load chart from raw data', function(done) {
@@ -47,8 +48,9 @@ define(['charts/qcChart'], function(QcChart) {
             });
         });
         context('Assembly labels', function() {
-            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+            it('Should switch labels to contigs when displaying an assembly', function(done) {
                 this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00140023';
                 const chart = new QcChart(containerID,
