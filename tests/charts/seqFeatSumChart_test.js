@@ -23,11 +23,9 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 
     describe('Seq feat chart charts', function() {
         context('Data source tests', function() {
-            beforeEach(function() {
+            it('Should load raw data', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-            });
-            it('Should load raw data', function(done) {
                 this.timeout(60000);
                 const chart = new SeqFeatSumChart(containerID, {data: data});
                 chart.loaded.done(() => {
@@ -39,6 +37,8 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 this.timeout(60000);
                 const accession = 'MGYA00141547';
                 const chart = new SeqFeatSumChart(containerID,
@@ -52,6 +52,8 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should display correct label for pipeline >= 3.0', function(done) {
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 this.timeout(60000);
                 const chart = new SeqFeatSumChart(containerID, {data: data});
                 chart.loaded.done(() => {
@@ -61,6 +63,8 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should display correct label for pipeline < 3.0', function(done) {
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 this.timeout(60000);
                 const modData = data;
                 modData['pipeline_version'] = '2.0';

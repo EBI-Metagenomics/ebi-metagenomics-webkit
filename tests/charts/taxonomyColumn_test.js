@@ -61,11 +61,8 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
 
     describe('Taxonomy column chart', function() {
         context('Data loading source', function() {
-            beforeEach(function() {
-                this.timeout(60000);
-                createDiv();
-            });
             it('Should load taxonomy column from data', function(done) {
+                this.timeout(60000);
                 const chart = new TaxonomyColumn(containerID, {data: taxonomyData});
                 chart.loaded.always(() => {
                     expect($('#' + containerID).html()).to.contain('Archaea');

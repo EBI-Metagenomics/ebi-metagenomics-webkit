@@ -7,11 +7,9 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
 
     describe('Sequence length chart', function() {
         context('Data source tests', function() {
-            beforeEach(function() {
+            it('Should load chart from raw data', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-            });
-            it('Should load chart from raw data', function(done) {
                 const data = {
                     'bp_count': 199782700,
                     'sequence_count': 1997827,
@@ -36,6 +34,8 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new SeqLengthChart(containerID,
                     {accession: accession, apiConfig: apiConfig});

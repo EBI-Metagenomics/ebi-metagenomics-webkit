@@ -7,11 +7,9 @@ define(['charts/qcChart'], function(QcChart) {
 
     describe('QC charts', function() {
         context('Data source tests', function() {
-            beforeEach(function() {
+            it('Should load chart from raw data', function(done) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-            });
-            it('Should load chart from raw data', function(done) {
                 const data = {
                     'Nucleotide sequences after format-specific filtering': '213741430',
                     'Nucleotide sequences after length filtering': '180329978',
@@ -35,6 +33,8 @@ define(['charts/qcChart'], function(QcChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new QcChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
