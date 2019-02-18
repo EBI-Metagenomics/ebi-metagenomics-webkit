@@ -1,15 +1,16 @@
 define(['charts/gcContentChart'], function(GcContentChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
 
     describe('GC Content chart', function() {
+        beforeEach(function() {
+            document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+        });
         context('Data source tests', function() {
             it('Should load chart from raw data', function(done) {
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const data = 'bp_count\t199782700\n' +
                     'sequence_count\t1997827\n' +
                     'average_length\t100.000\n' +
@@ -33,8 +34,6 @@ define(['charts/gcContentChart'], function(GcContentChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new GcContentChart(containerID,
                     {accession: accession, apiConfig: apiConfig});

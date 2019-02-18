@@ -1,15 +1,16 @@
 define(['charts/qcChart'], function(QcChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
 
     describe('QC charts', function() {
         context('Data source tests', function() {
-            it('Should load chart from raw data', function(done) {
-                document.body.innerHTML = '<p></p>';
+            beforeEach(function() {
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+            });
+            it('Should load chart from raw data', function(done) {
                 const data = {
                     'Nucleotide sequences after format-specific filtering': '213741430',
                     'Nucleotide sequences after length filtering': '180329978',
@@ -33,8 +34,6 @@ define(['charts/qcChart'], function(QcChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new QcChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
@@ -43,6 +42,22 @@ define(['charts/qcChart'], function(QcChart) {
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html()).to
                         .match(/Reads remaining:.+213 741 460/);
+                    done();
+                });
+            });
+        });
+        context('Assembly labels', function() {
+            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = 'MGYA00140023';
+                const chart = new QcChart(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                chart.loaded.done(() => {
+                    const labelsText = $('#' + containerID + ' .highcharts-xaxis-labels').text();
+                    expect(labelsText).to.contain('Contigs subsampled for QC analysis');
+                    expect($('#' + containerID + ' .highcharts-title').text())
+                        .to
+                        .contain('contigs');
                     done();
                 });
             });

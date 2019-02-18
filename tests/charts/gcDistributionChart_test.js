@@ -1,6 +1,6 @@
 define(['charts/gcDistributionChart'], function(GcDistributionChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -38,7 +38,6 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
     describe('GC Distribution chart', function() {
         context('Data source tests', function() {
             it('Should load chart from raw data', function(done) {
-                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new GcDistributionChart(containerID, {data: data});
                 chart.loaded.done(() => {
@@ -47,13 +46,31 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new GcDistributionChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
                     expect($('.highcharts-series-group .highcharts-markers').length).to.equal(1);
+                    done();
+                });
+            });
+        });
+        context('Assembly labels', function() {
+            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+                const accession = 'MGYA00140023';
+                const chart = new GcDistributionChart(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                chart.loaded.done(() => {
+                    expect($('#' + containerID + ' text.highcharts-title > tspan')
+                        .text())
+                        .to
+                        .contain('Contigs');
+                    expect(
+                        $('#' + containerID + ' g.highcharts-axis.highcharts-yaxis > text > tspan')
+                            .text())
+                        .to
+                        .contain('contigs');
                     done();
                 });
             });

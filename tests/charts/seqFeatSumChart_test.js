@@ -1,6 +1,6 @@
 define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -23,10 +23,12 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 
     describe('Seq feat chart charts', function() {
         context('Data source tests', function() {
+            beforeEach(function() {
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                this.timeout(60000);
+            });
             it('Should load raw data', function(done) {
                 this.timeout(60000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
                 chart.loaded.done(() => {
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point')
@@ -38,8 +40,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
             });
             it('Should fetch data from MGnify api with accession', function(done) {
                 this.timeout(60000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new SeqFeatSumChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
@@ -53,8 +53,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
             });
             it('Should display correct label for pipeline >= 3.0', function(done) {
                 this.timeout(60000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data});
                 chart.loaded.done(() => {
                     expect($('svg').html()).to
@@ -64,14 +62,28 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
             });
             it('Should display correct label for pipeline < 3.0', function(done) {
                 this.timeout(60000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const modData = data;
                 modData['pipeline_version'] = '2.0';
                 const chart = new SeqFeatSumChart(containerID, {data: modData});
                 chart.loaded.done(() => {
                     expect($('svg').html()).to
                         .match(/Reads with predicted RNA/);
+                    done();
+                });
+            });
+        });
+        context('Assembly labels', function() {
+            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+                this.timeout(60000);
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = 'MGYA00140023';
+                const chart = new SeqFeatSumChart(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                chart.loaded.done(() => {
+                    const labelsText = $('#' + containerID + ' .highcharts-xaxis-labels').text();
+                    expect(labelsText).to.contain('Contigs with predicted CDS');
+                    expect(labelsText).to.contain('Contigs with predicted rRNA');
+                    expect(labelsText).to.contain('Contigs with InterProScan match');
                     done();
                 });
             });

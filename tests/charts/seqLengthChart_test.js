@@ -1,15 +1,16 @@
 define(['charts/seqLengthChart'], function(SeqLengthChart) {
     const apiConfig = {
-        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
+        API_URL: window.__env__['API_URL'],
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
 
     describe('Sequence length chart', function() {
         context('Data source tests', function() {
-            it('Should load chart from raw data', function(done) {
-                document.body.innerHTML = '<p></p>';
+            beforeEach(function() {
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+            });
+            it('Should load chart from raw data', function(done) {
                 const data = {
                     'bp_count': 199782700,
                     'sequence_count': 1997827,
@@ -34,8 +35,6 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new SeqLengthChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
@@ -43,6 +42,23 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
                     $('.highcharts-series.highcharts-series-1 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-point').length).to.equal(3);
+                    done();
+                });
+            });
+        });
+        context('Assembly labels', function() {
+            it('Should switch labels from to contigs when displaying an assembly', function(done) {
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = 'MGYA00140023';
+                const chart = new SeqLengthChart(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                chart.loaded.done(() => {
+                    const labelsText = $('#' + containerID +
+                        ' .highcharts-yaxis .highcharts-axis-title').text();
+                    expect(labelsText).to.contain('Number of contigs');
+                    expect($('#' + containerID + ' .highcharts-title').text())
+                        .to
+                        .contain('Contigs length histogram');
                     done();
                 });
             });
