@@ -48,7 +48,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYA00140023';
+                const accession = 'MGYA00141547';
                 const chart = new ReadsLengthHist(containerID,
                     {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
                 chart.loaded.done(() => {
@@ -65,13 +65,9 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 const accession = 'MGYA00140023';
                 const chart = new ReadsLengthHist(containerID,
                     {accession: accession, apiConfig: apiConfig});
-                console.error('Loading chart...');
                 chart.loaded.done(() => {
-                    console.error('Loaded chart...');
                     expect($('svg').html()).to.contain('Contigs length histogram');
-                    console.error('Check1.');
                     expect($('svg').html()).to.contain('Number of contigs');
-                    console.error('Check2.');
                     done();
                 });
             });

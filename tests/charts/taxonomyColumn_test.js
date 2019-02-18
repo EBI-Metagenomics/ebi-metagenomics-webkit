@@ -147,18 +147,18 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
                     done();
                 });
             });
-            // it('Should display legend', function(done) {
-            //     this.timeout(60000);
-            //     createDiv();
-            //     const accession = 'MGYA00141547';
-            //     const chart = new TaxonomyColumn(containerID,
-            //         {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
-            //         {legend: true});
-            //     chart.loaded.done(() => {
-            //         expect($('.highcharts-legend').html()).to.contain('Bacteroidetes');
-            //         done();
-            //     });
-            // });
+            it('Should display legend', function(done) {
+                this.timeout(60000);
+                createDiv();
+                const accession = 'MGYA00141547';
+                const chart = new TaxonomyColumn(containerID,
+                    {accession: accession, type: '/ssu', apiConfig: apiConfig, groupingDepth: 2},
+                    {legend: true});
+                chart.loaded.done(() => {
+                    expect($('.highcharts-legend').html()).to.contain('Bacteroidetes');
+                    done();
+                });
+            });
         });
     });
 });
