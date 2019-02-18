@@ -23,7 +23,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
     describe('Reads length hist chart', function() {
         context('Data source tests', function() {
             it('Should load from raw data', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new ReadsLengthHist(containerID, {data: data});
@@ -33,7 +33,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
@@ -45,7 +45,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 });
             });
             it('Should display subset subtitle', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
@@ -59,7 +59,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
         });
         context('Assembly labels', function() {
             it('Should switch labels to contigs when displaying an assembly', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00140023';

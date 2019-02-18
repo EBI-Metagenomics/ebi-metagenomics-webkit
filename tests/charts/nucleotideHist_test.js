@@ -143,7 +143,7 @@ define(['charts/nucleotideHist'], function(NucleotideHist) {
                 });
             });
             it('Should raise error if returned data is an HTML error page', function(done) {
-                this.timeout(6000000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00136035';

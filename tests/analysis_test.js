@@ -75,7 +75,7 @@ define(['api'], function(api) {
         });
         context('Interpro identifiers', function() {
             it('Should retrieve interpro data', function() {
-                this.timeout(50000);
+                this.timeout(20000);
                 const interproData = new api.InterproIden({id: 'MGYA00141547'});
                 return interproData.fetch().done((interproResults) => {
                     expect(interproResults.length).to.equal(10587);

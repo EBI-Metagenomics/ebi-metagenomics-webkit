@@ -8,7 +8,7 @@ define(['charts/goTermPieChart'], function(GoTermPieChart) {
     describe('Go Term Pie chart', function() {
         context('Data source tests', function() {
             it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(60000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
