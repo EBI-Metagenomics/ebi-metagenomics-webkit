@@ -38,6 +38,7 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
     describe('GC Distribution chart', function() {
         context('Data source tests', function() {
             it('Should load chart from raw data', function(done) {
+                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new GcDistributionChart(containerID, {data: data});
                 chart.loaded.done(() => {
@@ -46,6 +47,7 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 });
             });
             it('Should fetch data from MGnify api with accession', function(done) {
+                document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYA00141547';
                 const chart = new GcDistributionChart(containerID,
@@ -63,15 +65,18 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                 const chart = new GcDistributionChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
+                    console.log('Testing1');
                     expect($('#' + containerID + ' text.highcharts-title > tspan')
                         .text())
                         .to
                         .eq('Contigs GC distribution');
+                    console.log('Testing2');
                     expect(
                         $('#' + containerID + ' g.highcharts-axis.highcharts-yaxis > text > tspan')
                             .text())
                         .to
                         .eq('Number of contigs');
+                    console.log('Testing3');
                     done();
                 });
             });

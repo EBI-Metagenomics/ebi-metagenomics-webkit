@@ -7,6 +7,7 @@ define(['charts/gcContentChart'], function(GcContentChart) {
 
     describe('GC Content chart', function() {
         beforeEach(function() {
+            document.body.innerHTML = '<p></p>';
             document.body.innerHTML = ('<div id="' + containerID + '"></div>');
         });
         context('Data source tests', function() {
