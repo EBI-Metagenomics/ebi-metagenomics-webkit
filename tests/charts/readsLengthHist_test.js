@@ -57,20 +57,24 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 });
             });
         });
-        // context('Assembly labels', function() {
-        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
-        //         this.timeout(20000);
-        //         document.body.innerHTML = '<p></p>';
-        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-        //         const accession = 'MGYA00140023';
-        //         const chart = new ReadsLengthHist(containerID,
-        //             {accession: accession, apiConfig: apiConfig});
-        //         chart.loaded.done(() => {
-        //             expect($('svg').html()).to.contain('Contigs length histogram');
-        //             expect($('svg').html()).to.contain('Number of contigs');
-        //             done();
-        //         });
-        //     });
-        // });
+        context('Assembly labels', function() {
+            it('Should switch labels to contigs when displaying an assembly', function(done) {
+                this.timeout(60000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = 'MGYA00140023';
+                const chart = new ReadsLengthHist(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                console.error('Loading chart...');
+                chart.loaded.done(() => {
+                    console.error('Loaded chart...');
+                    expect($('svg').html()).to.contain('Contigs length histogram');
+                    console.error('Check1.');
+                    expect($('svg').html()).to.contain('Number of contigs');
+                    console.error('Check2.');
+                    done();
+                });
+            });
+        });
     });
 });
