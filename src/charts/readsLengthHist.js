@@ -50,6 +50,8 @@ define([
                             return e[0];
                         }
                     }));
+                    const unit = this.is_assembly ? 'contigs' : 'reads';
+                    const capUnit = util.capitalize(unit);
                     const options = {
                         chart: {
                             marginLeft: 78,
@@ -59,7 +61,7 @@ define([
                             zoomType: 'x'
                         },
                         title: {
-                            text: 'Reads length histogram',
+                            text: capUnit + ' length histogram',
                             style: {
                                 fontSize: 16,
                                 fontWeight: 'bold'
@@ -71,7 +73,7 @@ define([
                                 : '') + 'Click and drag in the plot area to zoom in'
                         },
                         yAxis: {
-                            title: {text: 'Number of reads'}
+                            title: {text: 'Number of ' + unit}
                         },
                         xAxis: {
                             min: 0,
@@ -95,7 +97,7 @@ define([
                         },
                         series: [
                             {
-                                name: 'Reads',
+                                name: capUnit,
                                 data: this.data['series'],
                                 color: (chartOptions['isFromSubset']) ? '#8dc7c7' : '#058dc7'
                             }
@@ -133,16 +135,21 @@ define([
                 {id: params['accession'], type: 'summary'});
             this.model = new this.api.QcChartData(
                 {id: params['accession'], type: 'seq-length'});
-            return $.when(summary.fetch({dataType: 'text'}),
-                this.model.fetch({dataType: 'text'})
+            const analysis = new this.api.Analysis({id: params['accession']});
+            return $.when(
+                summary.fetch({dataType: 'text'}),
+                this.model.fetch({dataType: 'text'}),
+                analysis.fetch()
             ).then((...args) => {
                 if (args[0][0][0] === '\n' || args[1][0][0] === '\n') {
                     return Promise.reject();
                 }
+
                 const summaryData = util.tsv2dict(args[0][0]);
                 const seqLenData = transformSeries(args[1][0]);
                 this.data = summaryData;
                 this.data['series'] = seqLenData;
+                this.data['is_assembly'] = args[2][0]['data']['attributes']['experiment-type'] === 'assembly';
             });
         }
     }
