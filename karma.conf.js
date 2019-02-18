@@ -89,7 +89,10 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        browserDisconnectTimeout: 5000
+        browserDisconnectTimeout: 20000,
+        browserConsoleLogOptions: {
+            'terminal': true
+        }
     };
     if (process.env.TRAVIS) {
         configuration.browsers = ['Chrome_travis_ci'];

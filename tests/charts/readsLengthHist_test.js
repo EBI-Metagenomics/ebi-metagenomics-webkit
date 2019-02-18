@@ -48,7 +48,7 @@ define(['charts/readsLengthHist'], function(ReadsLengthHist) {
                 this.timeout(60000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYA00141547';
+                const accession = 'MGYA00140023';
                 const chart = new ReadsLengthHist(containerID,
                     {accession: accession, apiConfig: apiConfig}, {isFromSubset: true});
                 chart.loaded.done(() => {
