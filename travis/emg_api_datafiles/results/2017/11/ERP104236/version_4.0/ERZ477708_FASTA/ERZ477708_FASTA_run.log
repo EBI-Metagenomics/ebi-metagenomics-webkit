@@ -1,0 +1,1012 @@
+Job <2326904> is submitted to queue <production-rh7>.
+Job <2327954> is submitted to queue <production-rh7>.
+Job <2328913> is submitted to queue <production-rh7>.
+Job <2329069> is submitted to queue <production-rh7>.
+Job <2340777> is submitted to queue <production-rh7>.
+Job <2344234> is submitted to queue <production-rh7>.
+Job <2351222> is submitted to queue <production-rh7>.
+Job <2357765> is submitted to queue <production-rh7>.
+Krona tool script path is set to /hps/nobackup/production/metagenomics/pipeline/tools-v4/KronaTools-2.3
+Writing /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/SSU/krona.html...
+Krona tool script path is set to /hps/nobackup/production/metagenomics/pipeline/tools-v4/KronaTools-2.3
+Writing /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/LSU/krona.html...
+Job <2455502> is submitted to queue <production-rh7>.
+Job <2455882> is submitted to queue <production-rh7>.
+Start time: 2017-11-06 15:32:51
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Running FASTA header cleaning step...
+Start time: 2017-11-06 15:42:17
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Finished FASTA header cleaning step!
+Skipping the SeqPrep step as it is turned off!
+Input path is set to: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/clean/ERZ477708.fasta
+Finished sequence file preparation step!
+Running sequence quality filtering step (including Trimmomatic)...
+Sequences after fasta filtering:	35270
+Sequences rejected due to duplicate ids:	0
+Sequences rejected on length:	5769
+Sequences rejected due to undetermined bases (N):	0
+Remaining sequences after QC filtering step:	29501
+Skipping monitoring of step: stepInit, because log file does NOT exist!
+I/O error(2): No such file or directory: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/trimmomatic.out
+Finished sequence quality filtering.
+Input file size (bytes): 23691251
+Generating QC report...
+Creating a new output directory at:
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics
+Number of sequences after filtering: 29501
+Generating statistics for all sequences...
+Start time: 2017-11-06 15:47:21
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Job HZAMTV has failed 1 times:
+bsub -n 4 -e /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics.err -R "rusage[mem=100]" -g /mitchell2 -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics.out -q production-rh7 -R "rusage[tmp=500]" -M 100 -J HZAMTV "/hps/nobackup/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/qc-stats/MGRAST_base.py -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.fasta -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/summary.out -l /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/seq-length.out.full -g /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/GC-distribution.out.full -d /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/nucleotide-distribution.out.full"
+Checking if job with job name HZAMTV is already pending or running...
+Job is not pending or running. Resubmitting the job.
+Resubmitting failed job with 8G higher memory
+bsub -n 4 -e /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics.err -R "rusage[mem=8100]" -g /mitchell2 -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics.out -q production-rh7 -R "rusage[tmp=500]" -M 8100 -J HZAMTV "/hps/nobackup/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/qc-stats/MGRAST_base.py -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.fasta -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/summary.out -l /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/seq-length.out.full -g /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/GC-distribution.out.full -d /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics/nucleotide-distribution.out.full"
+Finished QC report step.
+Running Infernal's cmsearch...
+Cleaning the working directory
+About to chunk seqs
+Generate lsf commands
+Generating LSF bsub commands
+Monitoring LSF jobs
+Start time: 2017-11-06 15:57:48
+Total number of initially submitted jobs: 31
+Number of jobs registered so far: 31
+All submitted jobs have been registered.
+Concatenating results files
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta -name '*cmsearch.tblout' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.cmsearch.all.tblout
+Skipping monitoring of step: stepCMSearch, because log file does NOT exist!
+I/O error(2): No such file or directory: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta/1/NODE-1-length-958641-cov-145.3_NODE-29501-length-100-cov-2.51111.out
+Finished the cmsearch step.
+Running CMSearch deoverlap step (cmsearchDeoverlap)...
+Start time: 2017-11-06 16:05:48
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Finished the CMSearchDeoverlap step.
+Running RNA selection step...
+Creating a new output directory at:
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/RNASelection/
+Start time: 2017-11-06 16:09:12
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Concatenating SSU/LSU FASTA sequence...
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/RNASelection/ -name '*SSU*fa' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_SSU.fasta
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/RNASelection/ -name '*LSU*fa' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_LSU.fasta
+Done.
+Finished RNA selection step.
+Running MAPseq on SSUs...
+Start time: 2017-11-06 16:16:32
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Finished the MAPseq on SSUs step.
+Running MAPseq on LSUs...
+Start time: 2017-11-06 16:24:28
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Finished the MAPseq on LSUs step.
+Running taxonomic analysis summary step...
+/hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/miniconda2-4.0.5/bin/biom convert -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/SSU/ERZ477708_FASTA_SSU.fasta.mseq.tsv -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/SSU/ERZ477708_FASTA_SSU.fasta.mseq_json.biom --to-json --table-type="OTU table"
+/hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/tools/miniconda2-4.0.5/bin/biom convert -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/LSU/ERZ477708_FASTA_LSU.fasta.mseq.tsv -o /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/LSU/ERZ477708_FASTA_LSU.fasta.mseq_json.biom --to-json --table-type="OTU table"
+Finished taxonomic analysis summary step.
+Running coding sequences predication step (Joint gene caller)...
+Cleaning the working directory
+About to chunk seqs
+Generate lsf commands
+Generating LSF bsub commands
+Monitoring LSF jobs
+Start time: 2017-11-06 16:32:03
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Running stepCDS...
+Here are some intermediate stats:
+Time: 2017-11-06 16:40:38
+Number of initially submitted jobs: 1
+Number of registered jobs: 1
+Number of finished jobs: 0
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 0.0
+Current sequence throughput per hour: 0.0
+Concatenating results files
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta -name '*faa' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS.faa
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta -name '*ffn' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS.ffn
+Finished coding sequences predication step.
+Running functional annotation step (InterProScan)...
+Cleaning the working directory
+About to chunk seqs
+Generate lsf commands
+Generating LSF bsub commands
+Monitoring LSF jobs
+Start time: 2017-11-06 16:55:49
+Total number of initially submitted jobs: 5
+Number of jobs registered so far: 5
+All submitted jobs have been registered.
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:04:24
+Number of initially submitted jobs: 5
+Number of registered jobs: 5
+Number of finished jobs: 0
+Number of unfinished jobs: 5
+Number of running jobs: 5
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 0.0
+Current sequence throughput per hour: 0.0
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:11:55
+Number of initially submitted jobs: 5
+Number of registered jobs: 4
+Number of finished jobs: 1
+Number of unfinished jobs: 4
+Number of running jobs: 4
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 621.074924204
+Current sequence throughput per hour: 37264.4954522
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:19:25
+Number of initially submitted jobs: 5
+Number of registered jobs: 3
+Number of finished jobs: 2
+Number of unfinished jobs: 3
+Number of running jobs: 3
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 846.906907391
+Current sequence throughput per hour: 50814.4144434
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:26:56
+Number of initially submitted jobs: 5
+Number of registered jobs: 2
+Number of finished jobs: 3
+Number of unfinished jobs: 2
+Number of running jobs: 2
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 963.666221153
+Current sequence throughput per hour: 57819.9732692
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:34:27
+Number of initially submitted jobs: 5
+Number of registered jobs: 2
+Number of finished jobs: 3
+Number of unfinished jobs: 2
+Number of running jobs: 2
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 776.247509686
+Current sequence throughput per hour: 46574.8505812
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:42:04
+Number of initially submitted jobs: 5
+Number of registered jobs: 1
+Number of finished jobs: 4
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 864.643963781
+Current sequence throughput per hour: 51878.6378269
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:49:35
+Number of initially submitted jobs: 5
+Number of registered jobs: 1
+Number of finished jobs: 4
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 743.789108295
+Current sequence throughput per hour: 44627.3464977
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 17:57:06
+Number of initially submitted jobs: 5
+Number of registered jobs: 1
+Number of finished jobs: 4
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 652.613553105
+Current sequence throughput per hour: 39156.8131863
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 18:04:37
+Number of initially submitted jobs: 5
+Number of registered jobs: 1
+Number of finished jobs: 4
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 581.350759317
+Current sequence throughput per hour: 34881.045559
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 18:12:08
+Number of initially submitted jobs: 5
+Number of registered jobs: 1
+Number of finished jobs: 4
+Number of unfinished jobs: 1
+Number of running jobs: 1
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 524.127978596
+Current sequence throughput per hour: 31447.6787158
+Running stepI5tsv...
+Here are some intermediate stats:
+Time: 2017-11-06 18:19:38
+Number of initially submitted jobs: 5
+Number of registered jobs: 0
+Number of finished jobs: 5
+Number of unfinished jobs: 0
+Number of running jobs: 0
+Number of suspended jobs: 0
+Total number of unknown jobs: 0
+Total number of zombi jobs: 0
+Total number of re-submitted jobs: 0
+Total number of failed jobs: 0
+Current sequence throughput per min: 596.447158828
+Current sequence throughput per hour: 35786.8295297
+Concatenating results files
+Calling the following command:
+find /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta -name '*tsv' | xargs cat | sed 's/^*//' > /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_I5.tsv
+Finished functional annotation step.
+Running full/slim GO summary step...
+Start time: 2017-11-06 18:23:35
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Finished full/slim GO summary step.
+Running functional analysis summary step...
+Start time: 2017-11-06 18:28:39
+Total number of initially submitted jobs: 1
+Number of jobs registered so far: 1
+All submitted jobs have been registered.
+Skipping monitoring of step: stepSummary, because log file does NOT exist!
+I/O error(2): No such file or directory: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta/globalsummary.out
+Finished functional analysis summary step.
+Running sequence categorisation step...
+Finished sequence categorisation step.
+Running Google charts generation step...
+Finished Google charts generation step.
+=====>Starting chunking and compression job...
+Running the chunking program with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:_I5.tsv
+lineNumber:10000000
+cutoff:2253.0MB
+Checking for the '.chunks' file
+The size of the file is below the cutoff (14.9928178787MB < 2253.0MB). No chunking necessary!
+Parsing the InterProScan chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_I5.tsv.chunks
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_I5.tsv
+Using compression level 3
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+targetSize:1819
+resultFileSuffix:interproscan.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/interproscan.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+resultFileSuffix:interproscan.fasta
+targetSize:1819
+cutoff:1819.0MB
+Checking for the '.chunks' file
+Input file size in MB: 19.1880016327
+The size of the file is below the cutoff (19.1880016327MB < 1819.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/interproscan.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+targetSize:1847
+resultFileSuffix:pCDS.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/pCDS.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+resultFileSuffix:pCDS.fasta
+targetSize:1847
+cutoff:1847.0MB
+Checking for the '.chunks' file
+Input file size in MB: 22.2948827744
+The size of the file is below the cutoff (22.2948827744MB < 1847.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/pCDS.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+targetSize:1853
+resultFileSuffix:noFunction.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/noFunction.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+resultFileSuffix:noFunction.fasta
+targetSize:1853
+cutoff:1853.0MB
+Checking for the '.chunks' file
+Input file size in MB: 3.10688114166
+The size of the file is below the cutoff (3.10688114166MB < 1853.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/noFunction.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+targetSize:1853
+resultFileSuffix:SSU.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/SSU.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+resultFileSuffix:SSU.fasta
+targetSize:1853
+cutoff:1853.0MB
+Checking for the '.chunks' file
+Input file size in MB: 0.0510778427124
+The size of the file is below the cutoff (0.0510778427124MB < 1853.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/SSU.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+targetSize:1853
+resultFileSuffix:LSU.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/LSU.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/
+resultFileSuffix:LSU.fasta
+targetSize:1853
+cutoff:1853.0MB
+Checking for the '.chunks' file
+Input file size in MB: 0.0086145401001
+The size of the file is below the cutoff (0.0086145401001MB < 1853.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation/LSU.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+targetSize:1980
+resultFileSuffix:ERZ477708_FASTA.fasta
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.fasta.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:ERZ477708_FASTA.fasta
+targetSize:1980
+cutoff:1980.0MB
+Checking for the '.chunks' file
+Input file size in MB: 22.5937376022
+The size of the file is below the cutoff (22.5937376022MB < 1980.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.fasta
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+targetSize:1442
+resultFileSuffix:_CDS_unannotated.faa
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_unannotated.faa.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:_CDS_unannotated.faa
+targetSize:1442
+cutoff:1442.0MB
+Checking for the '.chunks' file
+Input file size in MB: 3.31682300568
+The size of the file is below the cutoff (3.31682300568MB < 1442.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_unannotated.faa
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+targetSize:1980
+resultFileSuffix:_CDS_unannotated.ffn
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_unannotated.ffn.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:_CDS_unannotated.ffn
+targetSize:1980
+cutoff:1980.0MB
+Checking for the '.chunks' file
+Input file size in MB: 5.86783981323
+The size of the file is below the cutoff (5.86783981323MB < 1980.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_unannotated.ffn
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+targetSize:1442
+resultFileSuffix:_CDS_annotated.faa
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_annotated.faa.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:_CDS_annotated.faa
+targetSize:1442
+cutoff:1442.0MB
+Checking for the '.chunks' file
+Input file size in MB: 10.8156099319
+The size of the file is below the cutoff (10.8156099319MB < 1442.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_annotated.faa
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Running the FASTA file chunking and compression sub-step with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+targetSize:1980
+resultFileSuffix:_CDS_annotated.ffn
+chunkFilePath:/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_annotated.ffn.chunks
+Minimum size of a compressed chunk file:480.0MB
+Maximum size of a compressed chunk file:520.0MB
+Running the FASTA file chunking tool with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+resultFileSuffix:_CDS_annotated.ffn
+targetSize:1980
+cutoff:1980.0MB
+Checking for the '.chunks' file
+Input file size in MB: 21.331782341
+The size of the file is below the cutoff (21.331782341MB < 1980.0MB). No chunking necessary!
+FASTA file chunking tool finished.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_CDS_annotated.ffn
+Using compression level 3
+Finished the FASTA file chunking and compression sub-step.
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/LSU/ERZ477708_FASTA_LSU.fasta.mseq
+Using compression level 3
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/SSU/ERZ477708_FASTA_SSU.fasta.mseq
+Using compression level 3
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.cmsearch.all.tblout
+Using compression level 3
+Compressing the following chunk file located at: 
+/hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.cmsearch.all.tblout.deoverlapped
+Using compression level 3
+<=====Chunking and compression job finished.
+Starting deletion/cleaning of unnecessary pipeline result files (temp files etc.)...
+Running the cleaning program with the following settings:
+rootDir: /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA
+validResultFileNames: stepFinalCleaning-lock, run-log.txt, -success, _run.log, .gz, .chunks, _summary, .fasta.submitted.count, _summary.go, _summary.go_slim, _summary.ipr, kingdom-counts.txt, krona.html, new.summary, , README, RESOURCE_USAGE_PROFILE, summary.out, seq-length.out.sub-set_pcbin, seq-length.out.full_pcbin, seq-length.out.sub-set_bin, seq-length.out.full_bin, seq-length.out.sub-set, seq-length.out.full, nucleotide-distribution.out.sub-set, nucleotide-distribution.out.full, GC-distribution.out.sub-set_pcbin, GC-distribution.out.full_pcbin, GC-distribution.out.sub-set_bin, GC-distribution.out.full_bin, GC-distribution.out.sub-set, GC-distribution.out.full, _tRNAselect.fasta, _tRNAselect.fasta_formatted, _tRNAselect.fasta_uniq, _tRNAselect_reads_id_list.txt, _tRNAselect_reads_uniq_id_list.txt, .fasta.mseq.txt, .fasta.mseq.tsv, .fasta.mseq_json.biom, .fasta.mseq.txt, .fa
+Checking the following file: stepQCStats-success
+Found the following substring -success at index 11
+Valid file name detected. This file will be kept.
+Checking the following file: README
+Found the following substring README at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_run.err
+Not a valid file name. This file will be deleted.
+Checking the following file: stepNewCharts-success
+Found the following substring -success at index 13
+Valid file name detected. This file will be kept.
+Checking the following file: fasta-header-clean.err
+Not a valid file name. This file will be deleted.
+Checking the following file: qc-statistics.err
+Not a valid file name. This file will be deleted.
+Checking the following file: globalsummary.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA.fasta.ssi
+Not a valid file name. This file will be deleted.
+Checking the following file: go-summary.out
+Found the following substring summary.out at index 3
+Valid file name detected. This file will be kept.
+Checking the following file: qc-statistics.out
+Not a valid file name. This file will be deleted.
+Checking the following file: stepCMSearch-success
+Found the following substring -success at index 12
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA.cmsearch.all.tblout.deoverlapped.gz
+Found the following substring .gz at index 48
+Valid file name detected. This file will be kept.
+Checking the following file: MAPseqLSU.out
+Not a valid file name. This file will be deleted.
+Checking the following file: stepSummary-success
+Found the following substring -success at index 11
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_unannotated.faa.gz
+Found the following substring .gz at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: MAPseqSSU.err
+Not a valid file name. This file will be deleted.
+Checking the following file: CMSearchDeoverlap.out
+Not a valid file name. This file will be deleted.
+Checking the following file: qc-statistics.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: stepFastaHeaderClean-success
+Found the following substring -success at index 20
+Valid file name detected. This file will be kept.
+Checking the following file: decompression.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA.dat
+Not a valid file name. This file will be deleted.
+Checking the following file: stepCMSearchDeoverlap-success
+Found the following substring -success at index 21
+Valid file name detected. This file will be kept.
+Checking the following file: fasta-header-clean.out
+Not a valid file name. This file will be deleted.
+Checking the following file: MAPseqLSU.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_CDS_unannotated.faa.chunks
+Found the following substring .chunks at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_summary.ipr
+Found the following substring _summary.ipr at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: stepGOSummary-success
+Found the following substring -success at index 13
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS.faa
+Not a valid file name. This file will be deleted.
+Checking the following file: stepI5tsv-success
+Found the following substring -success at index 9
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_summary.go
+Found the following substring _summary.go at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA.fasta.gz
+Found the following substring .gz at index 21
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_unannotated.ffn.gz
+Found the following substring .gz at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: stepInit-success
+Found the following substring -success at index 8
+Valid file name detected. This file will be kept.
+Checking the following file: CMSearchDeoverlap.err
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA.fasta.filter-counts
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_LSU.fasta
+Not a valid file name. This file will be deleted.
+Checking the following file: stepDecompression-success
+Found the following substring -success at index 17
+Valid file name detected. This file will be kept.
+Checking the following file: CMSearchDeoverlap.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA.fasta.submitted.count
+Found the following substring .fasta.submitted.count at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: decompression.out
+Not a valid file name. This file will be deleted.
+Checking the following file: stepRNASelection-success
+Found the following substring -success at index 16
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA.cmsearch.all.tblout.gz
+Found the following substring .gz at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_annotated.faa.gz
+Found the following substring .gz at index 33
+Valid file name detected. This file will be kept.
+Checking the following file: MAPseqSSU.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: MAPseqLSU.err
+Not a valid file name. This file will be deleted.
+Checking the following file: stepCDS-success
+Found the following substring -success at index 7
+Valid file name detected. This file will be kept.
+Checking the following file: stepFinalCleaning-lock
+Found the following substring stepFinalCleaning-lock at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: RNASelection.err
+Not a valid file name. This file will be deleted.
+Checking the following file: globalsummary.out
+Found the following substring summary.out at index 6
+Valid file name detected. This file will be kept.
+Checking the following file: stepChunkingAndCompression-success
+Found the following substring -success at index 26
+Valid file name detected. This file will be kept.
+Checking the following file: stepMAPseq-success
+Found the following substring -success at index 10
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_summary
+Found the following substring _summary at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA.cmsearch.all.tblout.sort
+Not a valid file name. This file will be deleted.
+Checking the following file: RNASelection.out
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_summary.versions
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.fasta
+Not a valid file name. This file will be deleted.
+Checking the following file: stepTaxonomySummary-success
+Found the following substring -success at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: stepSequenceCategorisation-success
+Found the following substring -success at index 26
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_annotated.faa.chunks
+Found the following substring .chunks at index 33
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS.ffn
+Not a valid file name. This file will be deleted.
+Checking the following file: run-log.txt
+Found the following substring run-log.txt at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_I5.tsv.chunks
+Found the following substring .chunks at index 22
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_annotated.ffn.chunks
+Found the following substring .chunks at index 33
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA.fasta.chunks
+Found the following substring .chunks at index 21
+Valid file name detected. This file will be kept.
+Checking the following file: RNASelection.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: go-summary.err
+Not a valid file name. This file will be deleted.
+Checking the following file: go-summary.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: RESOURCE_USAGE_PROFILE
+Found the following substring RESOURCE_USAGE_PROFILE at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: fasta-header-clean.lsf
+Not a valid file name. This file will be deleted.
+Checking the following file: MAPseqSSU.out
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_CDS_unannotated.ffn.chunks
+Found the following substring .chunks at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_SSU.fasta
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_run.log
+Found the following substring _run.log at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: decompression.err
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708_FASTA_I5.tsv.gz
+Found the following substring .gz at index 22
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_CDS_annotated.ffn.gz
+Found the following substring .gz at index 33
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_summary.go_slim
+Found the following substring _summary.go_slim at index 15
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_SSU.fasta.mseq.tsv
+Found the following substring .fasta.mseq.tsv at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_SSU.fasta.mseq.txt
+Found the following substring .fasta.mseq.txt at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: kingdom-counts.txt
+Found the following substring kingdom-counts.txt at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_SSU.fasta.mseq_json.biom
+Found the following substring .fasta.mseq_json.biom at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_SSU.fasta.mseq.gz
+Found the following substring .gz at index 30
+Valid file name detected. This file will be kept.
+Checking the following file: krona.html
+Found the following substring krona.html at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_LSU.fasta.mseq.tsv
+Found the following substring .fasta.mseq.tsv at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: kingdom-counts.txt
+Found the following substring kingdom-counts.txt at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_LSU.fasta.mseq_json.biom
+Found the following substring .fasta.mseq_json.biom at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: krona.html
+Found the following substring krona.html at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_LSU.fasta.mseq.gz
+Found the following substring .gz at index 30
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708_FASTA_LSU.fasta.mseq.txt
+Found the following substring .fasta.mseq.txt at index 19
+Valid file name detected. This file will be kept.
+Checking the following file: new.summary
+Found the following substring new.summary at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: seq-length.out.full
+Found the following substring seq-length.out.full at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: GC-distribution.out.full_bin
+Found the following substring GC-distribution.out.full_bin at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: nucleotide-distribution.out.full
+Found the following substring nucleotide-distribution.out.full at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: summary.out
+Found the following substring summary.out at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: GC-distribution.out.full_pcbin
+Found the following substring GC-distribution.out.full_pcbin at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: seq-length.out.full_bin
+Found the following substring seq-length.out.full_bin at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: seq-length.out.full_pcbin
+Found the following substring seq-length.out.full_pcbin at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: GC-distribution.out.full
+Found the following substring GC-distribution.out.full at index 0
+Valid file name detected. This file will be kept.
+Checking the following file: jobsSuccessful-flag
+Not a valid file name. This file will be deleted.
+Checking the following file: chunkedSequence.list
+Not a valid file name. This file will be deleted.
+Checking the following file: lsf.submit
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-25675-length-103-cov-5.79167_1_NODE-20919-length-124-cov-8294.99_1_124_-.out
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-6304-length-542-cov-1.423_1_NODE-15185-length-374-cov-2.64577_1_out.tsv
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-6304-length-542-cov-1.423_1_NODE-15185-length-374-cov-2.64577_1.out
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-1-length-958641-cov-145.3_1_NODE-208-length-4809-cov-16.0082_6_out.tsv
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-209-length-4744-cov-17.82_1_NODE-6303-length-542-cov-1.47639_2
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-25675-length-103-cov-5.79167_1_NODE-20919-length-124-cov-8294.99_1_124_-.err
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-15186-length-374-cov-2.48903_1_NODE-25674-length-103-cov-5.79167_1.err
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-15186-length-374-cov-2.48903_1_NODE-25674-length-103-cov-5.79167_1
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-1-length-958641-cov-145.3_1_NODE-208-length-4809-cov-16.0082_6.err
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-6304-length-542-cov-1.423_1_NODE-15185-length-374-cov-2.64577_1
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-6304-length-542-cov-1.423_1_NODE-15185-length-374-cov-2.64577_1.err
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-25675-length-103-cov-5.79167_1_NODE-20919-length-124-cov-8294.99_1_124_-
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-209-length-4744-cov-17.82_1_NODE-6303-length-542-cov-1.47639_2.out
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-209-length-4744-cov-17.82_1_NODE-6303-length-542-cov-1.47639_2_out.tsv
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-1-length-958641-cov-145.3_1_NODE-208-length-4809-cov-16.0082_6
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-209-length-4744-cov-17.82_1_NODE-6303-length-542-cov-1.47639_2.err
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-15186-length-374-cov-2.48903_1_NODE-25674-length-103-cov-5.79167_1_out.tsv
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-1-length-958641-cov-145.3_1_NODE-208-length-4809-cov-16.0082_6.out
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-25675-length-103-cov-5.79167_1_NODE-20919-length-124-cov-8294.99_1_124_-_out.tsv
+Not a valid file name. This file will be deleted.
+Checking the following file: NODE-15186-length-374-cov-2.48903_1_NODE-25674-length-103-cov-5.79167_1.out
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.SSU_rRNA_bacteria.RF00177.fa
+Found the following substring .fa at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.LSU_rRNA_eukarya.RF02543.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.tmRNA.RF00023.fa
+Found the following substring .fa at index 23
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.Bacteria_small_SRP.RF00169.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.tRNA-Sec.RF01852.fa
+Found the following substring .fa at index 26
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.tmRNA.RF00023.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.Bacteria_small_SRP.RF00169.fa
+Found the following substring .fa at index 36
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.tRNA.RF00005.fa
+Found the following substring .fa at index 22
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.SSU_rRNA_eukarya.RF01960.fa
+Found the following substring .fa at index 34
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.LSU_rRNA_bacteria.RF02541.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.tRNA-Sec.RF01852.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.LSU_rRNA_eukarya.RF02543.fa
+Found the following substring .fa at index 34
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.tRNA.RF00005.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.RNaseP_bact_a.RF00010.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.RNaseP_bact_a.RF00010.fa
+Found the following substring .fa at index 31
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.LSU_rRNA_bacteria.RF02541.fa
+Found the following substring .fa at index 35
+Valid file name detected. This file will be kept.
+Checking the following file: ERZ477708.SSU_rRNA_eukarya.RF01960.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.SSU_rRNA_bacteria.RF00177.key
+Not a valid file name. This file will be deleted.
+Checking the following file: ERZ477708.fasta
+Not a valid file name. This file will be deleted.
+Checking the following file: noFunction.fasta.chunks
+Found the following substring .chunks at index 16
+Valid file name detected. This file will be kept.
+Checking the following file: pCDS.fasta.gz
+Found the following substring .gz at index 10
+Valid file name detected. This file will be kept.
+Checking the following file: interproscan.fasta.gz
+Found the following substring .gz at index 18
+Valid file name detected. This file will be kept.
+Checking the following file: interproscan.fasta.chunks
+Found the following substring .chunks at index 18
+Valid file name detected. This file will be kept.
+Checking the following file: noFunction.fasta.gz
+Found the following substring .gz at index 16
+Valid file name detected. This file will be kept.
+Checking the following file: LSU.fasta.chunks
+Found the following substring .chunks at index 9
+Valid file name detected. This file will be kept.
+Checking the following file: SSU.fasta.gz
+Found the following substring .gz at index 9
+Valid file name detected. This file will be kept.
+Checking the following file: SSU.fasta.chunks
+Found the following substring .chunks at index 9
+Valid file name detected. This file will be kept.
+Checking the following file: pCDS.fasta.chunks
+Found the following substring .chunks at index 10
+Valid file name detected. This file will be kept.
+Checking the following file: LSU.fasta.gz
+Found the following substring .gz at index 9
+Valid file name detected. This file will be kept.
+Starting deletion of empty directories...
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/SSU
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary/LSU
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta/1
+Empty directory successfully deleted.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/stepFinalCleaning
+Empty directory successfully deleted.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/taxonomy-summary
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/charts
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/qc-statistics
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/chunked_fasta
+Empty directory successfully deleted.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/stepChunkingAndCompression
+Empty directory successfully deleted.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/RNASelection
+Directory is not empty! Skipping deletion of this directory.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/clean
+Empty directory successfully deleted.
+Checking directory /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/sequence-categorisation
+Directory is not empty! Skipping deletion of this directory.
+Finished deletion of empty directories.
+
+------------------------------------------------------------
+Sender: LSF System <lsf@ebi6-088>
+Subject: Job 2274109: </hps/nobackup/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/metagenomicsPipeline.py -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.dat> in cluster <EBI> Done
+
+Job </hps/nobackup/production/metagenomics/pipeline/tools-v4/miniconda2-4.0.5/bin/python /hps/nobackup/production/metagenomics/production-scripts/clones/v4.0.7/analysis-pipeline/python/metagenomicsPipeline.py -i /hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA.dat> was submitted from host <ebi6-217> by user <mitchell> in cluster <EBI>.
+Job was executed on host(s) <2*ebi6-088>, in queue <production-rh7>, as user <mitchell> in cluster <EBI>.
+</homes/mitchell> was used as the home directory.
+</hps/nobackup/production/metagenomics/alex/assembly_analysis> was used as the working directory.
+Started at Mon Nov  6 15:32:03 2017
+Results reported at Mon Nov  6 18:35:28 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               103.17 sec.
+    Max Memory :             68 MB
+    Average Memory :         54.78 MB
+    Total Requested Memory : 4096.00 MB
+    Delta Memory :           4028.00 MB
+    (Delta: the difference between total requested memory and actual max usage.)
+    Max Swap :               606 MB
+
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file </hps/nobackup/production/metagenomics/alex/assembly_analysis//ERP104236/results/ERZ477708_FASTA/ERZ477708_FASTA_run.err> for stderr output of this job.
+

@@ -1,5 +1,5 @@
 define(['api'], function(api) {
-    api = api({API_URL: 'http://localhost:9000/metagenomics/api/v1/', SUBFOLDER: '/metagenomics'});
+    api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
     describe('Analysis tests', function() {
         context('Model tests', function() {
             const analysisAccession = 'MGYA00011845';
@@ -75,7 +75,7 @@ define(['api'], function(api) {
         });
         context('Interpro identifiers', function() {
             it('Should retrieve interpro data', function() {
-                this.timeout(50000);
+                this.timeout(20000);
                 const interproData = new api.InterproIden({id: 'MGYA00141547'});
                 return interproData.fetch().done((interproResults) => {
                     expect(interproResults.length).to.equal(10587);

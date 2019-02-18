@@ -1,0 +1,5 @@
+Eukaryota	Unassigned	4	40.00
+Bacteria	Actinobacteria	2	20.00
+Eukaryota	Ascomycota	1	10.00
+Bacteria	Proteobacteria	5	50.00
+Eukaryota	Arthropoda	1	10.00
