@@ -46,22 +46,5 @@ define(['charts/seqLengthChart'], function(SeqLengthChart) {
                 });
             });
         });
-        context('Assembly labels', function() {
-            it('Should switch labels from to contigs when displaying an assembly', function(done) {
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYA00140023';
-                const chart = new SeqLengthChart(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.done(() => {
-                    const labelsText = $('#' + containerID +
-                        ' .highcharts-yaxis .highcharts-axis-title').text();
-                    expect(labelsText).to.contain('Number of contigs');
-                    expect($('#' + containerID + ' .highcharts-title').text())
-                        .to
-                        .contain('Contigs length histogram');
-                    done();
-                });
-            });
-        });
     });
 });
