@@ -66,12 +66,12 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
                     expect($('#' + containerID + ' text.highcharts-title > tspan')
                         .text())
                         .to
-                        .contain('Contigs');
+                        .eq('Contigs GC distribution');
                     expect(
                         $('#' + containerID + ' g.highcharts-axis.highcharts-yaxis > text > tspan')
                             .text())
                         .to
-                        .contain('contigs');
+                        .eq('Number of contigs');
                     done();
                 });
             });
