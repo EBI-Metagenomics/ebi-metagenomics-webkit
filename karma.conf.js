@@ -17,7 +17,7 @@ module.exports = function(config) {
         files: [
             {pattern: 'tests/test-main.js', included: true},
             {pattern: 'src/*.js', included: false},
-            // {pattern: 'tests/*_test.js', included: false},
+            {pattern: 'tests/*_test.js', included: false},
             {pattern: 'src/charts/*.js', included: false},
             {pattern: 'tests/charts/*_test.js', included: false},
             {pattern: 'node_modules/underscore/underscore.js', included: false},
@@ -38,7 +38,7 @@ module.exports = function(config) {
             '**/*.js': 'env'
         },
         envPreprocessor: [
-            'API_URL',
+            'API_URL'
         ],
         // test results reporter to use
         // possible values: 'dots', 'progress'
