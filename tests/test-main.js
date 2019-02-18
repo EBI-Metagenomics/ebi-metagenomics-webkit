@@ -3,9 +3,9 @@ for (let file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
         // if (/tests\/run_test\.js$/.test(file)) {
         if (/tests\/.*_test\.js$/.test(file)) {
-            if (/tests\/charts\/readsLengthHist_test\.js$/.test(file)) {
+            // if (/tests\/charts\/seqFeatSumChart_test\.js$/.test(file)) {
                 tests.push(file);
-            }
+            // }
         }
     }
 }
