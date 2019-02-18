@@ -17,7 +17,7 @@ module.exports = function(config) {
         files: [
             {pattern: 'tests/test-main.js', included: true},
             {pattern: 'src/*.js', included: false},
-            {pattern: 'tests/*_test.js', included: false},
+            // {pattern: 'tests/*_test.js', included: false},
             {pattern: 'src/charts/*.js', included: false},
             {pattern: 'tests/charts/*_test.js', included: false},
             {pattern: 'node_modules/underscore/underscore.js', included: false},
@@ -34,9 +34,12 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             'src/*.js': 'coverage',
-            'src/*/*.js': 'coverage'
+            'src/*/*.js': 'coverage',
+            '**/*.js': 'env'
         },
-
+        envPreprocessor: [
+            'API_URL',
+        ],
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -47,7 +50,8 @@ module.exports = function(config) {
             'karma-requirejs',
             'karma-chai',
             'karma-chrome-launcher',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-env-preprocessor'
         ],
 
         coverageReporter: {
