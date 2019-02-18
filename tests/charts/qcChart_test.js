@@ -1,6 +1,6 @@
 define(['charts/qcChart'], function(QcChart) {
     const apiConfig = {
-        API_URL: window.__env__['API_URL'],
+        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -43,24 +43,6 @@ define(['charts/qcChart'], function(QcChart) {
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html()).to
                         .match(/Reads remaining:.+213 741 460/);
-                    done();
-                });
-            });
-        });
-        context('Assembly labels', function() {
-            it('Should switch labels to contigs when displaying an assembly', function(done) {
-                this.timeout(20000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYA00140023';
-                const chart = new QcChart(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.done(() => {
-                    const labelsText = $('#' + containerID + ' .highcharts-xaxis-labels').text();
-                    expect(labelsText).to.contain('Contigs subsampled for QC analysis');
-                    expect($('#' + containerID + ' .highcharts-title').text())
-                        .to
-                        .contain('contigs');
                     done();
                 });
             });

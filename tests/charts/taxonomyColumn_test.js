@@ -46,7 +46,7 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
         }
     ];
     const apiConfig = {
-        API_URL: window.__env__['API_URL'],
+        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
@@ -61,8 +61,11 @@ define(['charts/taxonomyColumn'], function(TaxonomyColumn) {
 
     describe('Taxonomy column chart', function() {
         context('Data loading source', function() {
-            it('Should load taxonomy column from data', function(done) {
+            beforeEach(function() {
                 this.timeout(60000);
+                createDiv();
+            });
+            it('Should load taxonomy column from data', function(done) {
                 const chart = new TaxonomyColumn(containerID, {data: taxonomyData});
                 chart.loaded.always(() => {
                     expect($('#' + containerID).html()).to.contain('Archaea');

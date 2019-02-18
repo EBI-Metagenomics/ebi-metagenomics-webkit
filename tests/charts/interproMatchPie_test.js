@@ -1,6 +1,6 @@
 define(['charts/interproMatchPie'], function(InterproMatchPie) {
     const apiConfig = {
-        API_URL: window.__env__['API_URL'],
+        API_URL: 'http://localhost:9000/metagenomics/api/v1/',
         SUBFOLDER: '/metagenomics'
     };
     const containerID = 'chart-container';
