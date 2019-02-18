@@ -58,6 +58,7 @@ define(['charts/gcDistributionChart'], function(GcDistributionChart) {
         });
         context('Assembly labels', function() {
             it('Should switch labels from to contigs when displaying an assembly', function(done) {
+                this.timeout(20000);
                 const accession = 'MGYA00140023';
                 const chart = new GcDistributionChart(containerID,
                     {accession: accession, apiConfig: apiConfig});
