@@ -77,7 +77,7 @@ define([
                     if (typeof chartOptions['subtitle'] === 'undefined' ||
                         chartOptions['subtitle']) {
                         options.subtitle = {
-                            text: 'Total: ' + util.sumData(this.data) + ' ' +
+                            text: 'Total: ' + util.sumData(this.clusteredData) + ' ' +
                             chartOptions['seriesName']
                         };
                     }

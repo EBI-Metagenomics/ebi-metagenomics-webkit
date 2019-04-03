@@ -195,6 +195,9 @@ define(['underscore'], function(_) {
                     category = 'Unassigned';
                 }
             }
+            if (lineage[0] === 'Unusigned' && lineage.length === 1) {
+                category = 'Unassigned';
+            }
 
             let val = attr.count;
             if (clusteredData.hasOwnProperty(category)) {
