@@ -206,6 +206,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             url() {
                 return API_URL + 'studies/' + this.id +
                     '/geocoordinates?page_size=500';
+            },
+            fetch() {
+                return multiPageFetch(this);
             }
         });
 
