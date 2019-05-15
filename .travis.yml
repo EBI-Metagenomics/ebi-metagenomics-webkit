@@ -104,8 +104,9 @@ after_success:
 
 deploy:
   provider: npm
-  email: $TRAVIS_NPM_EMAIL
-  api_key: $TRAVIS_NPM_TOKEN
+  email: "metagenomics@ebi.ac.uk"
+  api_key:
+    secure: ha9B7YL2sB0m484FDXO0rimsxzmULrh+MJiC7qjlOimd8R6+xuPON9qf8TWuA7iFIyXvcXk7uunLABmJJjloKri/3sx5tFf2J0dPjiHZbc0yV2Bcds24wigqTaWCAjY0TKPmA090OjJnRjmSNtttVtp2NVUVQMtcs3DQWQJCZuBo8z6u4sVZ7myM/KL4ZzKOBwswO0LPg2qW3y3/AYZP9G5IdmQn1W7+XsEIMWAq8aJVOX9KQFvrR4Lx0Rc2wDKqGc1uqeGQDTkpbSpyaBDEp+EqF8MynN7KkgthVoKiyewakdPXTBirgY7mLItjOyISrSc8IzbAeF4yeYwmSY9XukskAP+bY5ci936PyDCpXgb2lygfvU3X+5ecNPiFegEzUl46FLDUIZDwNTu3H7HuQv0zVIZBJo0Pamcq1weBuG2foeqfJDoAhVUu0l+14xuAwkH3fq1FWT+vz44pYtdXZOJbQnJ5zddi+8q1Xc0pObUqbbKnPV7SFmOB4IfXFDmqK9iQST6n54ZMARau9ohj5SJYcJfMrXRxbEzDyw6dkROUOkz/g3sauc0w6x+6+99NXuBCW50Bj/yUA1Fxi79CQ6qFNTEhdFL7fwSfcSHhlbphpGO0N8rCThUlXhWPZIfOlMunnZ7No/ALi71Bci0J6aFLQkpKFC+sDcKSVYR/dmo=
   on:
     branch: master
     tag: next
