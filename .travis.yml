@@ -102,10 +102,13 @@ script:
 after_success:
   - npm run coverage
 
-#after_script:
-#  - npm run coverage
-#  - cat coverage/lcov.info | codacy-coverage
-#  - codecov
+deploy:
+  provider: npm
+  email: $TRAVIS_NPM_EMAIL
+  api_key: $TRAVIS_NPM_TOKEN
+  on:
+    branch: master
+    tag: next
 
 cache:
   pip
