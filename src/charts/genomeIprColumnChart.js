@@ -27,11 +27,15 @@ define([
                 let categories = [];
                 let total = 0;
                 this.data.forEach(function(d) {
-                    console.log(d);
-                    categories.push(d.ipr_accession);
-                    series.push(d.count);
+                    if (d.ipr_accession !=='Other') {
+                        categories.push(d.ipr_accession);
+                        series.push(d.count);
+                    }
                     total += d.count;
                 });
+                this.data = this.data.sort(function(v) {
+                    return v.ipr_accession === 'Other' ? -1 : v.count;
+                }).reverse();
                 let options = {
                     chart: {
                         type: 'column',
