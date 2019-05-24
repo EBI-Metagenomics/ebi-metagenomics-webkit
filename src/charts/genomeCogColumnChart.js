@@ -34,7 +34,7 @@ define([
                 let options = {
                     chart: {
                         type: 'column',
-                        height: 800,
+                        height: 400,
                         zoomType: 'xy',
                         renderTo: 'container'
                     },

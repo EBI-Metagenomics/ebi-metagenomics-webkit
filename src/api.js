@@ -810,6 +810,18 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return data;
             }
         });
+        const GenomeEggNogs = GenomeDatasetCollection.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/eggnog';
+            },
+            parse(data) {
+                data = data.map(function(eggnog) {
+                    return eggnog.attributes;
+                });
+                this.data = data;
+                return data;
+            }
+        });
         return {
             API_URL,
             Study,
@@ -847,7 +859,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             GenomeDownloads,
             GenomeKeggs,
             GenomeIprs,
-            GenomeCogs
+            GenomeCogs,
+            GenomeEggNogs
         };
     };
     return init;

@@ -1,14 +1,14 @@
 define([
-    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting'
-], function(GenericChart, util, Highcharts, exporting) {
+    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting', 'underscore'
+], function(GenericChart, util, Highcharts, exporting, _) {
     exporting(Highcharts);
 
     /**
-     * Container for GenomeKeggColumnChart
+     * Container for GenomeEggNogColumnChart
      */
-    class GenomeKeggColumnChart extends GenericChart {
+    class GenomeEggNogColumnChart extends GenericChart {
         /**
-         * Constructor for GenomeIPRColumnChart; provide accession OR this.data to generate chart.
+         * Constructor for GenomeEggNogColumnChart; provide accession OR this.data to generate chart.
          * @param {string} containerId id (without #) of container
          * @param {object} dataOptions to configure chart data source
          * @param {object} chartOptions to configure chart
@@ -26,11 +26,19 @@ define([
                 let series = [];
                 let categories = [];
                 let total = 0;
+                console.log(this.data);
                 this.data.forEach(function(d) {
-                    categories.push(d.name);
-                    series.push(d.count);
+                    if (d.description !== 'Other') {
+                        categories.push(d.description);
+                        series.push(d.count);
+                    }
                     total += d.count;
                 });
+                let sortLastOther = function(v) {
+                    return v.description === 'Other' ? Number.MIN_VALUE : v.count;
+                };
+                this.data = _.sortBy(this.data, sortLastOther).reverse();
+
                 let options = {
                     chart: {
                         type: 'column',
@@ -39,16 +47,16 @@ define([
                         renderTo: 'container'
                     },
                     title: {
-                        text: 'Top 10 kegg brite categories'
+                        text: 'Top 10 EggNog matches '
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' kegg matches - Drag to zoom in/out'
+                        ' EggNog matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Kegg matches'
+                            text: 'EggNog matches'
                         }
                     },
                     xAxis: {
@@ -92,14 +100,14 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const keggs = new this.api.GenomeKeggs(
+            const EggNogs = new this.api.GenomeEggNogs(
                 {id: params['accession']});
 
-            return $.when(keggs.fetch()).done(() => {
-                this.data = keggs.data;
+            return $.when(EggNogs.fetch()).done(() => {
+                this.data = EggNogs.data;
             });
         }
     }
 
-    return GenomeKeggColumnChart;
+    return GenomeEggNogColumnChart;
 });

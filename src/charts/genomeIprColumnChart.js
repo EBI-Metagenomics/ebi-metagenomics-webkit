@@ -1,6 +1,6 @@
 define([
-    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting'
-], function(GenericChart, util, Highcharts, exporting) {
+    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting', 'underscore'
+], function(GenericChart, util, Highcharts, exporting, _) {
     exporting(Highcharts);
 
     /**
@@ -33,13 +33,15 @@ define([
                     }
                     total += d.count;
                 });
-                this.data = this.data.sort(function(v) {
-                    return v.ipr_accession === 'Other' ? -1 : v.count;
-                }).reverse();
+                let sortLastOther = function(v) {
+                    return v.ipr_accession === 'Other' ? Number.MIN_VALUE : v.count;
+                };
+                this.data = _.sortBy(this.data, sortLastOther).reverse();
+
                 let options = {
                     chart: {
                         type: 'column',
-                        height: 800,
+                        height: 400,
                         zoomType: 'xy',
                         renderTo: 'container'
                     },
