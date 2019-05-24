@@ -1,0 +1,21 @@
+{
+    "accession": "GUT_GENOME000001",
+    "length": 3219614,
+    "num_contigs": 137,
+    "n_50": 47258,
+    "gc_content": 28.26,
+    "type": "Isolate",
+    "completeness": 98.59,
+    "contamination": 0.7,
+    "rna_5s": 88.24,
+    "rna_16s": 99.74,
+    "rna_23s": 99.83,
+    "trnas": 20,
+    "num_genomes": 4,
+    "num_proteins": 3181,
+    "pangenome_size": 3961,
+    "core_prop": 28.73,
+    "accessory_prop": 71.27,
+    "eggnog_prop": 81.92,
+    "ipr_prop": 77.93
+}
