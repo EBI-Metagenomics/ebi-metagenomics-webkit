@@ -1,0 +1,12 @@
+accession,eggnog_host,eggnog_organism,eggnog_desc,count
+GUT_GENOME000001,272563,CD1541,Mate efflux family protein,7
+GUT_GENOME000001,272563,CD2410,Pyruvate phosphate dikinase,6
+GUT_GENOME000001,272563,CD2766,Transcriptional attenuator,6
+GUT_GENOME000001,272563,CD2375,Domain of Unknown Function (DUF1540),5
+GUT_GENOME000001,445973,CLOBAR_02333,Protein of unknown function (DUF2922),5
+GUT_GENOME000001,272563,CD2465,amino acid,4
+GUT_GENOME000001,272563,CD2310,cold-shock DNA-binding domain protein,4
+GUT_GENOME000001,445973,CLOBAR_01243,Cysteine desulfurase,4
+GUT_GENOME000001,545693,BMQ_3557,,4
+GUT_GENOME000001,272563,CD0567,degv family,4
+GUT_GENOME000001,Other,Other,Other,3190
