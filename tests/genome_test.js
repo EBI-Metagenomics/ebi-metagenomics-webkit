@@ -55,7 +55,7 @@ define(['api'], function(api) {
             const fetch = collection.fetch();
             it('Should have correct number of kegg matches', function() {
                 return fetch.always(() => {
-                    expect(collection.data.length).to.eq(48);
+                    expect(collection.data.length).to.eq(43);
                 });
             });
             it('Should have correct fields for keggs', function() {

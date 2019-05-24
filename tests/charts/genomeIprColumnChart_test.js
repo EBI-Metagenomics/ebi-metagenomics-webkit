@@ -18,7 +18,6 @@ define(['charts/genomeIprColumnChart'], function(GenomeIprColumnChart) {
                     expect($('.highcharts-point').length).to.equal(10);
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
-                    console.log($('.highcharts-tooltip').html());
                     expect($('.highcharts-tooltip').html())
                         .to.match(/.+IPR027417.+Count: 292/);
                     done();
