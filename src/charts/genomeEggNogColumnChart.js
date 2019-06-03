@@ -47,16 +47,16 @@ define([
                         renderTo: 'container'
                     },
                     title: {
-                        text: 'Top 10 EggNog matches '
+                        text: 'Top 10 EggNOG matches '
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' EggNog matches - Drag to zoom in/out'
+                        ' EggNOG matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'EggNog matches'
+                            text: 'EggNOG matches'
                         }
                     },
                     xAxis: {

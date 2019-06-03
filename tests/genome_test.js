@@ -143,7 +143,7 @@ define(['api'], function(api) {
                 });
             });
             it('Should have correct fields for cog', function() {
-                const expectedFields = ['name', 'count'];
+                const expectedFields = ['name', 'description', 'count'];
                 return fetch.always(() => {
                     const firstCog = collection.data[0];
                     expectedFields.forEach((attr) => {

@@ -39,16 +39,16 @@ define([
                         renderTo: 'container'
                     },
                     title: {
-                        text: 'Top 10 kegg brite categories'
+                        text: 'Top 10 KEGG brite categories'
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' kegg matches - Drag to zoom in/out'
+                        ' KEGG matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Kegg matches'
+                            text: 'KEGG matches'
                         }
                     },
                     xAxis: {

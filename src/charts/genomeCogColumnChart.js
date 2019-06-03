@@ -43,7 +43,7 @@ define([
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' cog matches - Drag to zoom in/out'
+                        ' COG matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
