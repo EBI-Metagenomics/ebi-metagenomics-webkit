@@ -26,7 +26,6 @@ define([
                 let series = [];
                 let categories = [];
                 let total = 0;
-                console.log(this.data);
                 this.data.forEach(function(d) {
                     if (d.description !== 'Other') {
                         categories.push(d.description);
