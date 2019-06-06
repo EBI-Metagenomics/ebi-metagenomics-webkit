@@ -7,6 +7,7 @@ define([
      * Generic taxonomy pie chart class, configurable to
      */
     class TaxonomyColumn extends GenericChart {
+
         /**
          * Instantiate chart
          * @param {string} containerId chart container element
@@ -14,6 +15,10 @@ define([
          * @param {object} chartOptions parameters to customise highcharts chart options
          */
         constructor(containerId, dataOptions, chartOptions) {
+            let numColumns = 10;
+            if (chartOptions && chartOptions['numColumns']) {
+                numColumns = chartOptions['numColumns'];
+            }
             super(containerId, dataOptions);
             this.groupingDepth = dataOptions['groupingDepth'] || 0;
             this.loaded = $.Deferred();
@@ -23,7 +28,8 @@ define([
 
                 const categories = [];
                 this.clusteredData = util.groupTaxonomyData(this.data, this.groupingDepth);
-                this.clusteredData.forEach(function(e) {
+                this.dataSummary = this.clusteredData.slice(0, numColumns);
+                this.dataSummary.forEach(function(e) {
                     categories.push(e.name);
                 });
                 let options = {
@@ -42,7 +48,7 @@ define([
                     series: [
                         {
                             colorByPoint: true,
-                            data: this.clusteredData,
+                            data: this.dataSummary,
                             colors: util.TAXONOMY_COLOURS
                         }],
                     xAxis: {
@@ -54,7 +60,7 @@ define([
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Unique OTUs',
+                            text: 'Number of sequences',
                             align: 'high'
                         },
                         labels: {

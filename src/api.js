@@ -5,6 +5,8 @@ const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
+const INTERPRO_URL = 'https://www.ebi.ac.uk/interpro/entry/';
+
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
@@ -697,6 +699,129 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const Genome = Backbone.Model.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id;
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+                const attr = data.attributes;
+                return {
+                    accession: attr['accession'],
+                    length: attr['length'],
+                    num_contigs: attr['num-contigs'],
+                    n_50: attr['n-50'],
+                    gc_content: attr['gc-content'],
+                    type: attr['type'],
+                    completeness: attr['completeness'],
+                    contamination: attr['contamination'],
+                    rna_5s: attr['rna-5s'],
+                    rna_16s: attr['rna-16s'],
+                    rna_23s: attr['rna-23s'],
+                    trna_s: attr['trnas'],
+                    num_genomes: attr['num-genomes'],
+                    num_proteins: attr['num-proteins'],
+                    pangenome_size: attr['pangenome-size'],
+                    core_prop: attr['core-prop'],
+                    accessory_prop: attr['accessory-prop'],
+                    eggnog_prop: attr['eggnog-prop'],
+                    ipr_prop: attr['ipr-prop'],
+                    last_updated: util.formatDate(attr['last-update']),
+                    first_created: util.formatDate(attr['first-created']),
+                    genome_url: subfolder + '/genomes/' + attr['accession']
+                };
+            }
+        });
+
+        const GenomesCollection = Backbone.Collection.extend({
+            url: API_URL + 'genomes',
+            model: Genome,
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const GenomeDownloads = Backbone.Model.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/downloads';
+            },
+            parse(response) {
+                this.attributes.genomeFiles = clusterAnalysisDownloads(response.data);
+            }
+        });
+
+        const GenomeDatasetCollection = Backbone.Collection.extend({
+            initialize(params) {
+                this.id = params['id'];
+            },
+            fetch() {
+                const that = this;
+                return multiPageFetch(this).done((data) => {
+                    return that.parse(data);
+                });
+            }
+        });
+        const GenomeKeggs = GenomeDatasetCollection.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/kegg';
+            },
+
+            parse(data) {
+                data = data.map(function(kegg) {
+                    const attr = kegg['attributes'];
+                    return {
+                        'brite_id': attr['brite-id'],
+                        'name': attr['brite-name'],
+                        'count': attr['count']
+                    };
+                });
+                this.data = data;
+                return data;
+            }
+        });
+
+        const GenomeIprs = GenomeDatasetCollection.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/ipr';
+            },
+            parse(data) {
+                data = data.map(function(ipr) {
+                    const attr = ipr['attributes'];
+                    return {
+                        'ipr_accession': attr['ipr-accession'],
+                        'ipr_url': INTERPRO_URL + attr['ipr-accession'],
+                        'count': attr['count']
+                    };
+                });
+                this.data = data;
+                return data;
+            }
+        });
+
+        const GenomeCogs = GenomeDatasetCollection.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/cogs';
+            },
+            parse(data) {
+                data = data.map(function(cog) {
+                    return cog.attributes;
+                });
+                this.data = data;
+                return data;
+            }
+        });
+        const GenomeEggNogs = GenomeDatasetCollection.extend({
+            url() {
+                return API_URL + 'genomes/' + this.id + '/eggnog';
+            },
+            parse(data) {
+                data = data.map(function(eggnog) {
+                    return eggnog.attributes;
+                });
+                this.data = data;
+                return data;
+            }
+        });
         return {
             API_URL,
             Study,
@@ -728,7 +853,14 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             QcChartStats,
             Publication,
             PublicationsCollection,
-            PublicationStudies
+            PublicationStudies,
+            Genome,
+            GenomesCollection,
+            GenomeDownloads,
+            GenomeKeggs,
+            GenomeIprs,
+            GenomeCogs,
+            GenomeEggNogs
         };
     };
     return init;

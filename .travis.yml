@@ -29,7 +29,7 @@ before_install:
   - python3 -V
   - pip3 -V
   - pip3 install --user "git+git://github.com/EBI-metagenomics/django-rest-framework-json-api@develop#egg=djangorestframework-jsonapi"
-  - pip3 install --user "git+git://github.com/EBI-metagenomics/emgapi@develop#egg=emgcli"
+  - pip3 install --user "git+git://github.com/EBI-metagenomics/emgapi@genomes#egg=emgcli"
 
   # EMG API CONFIG MODIFICATION
   # Add slack notification to config
@@ -73,6 +73,9 @@ before_install:
   - emgcli import_summary ERP104236 ~/results .ipr
   - emgcli import_summary ERP104236 ~/results .go_slim
   - emgcli import_summary ERP104236 ~/results .go
+
+  - emgcli import_kegg_brites $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/kegg_orthology.json
+  - emgcli import_genomes $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/genomes/ 1.0
 
   ## ENA AUTHENTICATION FAKE DB
   # Create fake ENA authentication tables
