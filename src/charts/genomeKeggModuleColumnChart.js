@@ -1,12 +1,12 @@
 define([
-    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting', 'underscore'
-], function(GenericChart, util, Highcharts, exporting, _) {
+    './genericChart', '../util', 'highcharts', 'highcharts/modules/exporting'
+], function(GenericChart, util, Highcharts, exporting) {
     exporting(Highcharts);
 
     /**
-     * Container for GenomeIprColumnChart
+     * Container for GenomeKeggColumnChart
      */
-    class GenomeIprColumnChart extends GenericChart {
+    class GenomeKeggColumnChart extends GenericChart {
         /**
          * Constructor for GenomeIPRColumnChart; provide accession OR this.data to generate chart.
          * @param {string} containerId id (without #) of container
@@ -23,20 +23,14 @@ define([
                     return;
                 }
 
-                let series = [];
-                let categories = [];
                 let total = 0;
-                this.data.forEach(function(d) {
-                    if (d.ipr_accession !=='Other') {
-                        categories.push(d.ipr_accession);
-                        series.push(d.count);
-                    }
-                    total += d.count;
+                let categories = this.data.map((d) => {return d.name});
+                let genomeSeries = this.data.map((d) => {
+                    let c = d['genome-count'];
+                    total += c;
+                    return c;
                 });
-                let sortLastOther = function(v) {
-                    return v.ipr_accession === 'Other' ? Number.MIN_VALUE : v.count;
-                };
-                this.data = _.sortBy(this.data, sortLastOther).reverse();
+                let pangenomeSeries = this.data.map((d) => {return d['pangenome-count']});
 
                 let options = {
                     chart: {
@@ -46,16 +40,16 @@ define([
                         renderTo: 'container'
                     },
                     title: {
-                        text: 'Top 10 InterProScan matches '
+                        text: 'Top 10 KEGG brite categories'
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' IPR matches - Drag to zoom in/out'
+                        ' KEGG matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'IPR matches'
+                            text: 'KEGG matches'
                         }
                     },
                     xAxis: {
@@ -78,13 +72,23 @@ define([
                         enabled: false
                     },
                     tooltip: {
-                        pointFormat: '<b>Count: {point.y}</b>'
+                        formatter() {
+                            return this.series.name + '<br/>' + 'Count: ' + this.y;
+                        }
+
                     },
                     series: [
                         {
-                            colorByPoint: true,
-                            data: series.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS
+                            name: 'Genome',
+                            data: genomeSeries.slice(0, 10),
+                            colors: util.TAXONOMY_COLOURS[1],
+                            stack: 'genome'
+                        },
+                        {
+                            name: 'Pangenome',
+                            data: pangenomeSeries.slice(0, 10),
+                            colors: util.TAXONOMY_COLOURS[2],
+                            stack: 'pangenome'
                         }]
                 };
                 this.chart = Highcharts.chart(containerId, options);
@@ -99,14 +103,14 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const iprs = new this.api.GenomeIprs(
+            const keggs = new this.api.GenomeKeggModules(
                 {id: params['accession']});
 
-            return $.when(iprs.fetch()).done(() => {
-                this.data = iprs.data;
+            return $.when(keggs.fetch()).done(() => {
+                this.data = keggs.data;
             });
         }
     }
 
-    return GenomeIprColumnChart;
+    return GenomeKeggColumnChart;
 });

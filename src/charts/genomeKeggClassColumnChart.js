@@ -23,14 +23,15 @@ define([
                     return;
                 }
 
-                let series = [];
-                let categories = [];
                 let total = 0;
-                this.data.forEach(function(d) {
-                    categories.push(d.name);
-                    series.push(d.count);
-                    total += d.count;
+                let categories = this.data.map((d) => {return d.name});
+                let genomeSeries = this.data.map((d) => {
+                    let c = d['genome-count'];
+                    total += c;
+                    return c;
                 });
+                let pangenomeSeries = this.data.map((d) => {return d['pangenome-count']});
+
                 let options = {
                     chart: {
                         type: 'column',
@@ -71,13 +72,23 @@ define([
                         enabled: false
                     },
                     tooltip: {
-                        pointFormat: '<b>Count: {point.y}</b>'
+                        formatter() {
+                            return this.series.name + '<br/>' + 'Count: ' + this.y;
+                        }
+
                     },
                     series: [
                         {
-                            colorByPoint: true,
-                            data: series.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS
+                            name: 'Genome',
+                            data: genomeSeries.slice(0, 10),
+                            colors: util.TAXONOMY_COLOURS[1],
+                            stack: 'genome'
+                        },
+                        {
+                            name: 'Pangenome',
+                            data: pangenomeSeries.slice(0, 10),
+                            colors: util.TAXONOMY_COLOURS[2],
+                            stack: 'pangenome'
                         }]
                 };
                 this.chart = Highcharts.chart(containerId, options);
@@ -92,7 +103,7 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const keggs = new this.api.GenomeKeggs(
+            const keggs = new this.api.GenomeKeggClasses(
                 {id: params['accession']});
 
             return $.when(keggs.fetch()).done(() => {
