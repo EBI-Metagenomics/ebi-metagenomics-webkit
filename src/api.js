@@ -890,6 +890,14 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const ReleaseDownloads = Backbone.Model.extend({
+            url() {
+                return API_URL + 'release/' + this.id + '/downloads';
+            },
+            parse(response) {
+                this.attributes.files = clusterAnalysisDownloads(response.data);
+            }
+        });
 
         return {
             API_URL,
@@ -933,7 +941,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             Releases,
             ReleaseGenomes,
             GenomeSet,
-            GenomeSets
+            GenomeSets,
+            ReleaseDownloads
         };
     };
     return init;
