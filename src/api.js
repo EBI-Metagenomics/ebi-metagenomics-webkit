@@ -224,6 +224,46 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const SuperStudy = Backbone.Model.extend({
+            url() {
+                return API_URL + 'super-studies/' + this.id;
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+                const attr = data.attributes;
+                const url = subfolder + '/super-studies/' + attr['super-study-id'];
+                return {
+                    // Standard fields
+                    superstudy_id: attr['super-study-id'],
+                    superstudy_url: url,
+                    superstudy_title: attr['title'],
+                    superstudy_description: attr['description']
+                };
+            }
+        });
+
+        const SuperStudyFlagshipStudiesCollection = Backbone.Collection.extend({
+            model: Study,
+            initialize(params) {
+                this.url = API_URL + 'super-studies/' + params['super_study_id']
+                           + '/flagship-studies';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const SuperStudyRelatedStudiesCollection = Backbone.Collection.extend({
+            model: Study,
+            initialize(params) {
+                this.url = API_URL + 'super-studies/' + params['super_study_id']
+                           + '/related-studies';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const Sample = Backbone.Model.extend({
             url() {
                 return API_URL + 'samples/' + this.id;
@@ -824,6 +864,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         });
         return {
             API_URL,
+            SuperStudy,
+            SuperStudyFlagshipStudiesCollection,
+            SuperStudyRelatedStudiesCollection,
             Study,
             StudiesCollection,
             SampleStudiesCollection,
