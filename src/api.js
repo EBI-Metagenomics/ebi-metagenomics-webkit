@@ -249,6 +249,14 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const SuperStudiesCollection = Backbone.Collection.extend({
+            url: API_URL + 'super-studies',
+            model: SuperStudy,
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const SuperStudyFlagshipStudiesCollection = Backbone.Collection.extend({
             model: Study,
             initialize(params) {
@@ -941,6 +949,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         return {
             API_URL,
             SuperStudy,
+            SuperStudiesCollection,
             SuperStudyFlagshipStudiesCollection,
             SuperStudyRelatedStudiesCollection,
             Study,
