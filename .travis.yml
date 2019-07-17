@@ -75,7 +75,7 @@ before_install:
   - emgcli import_summary ERP104236 ~/results .go
 
   - emgcli import_kegg_brites $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/kegg_orthology.json
-  - emgcli import_genomes $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/genomes/ 1.0
+  #- emgcli import_genomes $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/genomes/ 1.0
 
   ## ENA AUTHENTICATION FAKE DB
   # Create fake ENA authentication tables
