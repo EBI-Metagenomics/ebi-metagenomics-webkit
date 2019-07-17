@@ -40,11 +40,11 @@ define([
                         renderTo: 'container'
                     },
                     title: {
-                        text: 'Top 10 KEGG brite categories'
+                        text: 'Top 10 KEGG module categories'
                     },
                     subtitle: {
                         text: 'Total: ' + total +
-                        ' KEGG matches - Drag to zoom in/out'
+                        ' KEGG module matches - Drag to zoom in/out'
                     },
                     yAxis: {
                         min: 0,
@@ -69,7 +69,7 @@ define([
                         enabled: false
                     },
                     legend: {
-                        enabled: false
+                        enabled: true
                     },
                     tooltip: {
                         formatter() {

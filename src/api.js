@@ -5,7 +5,6 @@ const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
-const INTERPRO_URL = 'https://www.ebi.ac.uk/interpro/entry/';
 
 const PATRIC_URL = 'https://www.patricbrc.org/view/Genome/';
 
@@ -726,7 +725,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     ena_study_url: ENA_VIEW_URL + attr['ena-study-accession'],
 
                     img_genome_accession: attr['igm-genome-accession'],
-                    // img_genome_url: attr['igm-genome-accession'],
+                    img_genome_url: attr['igm-genome-accession'],
 
                     ncbi_genome_accession: attr['ncbi-genome-accession'],
                     ncbi_sample_accession: attr['ncbi-sample-accession'],

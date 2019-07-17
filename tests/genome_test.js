@@ -1,22 +1,46 @@
 let expectedAttributes = [
     'accession',
+    'ena_genome_accession',
+    'ena_sample_accession',
+    'ena_study_accession',
+    'ena_genome_url',
+    'ena_sample_url',
+    'ena_study_url',
+    'img_genome_accession',
+    'img_genome_url',
+    'ncbi_genome_accession',
+    'ncbi_sample_accession',
+    'ncbi_study_accession',
+    'patric_genome_accession',
+    'patric_url',
+    'taxon_lineage',
+    'biome',
+    'biome_icon',
+    'biome_name',
+    'geographic_origin',
+    'geographic_range',
+    'completeness',
+    'contamination',
     'length',
     'num_contigs',
     'n_50',
     'gc_content',
     'type',
-    'completeness',
-    'contamination',
     'rna_5s',
     'rna_16s',
     'rna_23s',
-    'trna_s',
-    'num_genomes',
+    'trnas',
+    'nc_rnas',
     'num_proteins',
+    'eggnog_cov',
+    'ipr_cov',
+    'num_genomes_total',
+    'num_genomes_nr',
     'pangenome_size',
-    'core_prop',
-    'accessory_prop',
-    'ipr_prop',
+    'pangenome_core_size',
+    'pangenome_accessory_size',
+    'pangenome_eggnog_cov',
+    'pangenome_ipr_cov',
     'last_updated',
     'first_created',
     'genome_url'];
@@ -25,11 +49,12 @@ define(['api'], function(api) {
     api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
     describe('Genome tests', function() {
         context('Model tests', function() {
-            const genomeAcc = 'GUT_GENOME000001';
+            const genomeAcc = 'MGYG-HGUT-00279';
             const model = new api.Genome({id: genomeAcc});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
-                return fetch.always(() => {
+                return fetch.done(() => {
+                    console.log(model.attributes);
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
                         expect(model.attributes[attr]).to.not.equal(null);
@@ -50,16 +75,16 @@ define(['api'], function(api) {
                 });
             });
         });
-        context('Kegg tests', function() {
-            const collection = new api.GenomeKeggs({id: 'GUT_GENOME000001'});
+        context('Kegg Module tests', function() {
+            const collection = new api.GenomeKeggModules({id: 'MGYG-HGUT-00279'});
             const fetch = collection.fetch();
             it('Should have correct number of kegg matches', function() {
                 return fetch.always(() => {
-                    expect(collection.data.length).to.eq(43);
+                    expect(collection.data.length).to.eq(52);
                 });
             });
             it('Should have correct fields for keggs', function() {
-                const expectedFields = ['brite_id', 'name', 'count'];
+                const expectedFields = ['name', 'description', 'genome-count', 'pangenome-count'];
                 return fetch.always(() => {
                     const firstKegg = collection.data[0];
                     expectedFields.forEach((attr) => {
@@ -69,65 +94,9 @@ define(['api'], function(api) {
             });
             it('Should be ordered by decreasing count', function() {
                 return fetch.always(() => {
-                    let prevCount = collection.data[0].count;
+                    let prevCount = collection.data[0]['genome-count'];
                     collection.data.slice(1).forEach((attr) => {
-                        const newCount = attr.count;
-                        expect(Math.min(prevCount, newCount)).to.eq(newCount);
-                        prevCount = newCount;
-                    });
-                });
-            });
-        });
-        context('EggNog tests', function() {
-            const collection = new api.GenomeEggNogs({id: 'GUT_GENOME000001'});
-            const fetch = collection.fetch();
-            it('Should have correct number of eggnog matches', function() {
-                return fetch.always(() => {
-                    expect(collection.data.length).to.eq(11);
-                });
-            });
-            it('Should have correct fields for eggnog', function() {
-                const expectedFields = ['host', 'organism', 'description', 'count'];
-                return fetch.always(() => {
-                    const firstEggnog = collection.data[0];
-                    expectedFields.forEach((attr) => {
-                        expect(firstEggnog).to.have.property(attr);
-                    });
-                });
-            });
-            it('Should be ordered by decreasing count', function() {
-                return fetch.always(() => {
-                    let prevCount = collection.data[0].count;
-                    collection.data.slice(1).forEach((attr) => {
-                        const newCount = attr.count;
-                        expect(Math.min(prevCount, newCount)).to.eq(newCount);
-                        prevCount = newCount;
-                    });
-                });
-            });
-        });
-        context('IPR tests', function() {
-            const collection = new api.GenomeIprs({id: 'GUT_GENOME000001'});
-            const fetch = collection.fetch();
-            it('Should have correct number of ipr matches', function() {
-                return fetch.always(() => {
-                    expect(collection.data.length).to.eq(11);
-                });
-            });
-            it('Should have correct fields for ipr', function() {
-                const expectedFields = ['ipr_accession', 'ipr_url', 'count'];
-                return fetch.always(() => {
-                    const firstIPRMatch = collection.data[0];
-                    expectedFields.forEach((attr) => {
-                        expect(firstIPRMatch).to.have.property(attr);
-                    });
-                });
-            });
-            it('Should be ordered by decreasing count', function() {
-                return fetch.always(() => {
-                    let prevCount = collection.data[0].count;
-                    collection.data.slice(1).forEach((attr) => {
-                        const newCount = attr.count;
+                        const newCount = attr['genome-count'];
                         expect(Math.min(prevCount, newCount)).to.eq(newCount);
                         prevCount = newCount;
                     });
@@ -135,7 +104,7 @@ define(['api'], function(api) {
             });
         });
         context('Cog tests', function() {
-            const collection = new api.GenomeCogs({id: 'GUT_GENOME000001'});
+            const collection = new api.GenomeCogs({id: 'MGYG-HGUT-00279'});
             const fetch = collection.fetch();
             it('Should have correct number of cog matches', function() {
                 return fetch.always(() => {
@@ -143,7 +112,7 @@ define(['api'], function(api) {
                 });
             });
             it('Should have correct fields for cog', function() {
-                const expectedFields = ['name', 'description', 'count'];
+                const expectedFields = ['name', 'description', 'genome-count', 'pangenome-count'];
                 return fetch.always(() => {
                     const firstCog = collection.data[0];
                     expectedFields.forEach((attr) => {
@@ -153,9 +122,9 @@ define(['api'], function(api) {
             });
             it('Should be ordered by decreasing count', function() {
                 return fetch.always(() => {
-                    let prevCount = collection.data[0].count;
+                    let prevCount = collection.data[0]['genome-count'];
                     collection.data.slice(1).forEach((attr) => {
-                        const newCount = attr.count;
+                        const newCount = attr['genome-count'];
                         expect(Math.min(prevCount, newCount)).to.eq(newCount);
                         prevCount = newCount;
                     });
