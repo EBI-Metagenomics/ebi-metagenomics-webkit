@@ -53,7 +53,7 @@ define(['api'], function(api) {
             const model = new api.Genome({id: genomeAcc});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
-                return fetch.done(() => {
+                return fetch.always(() => {
                     console.log(model.attributes);
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
