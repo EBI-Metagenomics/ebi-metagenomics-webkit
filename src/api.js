@@ -5,7 +5,8 @@ const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
-const INTERPRO_URL = 'https://www.ebi.ac.uk/interpro/entry/';
+
+const PATRIC_URL = 'https://www.patricbrc.org/view/Genome/';
 
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
@@ -27,11 +28,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
          * @param {object} that context for url fetching
          * @return {Promise}
          */
-        function multiPageFetch(that) {
+        function multiPageFetch(that, reqData) {
             const deferred = $.Deferred();
             let data = [];
             $.get({
                 url: that.url(),
+                data: reqData,
                 success(response) {
                     try {
                         data = data.concat(response.data);
@@ -39,7 +41,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                         if (numPages > 1) {
                             let requests = [];
                             for (let x = 2; x <= numPages; x++) {
-                                requests.push($.get(that.url() + '?page=' + x));
+                                requests.push(
+                                    $.get({
+                                        url: that.url() + '?page=' + x,
+                                        data: reqData
+                                    })
+                                );
                             }
                             $.when(...requests).done(function() {
                                 _.each(requests, function(response) {
@@ -706,26 +713,59 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
+                const biome = util.getBiomeIconData(data.relationships.biome.data);
+                const biomeName = data.relationships.biome.data.id;
                 return {
                     accession: attr['accession'],
+                    ena_genome_accession: attr['ena-genome-accession'],
+                    ena_sample_accession: attr['ena-sample-accession'],
+                    ena_study_accession: attr['ena-study-accession'],
+                    ena_genome_url: ENA_VIEW_URL + attr['ena-genome-accession'],
+                    ena_sample_url: ENA_VIEW_URL + attr['ena-sample-accession'],
+                    ena_study_url: ENA_VIEW_URL + attr['ena-study-accession'],
+
+                    img_genome_accession: attr['igm-genome-accession'],
+                    img_genome_url: attr['igm-genome-accession'],
+
+                    ncbi_genome_accession: attr['ncbi-genome-accession'],
+                    ncbi_sample_accession: attr['ncbi-sample-accession'],
+                    ncbi_study_accession: attr['ncbi-study-accession'],
+
+                    patric_genome_accession: attr['patric-genome-accession'],
+                    patric_url: PATRIC_URL + attr['patric-genome-accession'],
+
+                    taxon_lineage: attr['taxon-lineage'],
+                    biome: biome,
+                    biome_icon: util.getBiomeIcon(biomeName),
+                    biome_name: util.formatLineage(biomeName, true),
+
+                    geographic_origin: attr['geographic-origin'],
+                    geographic_range: attr['geographic-range'],
+
+                    completeness: attr['completeness'],
+                    contamination: attr['contamination'],
                     length: attr['length'],
                     num_contigs: attr['num-contigs'],
                     n_50: attr['n-50'],
                     gc_content: attr['gc-content'],
                     type: attr['type'],
-                    completeness: attr['completeness'],
-                    contamination: attr['contamination'],
                     rna_5s: attr['rna-5s'],
                     rna_16s: attr['rna-16s'],
                     rna_23s: attr['rna-23s'],
-                    trna_s: attr['trnas'],
-                    num_genomes: attr['num-genomes'],
+                    trnas: attr['trnas'],
+                    nc_rnas: attr['nc-rnas'],
                     num_proteins: attr['num-proteins'],
+                    eggnog_cov: attr['eggnog-coverage'],
+                    ipr_cov: attr['ipr-coverage'],
+                    num_genomes_total: attr['num-genomes-total'],
+                    num_genomes_nr: attr['num-genomes-non-redundant'],
+
                     pangenome_size: attr['pangenome-size'],
-                    core_prop: attr['core-prop'],
-                    accessory_prop: attr['accessory-prop'],
-                    eggnog_prop: attr['eggnog-prop'],
-                    ipr_prop: attr['ipr-prop'],
+                    pangenome_core_size: attr['pangenome-core-size'],
+                    pangenome_accessory_size: attr['pangenome-accessory-size'],
+                    pangenome_eggnog_cov: attr['pangenome-eggnog-coverage'],
+                    pangenome_ipr_cov: attr['pangenome-ipr-coverage'],
+
                     last_updated: util.formatDate(attr['last-update']),
                     first_created: util.formatDate(attr['first-created']),
                     genome_url: subfolder + '/genomes/' + attr['accession']
@@ -741,6 +781,34 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const Release = Backbone.Model.extend({
+            url() {
+                return API_URL + 'release/' + this.id;
+            },
+            parse(response) {
+                const attr = response.attributes;
+                return {
+                    version: attr['version'],
+                    last_updated: util.formatDate(attr['last-update']),
+                    first_created: util.formatDate(attr['first-created']),
+                    num_genomes: attr['genome-count']
+                };
+            }
+        });
+        const Releases = Backbone.Collection.extend({
+            url: API_URL + 'release',
+            model: Release,
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const ReleaseGenomes = GenomesCollection.extend({
+            url() {
+                return API_URL + 'release/' + this.id + '/genomes';
+            }
+        });
+
         const GenomeDownloads = Backbone.Model.extend({
             url() {
                 return API_URL + 'genomes/' + this.id + '/downloads';
@@ -753,51 +821,45 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const GenomeDatasetCollection = Backbone.Collection.extend({
             initialize(params) {
                 this.id = params['id'];
+                this.pangenome = params['pangenome'];
             },
             fetch() {
                 const that = this;
-                return multiPageFetch(this).done((data) => {
+                let reqData = {'page_size': 100};
+                if (this.pangenome) {
+                    reqData['pangenome'] = this.pangenome;
+                }
+                return multiPageFetch(this, reqData).done((data) => {
                     return that.parse(data);
                 });
             }
         });
-        const GenomeKeggs = GenomeDatasetCollection.extend({
+        const GenomeKeggClasses = GenomeDatasetCollection.extend({
             url() {
-                return API_URL + 'genomes/' + this.id + '/kegg';
+                return API_URL + 'genomes/' + this.id + '/kegg-class';
             },
 
             parse(data) {
                 data = data.map(function(kegg) {
-                    const attr = kegg['attributes'];
-                    return {
-                        'brite_id': attr['brite-id'],
-                        'name': attr['brite-name'],
-                        'count': attr['count']
-                    };
+                    return kegg['attributes'];
                 });
                 this.data = data;
                 return data;
             }
         });
-
-        const GenomeIprs = GenomeDatasetCollection.extend({
+        const GenomeKeggModules = GenomeDatasetCollection.extend({
             url() {
-                return API_URL + 'genomes/' + this.id + '/ipr';
+                return API_URL + 'genomes/' + this.id + '/kegg-module';
             },
+
             parse(data) {
-                data = data.map(function(ipr) {
-                    const attr = ipr['attributes'];
-                    return {
-                        'ipr_accession': attr['ipr-accession'],
-                        'ipr_url': INTERPRO_URL + attr['ipr-accession'],
-                        'count': attr['count']
-                    };
+                data = data.map(function(kegg) {
+                    return kegg['attributes'];
                 });
                 this.data = data;
                 return data;
             }
         });
-
         const GenomeCogs = GenomeDatasetCollection.extend({
             url() {
                 return API_URL + 'genomes/' + this.id + '/cogs';
@@ -810,18 +872,32 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return data;
             }
         });
-        const GenomeEggNogs = GenomeDatasetCollection.extend({
+
+        const GenomeSet = Backbone.Model.extend({
             url() {
-                return API_URL + 'genomes/' + this.id + '/eggnog';
+                return API_URL + 'genomeset/' + this.id;
             },
-            parse(data) {
-                data = data.map(function(eggnog) {
-                    return eggnog.attributes;
-                });
-                this.data = data;
-                return data;
+            parse(response) {
+                return response.attributes;
             }
         });
+        const GenomeSets = Backbone.Collection.extend({
+            url: API_URL + 'genomeset',
+            model: GenomeSet,
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const ReleaseDownloads = Backbone.Model.extend({
+            url() {
+                return API_URL + 'release/' + this.id + '/downloads';
+            },
+            parse(response) {
+                this.attributes.files = clusterAnalysisDownloads(response.data);
+            }
+        });
+
         return {
             API_URL,
             Study,
@@ -857,10 +933,15 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             Genome,
             GenomesCollection,
             GenomeDownloads,
-            GenomeKeggs,
-            GenomeIprs,
+            GenomeKeggClasses,
+            GenomeKeggModules,
             GenomeCogs,
-            GenomeEggNogs
+            Release,
+            Releases,
+            ReleaseGenomes,
+            GenomeSet,
+            GenomeSets,
+            ReleaseDownloads
         };
     };
     return init;
