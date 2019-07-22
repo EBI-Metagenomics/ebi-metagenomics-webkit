@@ -12,7 +12,8 @@ define(['api'], function(api) {
                     'superstudy_id',
                     'superstudy_url',
                     'superstudy_title',
-                    'superstudy_description'
+                    'superstudy_description',
+                    'superstudy_image_url',
                 ];
                 return fetch.always(() => {
                     expectedAttributes.forEach((attr) => {
@@ -28,6 +29,13 @@ define(['api'], function(api) {
                         .to.equal('/metagenomics/super-studies/' + superStudyId);
                 });
             });
+
+            if('Should have the correct image property', function() {
+                return fetch.always(() => {
+                    expect(model.attributes['superstudy_image_url'])
+                        .to.have.string('/super-studies-img/' + superStudyId + '/test_6sWQrNG.jpg');
+                });
+            })
 
             it('Should fetch the flagship studies for the Super Study', function() {
                 const collection = new api.SuperStudyFlagshipStudiesCollection(

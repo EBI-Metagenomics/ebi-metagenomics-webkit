@@ -244,7 +244,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     superstudy_id: attr['super-study-id'],
                     superstudy_url: url,
                     superstudy_title: attr['title'],
-                    superstudy_description: attr['description']
+                    superstudy_description: attr['description'],
+                    superstudy_image_url: attr['image'],
                 };
             }
         });
