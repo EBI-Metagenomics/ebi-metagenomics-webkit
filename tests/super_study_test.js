@@ -33,7 +33,7 @@ define(['api'], function(api) {
             if('Should have the correct image property', function() {
                 return fetch.always(() => {
                     expect(model.attributes['superstudy_image_url'])
-                        .to.have.string('http://locahost:9000/results/images/test_6sWQrNG.jpg');
+                        .to.have.string('/results/images/test_6sWQrNG.jpg');
                 });
             })
 
