@@ -23,7 +23,7 @@ define([
                     return;
                 }
                 let total = 0;
-                let categories = this.data.map((d) => {return d.name});
+                let categories = this.data.map((d) => d.name);
                 let genomeSeries = this.data.map((d) => {
                     let c = d['genome-count'];
                     total += c;
@@ -84,7 +84,7 @@ define([
                             stack: 'genome'
                         },
                         {
-                            name: 'Pangenome',
+                            name: 'Pan-genome',
                             data: pangenomeSeries.slice(0, 10),
                             colors: util.TAXONOMY_COLOURS[2],
                             stack: 'pangenome'
