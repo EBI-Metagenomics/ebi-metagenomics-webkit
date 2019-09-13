@@ -42,6 +42,7 @@ before_install:
   # Create EMG and ENA user schemas
   - mysql -e 'CREATE DATABASE emg;'
   - mysql -e 'CREATE DATABASE ena;'
+  - mysql -e "SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES'"
 
   ## EMG SCHEMA
   # Create tables from django model
