@@ -416,6 +416,71 @@ define(['underscore'], function(_) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    // function hasCategory(dataset, category) {
+    //     for (let d of dataset) {
+    //         if (d.name === category) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+    //
+    // function sortByName(a, b) {
+    //     return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0);
+    // }
+    //
+    // function sortByCount(a, b){
+    //     return a.count < b.count ? -1 : (a.count > b.count ? 1 : 0);
+    // }
+    //
+    // function addMissingCategories(genome, pangenome) {
+    //     let newGenome = [];
+    //     let newPangenome = [];
+    //     for (let d of genome) {
+    //         if (!hasCategory(pangenome, d.name)) {
+    //             let d2 = d;
+    //             d2['count'] = 0;
+    //             d2['pangenome'] = true;
+    //             newPangenome.push(d2);
+    //         }
+    //         newGenome.push(d);
+    //     }
+    //
+    //     for (let d of pangenome) {
+    //         if (!hasCategory(newGenome, d.name)) {
+    //             let d2 = d;
+    //             d2['count'] = 0;
+    //             d2['pangenome'] = false;
+    //             newGenome.push(d2);
+    //         }
+    //         newPangenome.push(d);
+    //     }
+    //     newGenome = newGenome.sort(sortByCount).reverse();
+    //     const order = newGenome.map((o) => {return o.name});
+    //     newPangenome = newPangenome.sort((a, b) => {
+    //         const ai = order.indexOf(a.name);
+    //         const bi = order.indexOf(b.name);
+    //         return ai < bi ? -1 : (ai > bi ? 1 : 0);
+    //     });
+    //     return {
+    //         'genome': newGenome,
+    //         'pangenome': newPangenome
+    //     };
+    // }
+    //
+    // function splitPangenomeData(data) {
+    //     const genome = [];
+    //     const pangenome = [];
+    //     for (let d of data) {
+    //         if (d.pangenome) {
+    //             pangenome.push(d);
+    //         } else {
+    //             genome.push(d);
+    //         }
+    //     }
+    //     return addMissingCategories(genome, pangenome);
+    // }
+
     return {
         TAXONOMY_COLOURS,
         sumProp,

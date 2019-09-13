@@ -12,15 +12,14 @@ define([
     './charts/interproMatchPie',
     './charts/goTermBarChart',
     './charts/goTermPieChart',
-    './charts/genomeKeggColumnChart',
-    './charts/genomeIprColumnChart',
+    './charts/genomeKeggClassColumnChart',
+    './charts/genomeKeggModuleColumnChart',
     './charts/genomeCogColumnChart',
-    './charts/genomeEggNogColumnChart'
 ], function(
     QcChart, TaxonomyPie, TaxonomyColumn, TaxonomyColumnStacked, NucleotideHist, SeqFeatSumChart,
     GcContentChart, GcDistributionChart, ReadsLengthHist, SeqLengthChart, InterproMatchPie,
-    GoTermBarChart, GoTermPieChart, GenomeKeggColumnChart, GenomeIprColumnChart,
-    GenomeCogColumnChart, GenomeEggNogColumnChart) {
+    GoTermBarChart, GoTermPieChart, GenomeKeggClassColumnChart, GenomeKeggModuleColumnChart,
+    GenomeCogColumnChart) {
     return {
         QcChart,
         TaxonomyPie,
@@ -35,9 +34,8 @@ define([
         InterproMatchPie,
         GoTermBarChart,
         GoTermPieChart,
-        GenomeKeggColumnChart,
-        GenomeIprColumnChart,
-        GenomeCogColumnChart,
-        GenomeEggNogColumnChart
+        GenomeKeggClassColumnChart,
+        GenomeKeggModuleColumnChart,
+        GenomeCogColumnChart
     };
 });
