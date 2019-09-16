@@ -6,6 +6,10 @@ const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
 
+const IMG_URL = ' https://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=TaxonDetail&page=taxonDetail&taxon_oid=';
+const NCBI_ASSEMBLY_URL = 'https://www.ncbi.nlm.nih.gov/assembly/';
+const NCBI_SAMPLE_URL = 'https://www.ncbi.nlm.nih.gov/biosample/?term=';
+const NCBI_PROJECT_URL = 'https://www.ncbi.nlm.nih.gov/bioproject/';
 const PATRIC_URL = 'https://www.patricbrc.org/view/Genome/';
 
 // Based off of CommonJS / AMD compatible template:
@@ -774,11 +778,16 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     ena_study_url: ENA_VIEW_URL + attr['ena-study-accession'],
 
                     img_genome_accession: attr['igm-genome-accession'],
-                    img_genome_url: attr['igm-genome-accession'],
+                    img_genome_url: IMG_URL + attr['igm-genome-accession'],
 
                     ncbi_genome_accession: attr['ncbi-genome-accession'],
+                    ncbi_genome_url: NCBI_ASSEMBLY_URL + attr['ncbi-genome-accession'],
+
                     ncbi_sample_accession: attr['ncbi-sample-accession'],
+                    ncbi_sample_url: NCBI_SAMPLE_URL + attr['ncbi-sample-accession'],
+
                     ncbi_study_accession: attr['ncbi-study-accession'],
+                    ncbi_study_url: NCBI_PROJECT_URL + attr['ncbi-study-accession'],
 
                     patric_genome_accession: attr['patric-genome-accession'],
                     patric_url: PATRIC_URL + attr['patric-genome-accession'],
