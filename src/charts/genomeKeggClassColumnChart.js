@@ -88,7 +88,7 @@ define([
                             name: 'Pan-genome',
                             data: pangenomeSeries.slice(0, 10),
                             colors: util.TAXONOMY_COLOURS[2],
-                            stack: 'pangenome'
+                            stack: 'pan-genome'
                         }]
                 };
                 this.chart = Highcharts.chart(containerId, options);
