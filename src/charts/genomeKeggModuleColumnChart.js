@@ -25,6 +25,10 @@ define([
 
                 let total = 0;
                 let categories = this.data.map((d) => {return d.name});
+                let categoriesDescriptions = this.data.reduce((memo, d) => {
+                    memo[d.name] = d.description;
+                    return memo;
+                }, {});
                 let genomeSeries = this.data.map((d) => {
                     let c = d['genome-count'];
                     total += c;
@@ -73,9 +77,13 @@ define([
                     },
                     tooltip: {
                         formatter() {
-                            return this.series.name + '<br/>' + 'Count: ' + this.y;
+                            const description = categoriesDescriptions[this.key];
+                            let tooltip = this.series.name + '<br/>Count: ' + this.y;
+                            if (description) {
+                                tooltip += '<br />KEGG Module: ' + description;
+                            }
+                            return tooltip;
                         }
-
                     },
                     series: [
                         {
@@ -88,7 +96,7 @@ define([
                             name: 'Pan-genome',
                             data: pangenomeSeries.slice(0, 10),
                             colors: util.TAXONOMY_COLOURS[2],
-                            stack: 'pangenome'
+                            stack: 'pan-genome'
                         }]
                 };
                 this.chart = Highcharts.chart(containerId, options);
