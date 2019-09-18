@@ -26,7 +26,7 @@ define([
                 let total = 0;
                 let categories = this.data.map((d) => {return d['class-id']});
                 let categoriesDescriptions = this.data.reduce((memo, d) => {
-                    memo[d.name] = d.description;
+                    memo[d.name] = d.name;
                     return memo;
                 }, {});
                 let genomeSeries = this.data.map((d) => {
