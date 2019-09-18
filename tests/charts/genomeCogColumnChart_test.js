@@ -12,8 +12,10 @@ define(['charts/genomeCogColumnChart'], function(GenomeCogColumnChart) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYG-HGUT-00279';
-                const chart = new GenomeCogColumnChart(containerID,
-                    {accession: accession, apiConfig: apiConfig});
+                const chart = new GenomeCogColumnChart(
+                    containerID,
+                    {accession: accession, apiConfig: apiConfig},
+                    {includePangenome: true});
                 chart.loaded.done(() => {
                     expect($('.highcharts-series-group .highcharts-point').length).to.equal(20);
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
