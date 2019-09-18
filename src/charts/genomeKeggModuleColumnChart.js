@@ -85,20 +85,21 @@ define([
                             return tooltip;
                         }
                     },
-                    series: [
-                        {
-                            name: 'Genome',
-                            data: genomeSeries.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS[1],
-                            stack: 'genome'
-                        },
-                        {
-                            name: 'Pan-genome',
-                            data: pangenomeSeries.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS[2],
-                            stack: 'pan-genome'
-                        }]
+                    series: [{
+                        name: 'Genome',
+                        data: genomeSeries.slice(0, 10),
+                        colors: util.TAXONOMY_COLOURS[1],
+                        stack: 'genome'
+                    }]
                 };
+                if (chartOptions.includePangenome) {
+                    options.series.push({
+                        name: 'Pan-genome',
+                        data: pangenomeSeries.slice(0, 10),
+                        colors: util.TAXONOMY_COLOURS[2],
+                        stack: 'pan-genome'
+                    });
+                }
                 this.chart = Highcharts.chart(containerId, options);
             }).done(() => {
                 this.loaded.resolve();

@@ -24,6 +24,10 @@ define([
                 }
                 let total = 0;
                 let categories = this.data.map((d) => d.name);
+                let categoriesDescriptions = this.data.reduce((memo, d) => {
+                    memo[d.name] = d.description;
+                    return memo;
+                }, {});
                 let genomeSeries = this.data.map((d) => {
                     let c = d['genome-count'];
                     total += c;
@@ -72,24 +76,29 @@ define([
                     },
                     tooltip: {
                         formatter() {
-                            return this.series.name + '<br/>' + 'Count: ' + this.y;
+                            const description = categoriesDescriptions[this.key];
+                            let tooltip = this.series.name + '<br/>Count: ' + this.y;
+                            if (description) {
+                                tooltip += '<br />COG: ' + description;
+                            }
+                            return tooltip;
                         }
-
                     },
-                    series: [
-                        {
-                            name: 'Genome',
-                            data: genomeSeries.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS[1],
-                            stack: 'genome'
-                        },
-                        {
-                            name: 'Pan-genome',
-                            data: pangenomeSeries.slice(0, 10),
-                            colors: util.TAXONOMY_COLOURS[2],
-                            stack: 'pangenome'
-                        }]
+                    series: [{
+                        name: 'Genome',
+                        data: genomeSeries.slice(0, 10),
+                        colors: util.TAXONOMY_COLOURS[1],
+                        stack: 'genome'
+                    }]
                 };
+                if (chartOptions.includePangenome) {
+                    options.series.push({
+                        name: 'Pan-genome',
+                        data: pangenomeSeries.slice(0, 10),
+                        colors: util.TAXONOMY_COLOURS[2],
+                        stack: 'pangenome'
+                    });
+                }
                 this.chart = Highcharts.chart(containerId, options);
             }).done(() => {
                 this.loaded.resolve();
