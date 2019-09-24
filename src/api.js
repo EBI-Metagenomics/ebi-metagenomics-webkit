@@ -472,6 +472,30 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        let AnalysesContig = Backbone.Model.extend({
+            parse(data) {
+                return {
+                    display_name: data.attributes['display-name'],
+                    contig_name: data.attributes['contig-name'],
+                    length: data.attributes.length,
+                    coverage: data.attributes.coverage
+                };
+            }
+        });
+        
+        let ContigCollection = Backbone.Collection.extend({
+            model: AnalysesContig,
+            initialize(options) {
+                this.accession = options.accession;
+            },
+            url() {
+                return API_URL + 'analyses/' + this.accession + '/contigs';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const Biome = Backbone.Model.extend({
             url() {
                 return API_URL + 'biomes/' + this.id;
@@ -640,6 +664,18 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const TaxonomyOverview = Backbone.Model.extend({
+            initialize(id) {
+                this.id = id;
+            },
+            url() {
+                return API_URL + 'analyses/' + this.id + '/taxonomy/overview';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const InterproIden = GenericAnalysisResult.extend({
             url() {
                 return API_URL + 'analyses/' + this.id + '/interpro-identifiers';
@@ -652,6 +688,30 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const GoSlim = GenericAnalysisResult.extend({
             url() {
                 return API_URL + 'analyses/' + this.id + '/go-slim';
+            }
+        });
+
+        const KeggModule = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/kegg-modules';
+            }
+        });
+
+        const KeggOrtholog = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/kegg-orthologs';
+            }
+        });
+
+        const GenomeProperties = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/genome-properties';
+            }
+        });
+
+        const Pfam = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/pfam-entries';
             }
         });
 
