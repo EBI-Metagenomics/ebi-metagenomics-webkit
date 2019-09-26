@@ -111,7 +111,7 @@ define([
                     return $.when();
                 }
             } else {
-                const analysis = this.api.Analysis({id: params['accession']});
+                const analysis = new this.api.Analysis({id: params['accession']});
                 return analysis.fetch().then(() => {
                     that.data = analysis['attributes']['analysis_summary'];
                     that.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
