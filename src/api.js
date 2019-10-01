@@ -475,8 +475,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         let AnalysesContig = Backbone.Model.extend({
             parse(data) {
                 return {
-                    display_name: data.attributes['display-name'],
-                    contig_name: data.attributes['contig-name'],
+                    contig_id: data.attributes['contig-id'],
                     length: data.attributes.length,
                     coverage: data.attributes.coverage
                 };
