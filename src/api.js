@@ -717,6 +717,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const AntiSMASHGeneCluster = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/antismash-gene-clusters';
+            }
+        });
+
         const Pfam = GenericAnalysisResult.extend({
             url() {
                 return API_URL + 'analyses/' + this.id + '/pfam-entries';
@@ -1062,6 +1068,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             KeggOrtholog,
             Pfam,
             GenomeProperties,
+            AntiSMASHGeneCluster,
             StudyDownloads,
             AnalysisDownloads,
             StudyGeoCoordinates,
