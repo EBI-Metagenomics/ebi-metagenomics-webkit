@@ -477,7 +477,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return {
                     contig_id: data.attributes['contig-id'],
                     length: data.attributes.length,
-                    coverage: data.attributes.coverage
+                    coverage: data.attributes.coverage,
+                    antismash_geneclusters_count: data.attributes['antismash-geneclusters-count'],
+                    kegg_modules_count: data.attributes['kegg-modules-count']
                 };
             }
         });
