@@ -478,8 +478,13 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     contig_id: data.attributes['contig-id'],
                     length: data.attributes.length,
                     coverage: data.attributes.coverage,
-                    antismash_geneclusters_count: data.attributes['antismash-geneclusters-count'],
-                    kegg_modules_count: data.attributes['kegg-modules-count']
+                    has_cog: data.attributes['has-cog'],
+                    has_kegg: data.attributes['has-kegg'],
+                    has_pfam: data.attributes['has-pfam'],
+                    has_interpro: data.attributes['has-interpro'],
+                    has_go: data.attributes['has-go'],
+                    has_antismash: data.attributes['has-antismash'],
+                    has_kegg_modules: data.attributes['has-kegg-modules'],
                 };
             }
         });
