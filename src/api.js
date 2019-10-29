@@ -484,7 +484,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     has_interpro: data.attributes['has-interpro'],
                     has_go: data.attributes['has-go'],
                     has_antismash: data.attributes['has-antismash'],
-                    has_kegg_modules: data.attributes['has-kegg-modules'],
+                    // TODO: this property is not used at the moment.
+                    // has_kegg_modules: data.attributes['has-kegg-modules'],
                 };
             }
         });
