@@ -472,6 +472,37 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        let AnalysesContig = Backbone.Model.extend({
+            parse(data) {
+                return {
+                    contig_id: data.attributes['contig-id'],
+                    length: data.attributes.length,
+                    coverage: data.attributes.coverage,
+                    has_cog: data.attributes['has-cog'],
+                    has_kegg: data.attributes['has-kegg'],
+                    has_pfam: data.attributes['has-pfam'],
+                    has_interpro: data.attributes['has-interpro'],
+                    has_go: data.attributes['has-go'],
+                    has_antismash: data.attributes['has-antismash'],
+                    // TODO: this property is not used at the moment.
+                    // has_kegg_modules: data.attributes['has-kegg-modules'],
+                };
+            }
+        });
+        
+        let ContigCollection = Backbone.Collection.extend({
+            model: AnalysesContig,
+            initialize(options) {
+                this.accession = options.accession;
+            },
+            url() {
+                return API_URL + 'analyses/' + this.accession + '/contigs';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const Biome = Backbone.Model.extend({
             url() {
                 return API_URL + 'biomes/' + this.id;
@@ -519,8 +550,16 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         });
 
         const Analysis = Backbone.Model.extend({
+            initialize(data) {
+                this.id = data.id;
+                this.params = data.params;
+            },
             url() {
-                return API_URL + 'analyses/' + this.id;
+                if (this.params) {
+                    return API_URL + 'analyses/' + this.id + '?' + $.param(this.params);
+                } else {
+                    return API_URL + 'analyses/' + this.id;
+                }
             },
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
@@ -550,9 +589,10 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     complete_time: attr['complete-time'],
                     instrument_model: attr['instrument-model'],
                     instrument_platform: attr['instrument-platform'],
-                    pipeline_version: attr['pipeline-version'],
+                    pipeline_version: parseFloat(attr['pipeline-version']),
                     pipeline_url: subfolder + '/pipelines/' + attr['pipeline-version'],
-                    download: attr['download']
+                    download: attr['download'],
+                    included: d.included,
                 };
             }
         });
@@ -640,6 +680,18 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             }
         });
 
+        const TaxonomyOverview = Backbone.Model.extend({
+            initialize(id) {
+                this.id = id;
+            },
+            url() {
+                return API_URL + 'analyses/' + this.id + '/taxonomy/overview';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
         const InterproIden = GenericAnalysisResult.extend({
             url() {
                 return API_URL + 'analyses/' + this.id + '/interpro-identifiers';
@@ -652,6 +704,36 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const GoSlim = GenericAnalysisResult.extend({
             url() {
                 return API_URL + 'analyses/' + this.id + '/go-slim';
+            }
+        });
+
+        const KeggModule = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/kegg-modules';
+            }
+        });
+
+        const KeggOrtholog = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/kegg-orthologs';
+            }
+        });
+
+        const GenomeProperties = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/genome-properties';
+            }
+        });
+
+        const AntiSMASHGeneCluster = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/antismash-gene-clusters';
+            }
+        });
+
+        const Pfam = GenericAnalysisResult.extend({
+            url() {
+                return API_URL + 'analyses/' + this.id + '/pfam-entries';
             }
         });
 
@@ -670,6 +752,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             },
             parse(response) {
                 this.attributes.downloadGroups = clusterAnalysisDownloads(response.data);
+            },
+            load(data) {
+                this.attributes.downloadGroups = clusterAnalysisDownloads(data);
             }
         });
 
@@ -978,12 +1063,20 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             GenericAnalysisResult,
             getKronaURL,
             Analysis,
+            AnalysesContig,
+            ContigCollection,
             RunAnalyses,
             RunAssemblies,
             StudyAnalyses,
             Taxonomy,
+            TaxonomyOverview,
             InterproIden,
             GoSlim,
+            KeggModule,
+            KeggOrtholog,
+            Pfam,
+            GenomeProperties,
+            AntiSMASHGeneCluster,
             StudyDownloads,
             AnalysisDownloads,
             StudyGeoCoordinates,

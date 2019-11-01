@@ -14,6 +14,7 @@ define([
          */
         constructor(containerId, options) {
             super(containerId, options);
+            this.analysesModel = options.analysesModel; // Analyses with the data loaded
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
                 console.debug('Drawing QC chart');
@@ -95,21 +96,34 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const analysis = new this.api.Analysis({id: params['accession']});
             const qcStats = new this.api.QcChartStats({id: params['accession']});
-
+            // TODO: clean this.
             const that = this;
-            return analysis.fetch().then(function() {
-                that.data = analysis['attributes']['analysis_summary'];
-                that.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
-                if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
-                    return qcStats.fetch({dataType: 'text'});
+            if (params.analysesModel) {
+                const analysis = params.analysesModel;
+                that.data = analysis.get('analysis_summary');
+                that.data.is_assembly = analysis.get('experiment_type') === 'assembly';
+                if (parseFloat(analysis.get('pipeline_version')) > 3.0) {
+                    return qcStats.fetch({dataType: 'text'}).then(() => {
+                        that.data.sequence_count = qcStats.get('sequence_count');
+                    });
                 } else {
-                    return true;
+                    return $.when();
                 }
-            }).then(() => {
-                that.data['sequence_count'] = qcStats['attributes']['sequence_count'];
-            });
+            } else {
+                const analysis = new this.api.Analysis({id: params['accession']});
+                return analysis.fetch().then(() => {
+                    that.data = analysis['attributes']['analysis_summary'];
+                    that.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
+                    if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
+                        return qcStats.fetch({dataType: 'text'});
+                    } else {
+                        return true;
+                    }
+                }).then(() => {
+                    that.data['sequence_count'] = qcStats['attributes']['sequence_count'];
+                });    
+            }
         }
     }
 
