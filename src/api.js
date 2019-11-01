@@ -589,7 +589,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     complete_time: attr['complete-time'],
                     instrument_model: attr['instrument-model'],
                     instrument_platform: attr['instrument-platform'],
-                    pipeline_version: attr['pipeline-version'],
+                    pipeline_version: parseFloat(attr['pipeline-version']),
                     pipeline_url: subfolder + '/pipelines/' + attr['pipeline-version'],
                     download: attr['download'],
                     included: d.included,
