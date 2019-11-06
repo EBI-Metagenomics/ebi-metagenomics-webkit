@@ -57,23 +57,29 @@ before_install:
 
   ## EMG FIXTURES
   - travis/create_download_files.sh
-  - emgcli import_taxonomy ERR1022502 ~/results
-  - emgcli import_qc ERR1022502 ~/results
-  - emgcli import_summary ERR1022502 ~/results .ipr
-  - emgcli import_summary ERR1022502 ~/results .go_slim
-  - emgcli import_summary ERR1022502 ~/results .go
+  - emgcli import_taxonomy ERR1022502 ~/results --pipeline 4.0
+  - emgcli import_qc ERR1022502 ~/results --pipeline 4.0
+  - emgcli import_summary ERR1022502 ~/results .ipr --pipeline 4.0
+  - emgcli import_summary ERR1022502 ~/results .go_slim --pipeline 4.0
+  - emgcli import_summary ERR1022502 ~/results .go --pipeline 4.0
 
-  - emgcli import_taxonomy ERR867655 ~/results
-  - emgcli import_qc ERR867655 ~/results
-  - emgcli import_summary ERR867655 ~/results .ipr
-  - emgcli import_summary ERR867655 ~/results .go_slim
-  - emgcli import_summary ERR867655 ~/results .go
+  - emgcli import_taxonomy ERR1022502 ~/results --pipeline 2.0
+  - emgcli import_qc ERR1022502 ~/results --pipeline 2.0
+  - emgcli import_summary ERR1022502 ~/results .ipr --pipeline 2.0
+  - emgcli import_summary ERR1022502 ~/results .go_slim --pipeline 2.0
+  - emgcli import_summary ERR1022502 ~/results .go --pipeline 2.0
 
-  - emgcli import_taxonomy ERP104236 ~/results
-  - emgcli import_qc ERP104236 ~/results
-  - emgcli import_summary ERP104236 ~/results .ipr
-  - emgcli import_summary ERP104236 ~/results .go_slim
-  - emgcli import_summary ERP104236 ~/results .go
+  - emgcli import_taxonomy ERR867655 ~/results --pipeline 4.0
+  - emgcli import_qc ERR867655 ~/results --pipeline 4.0
+  - emgcli import_summary ERR867655 ~/results .ipr --pipeline 4.0
+  - emgcli import_summary ERR867655 ~/results .go_slim --pipeline 4.0
+  - emgcli import_summary ERR867655 ~/results .go --pipeline 4.0
+
+  - emgcli import_taxonomy ERP104236 ~/results --pipeline 4.0
+  - emgcli import_qc ERP104236 ~/results --pipeline 4.0
+  - emgcli import_summary ERP104236 ~/results .ipr --pipeline 4.0
+  - emgcli import_summary ERP104236 ~/results .go_slim --pipeline 4.0
+  - emgcli import_summary ERP104236 ~/results .go --pipeline 4.0
 
   - emgcli import_kegg_modules $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/kegg_module_orthology.json
   - emgcli import_kegg_classes $TRAVIS_BUILD_DIR/travis/emg_api_datafiles/kegg_class_orthology.json
