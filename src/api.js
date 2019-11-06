@@ -572,6 +572,10 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     return obj;
                 }, {});
                 let assemblyID = data.relationships.assembly.data.id;
+                let pipelineVersion = parseFloat(attr['pipeline-version']);
+                if (_.isNumber(pipelineVersion)) {
+                    pipelineVersion = pipelineVersion.toFixed(1);
+                }
 
                 return {
                     study_accession: studyID,
@@ -589,7 +593,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     complete_time: attr['complete-time'],
                     instrument_model: attr['instrument-model'],
                     instrument_platform: attr['instrument-platform'],
-                    pipeline_version: parseFloat(attr['pipeline-version']),
+                    pipeline_version: pipelineVersion,
                     pipeline_url: subfolder + '/pipelines/' + attr['pipeline-version'],
                     download: attr['download'],
                     included: d.included,
