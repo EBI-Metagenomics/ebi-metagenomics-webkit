@@ -125,7 +125,17 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
          */
         function clusterAnalysisDownloads(downloads) {
             const groups = {};
-            _.each(downloads, function(download) {
+            const filteredDownloads =_.filter(downloads, (dl) => {
+                const attributes = dl.attributes;
+                const passed = attributes &&
+                    _.has(attributes, 'description') &&
+                    _.has(attributes, 'file-format');
+                if (!passed && console && console.warn) {
+                    console.warn('Download entry has missing values.')
+                }
+                return passed;
+            });
+            _.each(filteredDownloads, (download) => {
                 const attr = download.attributes;
                 const group = attr['group-type'];
                 const label = attr.description.label;
