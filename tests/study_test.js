@@ -38,7 +38,7 @@ define(['api'], function(api) {
                     expect(model.attributes['samples_url'])
                         .to.equal('/metagenomics/studies/' + studyAcc + '#samples-section');
                     expect(model.attributes['ena_url'])
-                        .to.equal('https://www.ebi.ac.uk/ena/data/view/ERP019566');
+                        .to.equal('https://www.ebi.ac.uk/ena/browser/view/ERP019566');
                 });
             });
             it('Should provide related studies', function() {
