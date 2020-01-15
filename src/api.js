@@ -1,6 +1,6 @@
 const NO_DATA_MSG = 'N/A';
 
-const ENA_VIEW_URL = 'https://www.ebi.ac.uk/ena/data/view/';
+const ENA_VIEW_URL = 'https://www.ebi.ac.uk/ena/browser/view/';
 const EUROPE_PMC_ENTRY_URL = 'https://europepmc.org/abstract/MED/';
 const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';

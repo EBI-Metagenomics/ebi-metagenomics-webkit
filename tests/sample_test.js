@@ -38,7 +38,7 @@ define(['api'], function(api) {
                     expect(model.attributes['sample_url'])
                         .to.equal('/metagenomics/samples/' + sampleAccession);
                     expect(model.attributes['ena_url'])
-                        .to.equal('https://www.ebi.ac.uk/ena/data/view/' + sampleAccession);
+                        .to.equal('https://www.ebi.ac.uk/ena/browser/view/' + sampleAccession);
                 });
             });
             it('Should provide load metadata', function() {

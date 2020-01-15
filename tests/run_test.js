@@ -36,7 +36,7 @@ define(['api'], function(api) {
                     expect(model.attributes['sample_url'])
                         .to.equal('/metagenomics/samples/ERS667576');
                     expect(model.attributes['ena_url'])
-                        .to.equal('https://www.ebi.ac.uk/ena/data/view/' + runAccession);
+                        .to.equal('https://www.ebi.ac.uk/ena/browser/view/' + runAccession);
                 });
             });
         });
