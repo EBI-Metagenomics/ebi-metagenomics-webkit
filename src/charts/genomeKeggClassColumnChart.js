@@ -73,7 +73,7 @@ define([
                         enabled: false
                     },
                     legend: {
-                        enabled: false
+                        enabled: true
                     },
                     tooltip: {
                         formatter() {
