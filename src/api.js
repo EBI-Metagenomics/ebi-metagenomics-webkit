@@ -916,6 +916,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     ipr_cov: attr['ipr-coverage'],
                     num_genomes_total: attr['num-genomes-total'],
                     num_genomes_nr: attr['num-genomes-non-redundant'],
+                    cmseq: attr['cmseq'],
+                    taxincons: attr['taxincons'],
 
                     pangenome_size: attr['pangenome-size'],
                     pangenome_core_size: attr['pangenome-core-size'],
