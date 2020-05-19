@@ -14,6 +14,7 @@ let expectedAttributes = [
     'patric_genome_accession',
     'patric_url',
     'taxon_lineage',
+    'taxincons',
     'biome',
     'biome_icon',
     'biome_name',
@@ -43,7 +44,8 @@ let expectedAttributes = [
     'pangenome_ipr_cov',
     'last_updated',
     'first_created',
-    'genome_url'];
+    'genome_url'
+];
 
 define(['api'], function(api) {
     api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
@@ -54,10 +56,8 @@ define(['api'], function(api) {
             const fetch = model.fetch();
             it('Should have expected fields', function() {
                 return fetch.always(() => {
-                    console.log(model.attributes);
                     expectedAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
-                        expect(model.attributes[attr]).to.not.equal(null);
                     });
                 });
             });
@@ -80,7 +80,7 @@ define(['api'], function(api) {
             const fetch = collection.fetch();
             it('Should have correct number of kegg matches', function() {
                 return fetch.always(() => {
-                    expect(collection.data.length).to.eq(52);
+                    expect(collection.data.length).to.eq(163);
                 });
             });
             it('Should have correct fields for keggs', function() {

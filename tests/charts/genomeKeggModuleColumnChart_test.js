@@ -8,7 +8,6 @@ define(['charts/genomeKeggModuleColumnChart'], function(GenomeKeggModuleColumnCh
     describe('Genome Kegg Module Column chart', function() {
         context('Data source tests', function() {
             it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(2000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYG-HGUT-00279';
@@ -21,7 +20,7 @@ define(['charts/genomeKeggModuleColumnChart'], function(GenomeKeggModuleColumnCh
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html())
-                        .to.match(/Genome.+Count: 26/);
+                        .to.match(/Genome.+Count: 58/);
                     done();
                 });
             });

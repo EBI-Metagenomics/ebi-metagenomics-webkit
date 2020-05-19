@@ -16,37 +16,32 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
-                console.debug('Drawing seq feat sum chart');
-
                 const seqData = this.data['analysis_summary'];
                 if (Object.keys(seqData).length === 0) {
                     this.loaded.reject();
                     return;
                 }
-                const pipelineVersion = this.data['pipeline_version'];
+                const pipelineVersion = parseFloat(this.data['pipeline_version']);
 
-                const unit = this.data.is_assembly ? 'contigs' : 'reads';
-                const capUnit = util.capitalize(unit);
-                const secondLabel = capUnit +
-                    (parseFloat(pipelineVersion) >= 3.0 ? ' with predicted rRNA'
-                        : ' with predicted RNA');
+                const unit = this.data.is_assembly ? 'Contigs' : 'Reads';
+
+                const secondLabel = unit + (pipelineVersion >= 3.0 ? ' with predicted rRNA' : ' with predicted RNA');
+                
                 const categories = [
-                    capUnit + ' with predicted CDS',
+                    unit + ' with predicted CDS',
                     secondLabel,
-                    capUnit + ' with InterProScan match',
+                    unit + ' with InterProScan match',
                     'Predicted CDS',
                     'Predicted CDS with InterProScan match'
                 ];
 
-                let series = [
-                    seqData['Nucleotide sequences with predicted CDS'],
-                    seqData['Nucleotide sequences with predicted RNA'],
-                    seqData['Nucleotide sequences with InterProScan match'],
+                const series = [
+                    seqData['Reads with predicted CDS'],
+                    seqData['Reads with predicted RNA'],
+                    seqData['Reads with InterProScan match'],
                     seqData['Predicted CDS'],
                     seqData['Predicted CDS with InterProScan match']
-                ].map(function(e) {
-                    return parseInt(e);
-                });
+                ].map((d) => parseInt(d));
 
                 let options = {
                     chart: {
