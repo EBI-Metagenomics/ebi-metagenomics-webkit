@@ -13,6 +13,12 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['mocha', 'requirejs', 'chai'],
 
+        client: {
+            mocha: {
+                timeout: 40000
+            }
+        },
+
         // list of files / patterns to load in the browser
         files: [
             {pattern: 'tests/test-main.js', included: true},
@@ -81,11 +87,15 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['Chrome_without_security'],
         customLaunchers: {
             Chrome_travis_ci: {
                 base: 'Chrome',
                 flags: ['--no-sandbox']
+            },
+            Chrome_without_security: {
+                base: 'Chrome',
+                flags: ['--disable-web-security']
             }
         },
 
