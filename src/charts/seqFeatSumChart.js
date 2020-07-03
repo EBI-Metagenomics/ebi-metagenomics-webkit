@@ -16,12 +16,12 @@ define([
             super(containerId, options);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
-                const seqData = this.data['analysis-summary'];
+                const seqData = this.data['analysis_summary'];
                 if (Object.keys(seqData).length === 0) {
                     this.loaded.reject();
                     return;
                 }
-                const pipelineVersion = parseFloat(this.data['pipeline-version']);
+                const pipelineVersion = parseFloat(this.data['pipeline_version']);
 
                 const unit = this.data.is_assembly ? 'Contigs' : 'Reads';
 
@@ -96,7 +96,7 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             return analysis.fetch().done(() => {
                 this.data = analysis['attributes'];
-                this.data['is_assembly'] = analysis['attributes']['experiment-type'] === 'assembly';
+                this.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
             });
         }
     }

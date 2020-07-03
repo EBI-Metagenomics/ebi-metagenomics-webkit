@@ -10,10 +10,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 // MGYA00554532 RAW read version 5
 
     const data_raw_read_v2 = {
-        "pipeline-version": "2.0",
+        "pipeline_version": "2.0",
         "accession": "MGYA00009824",
-        "experiment-type": "metagenomic",
-        "analysis-summary": {
+        "experiment_type": "metagenomic",
+        "analysis_summary": {
             "Submitted nucleotide sequences": "751041",
             "Nucleotide sequences after format-specific filtering": "749939",
             "Nucleotide sequences after length filtering": "723880",
@@ -28,10 +28,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     };
 
     const data_raw_read_v4 = {
-        "pipeline-version": "4.0",
+        "pipeline_version": "4.0",
         "accession": "MGYA00141547",
-        "experiment-type": "metatranscriptomic",
-        "analysis-summary": {
+        "experiment_type": "metatranscriptomic",
+        "analysis_summary": {
             "Nucleotide sequences after format-specific filtering": "213741430",
             "Nucleotide sequences after length filtering": "180329978",
             "Nucleotide sequences after undetermined bases filtering": "180329978",
@@ -46,10 +46,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     };
 
     const data_raw_read_v5 = {
-        "pipeline-version": "5.0",
+        "pipeline_version": "5.0",
         "accession": "MGYA00554532",
-        "experiment-type": "metagenomic",
-        "analysis-summary": {
+        "experiment_type": "metagenomic",
+        "analysis_summary": {
             "Nucleotide sequences after format-specific filtering": "522412",
             "Nucleotide sequences after length filtering": "522412",
             "Nucleotide sequences after undetermined bases filtering": "522412",
@@ -70,10 +70,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 // MGYA00554532 Assembly version 5
 
     const data_assembly_v1 = {
-        "pipeline-version": "1.0",
+        "pipeline_version": "1.0",
         "accession": "MGYA00004410",
-        "experiment-type": "assembly",
-        "analysis-summary": {
+        "experiment_type": "assembly",
+        "analysis_summary": {
             "Nucleotide sequences after clustering": "808659",
             "Nucleotide sequences after format-specific filtering": "844717",
             "Nucleotide sequences after length filtering": "844717",
@@ -90,10 +90,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     };
 
     const data_assembly_v4_1 = {
-        "pipeline-version": "4.1",
+        "pipeline_version": "4.1",
         "accession": "MGYA00521048",
-        "experiment-type": "assembly",
-        "analysis-summary": {
+        "experiment_type": "assembly",
+        "analysis_summary": {
             "Nucleotide sequences after format-specific filtering": "96021",
             "Nucleotide sequences after length filtering": "96021",
             "Nucleotide sequences after undetermined bases filtering": "96021",
@@ -110,10 +110,10 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
     };
 
     const data_assembly_v5 = {
-        "pipeline-version": "5.0",
+        "pipeline_version": "5.0",
         "accession": "MGYA00536622",
-        "experiment-type": "assembly",
-        "analysis-summary": {
+        "experiment_type": "assembly",
+        "analysis_summary": {
             "Submitted nucleotide sequences": "3315",
             "Nucleotide sequences after format-specific filtering": "3315",
             "Nucleotide sequences after length filtering": "3315",
@@ -188,7 +188,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const modData = data_raw_read_v4;
-                modData['pipeline-version'] = '2.0';
+                modData['pipeline_version'] = '2.0';
                 const chart = new SeqFeatSumChart(containerID, {data: modData});
                 chart.loaded.done(() => {
                     expect($('svg').html()).to
@@ -213,7 +213,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                     done();
                 });
              });
-             it('Should display correct contig label when displaying an assembly (data from API)', function(done) {
+             it('Should display correct contig label when displaying an assembly (data from API )', function(done) {
                  this.timeout(20000);
                  document.body.innerHTML = '<p></p>';
                  document.body.innerHTML = ('<div id="' + containerID + '"></div>');
