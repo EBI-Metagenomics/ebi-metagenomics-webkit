@@ -157,6 +157,21 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                     done();
                 });
             });
+            it('Chart label should read Reads with predicted RNA', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const accession = data_raw_read_v4['accession'];
+                const chart = new SeqFeatSumChart(containerID,
+                    {accession: accession, apiConfig: apiConfig});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Reads with predicted RNA.+7 159 621/);
+                    done();
+                });
+            });
             it('Should display correct label for pipeline >= 3.0', function(done) {
                 this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
@@ -182,22 +197,37 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
         });
-        // context('Assembly labels', function() {
-        //     it('Should switch labels to contigs when displaying an assembly', function(done) {
-        //         this.timeout(20000);
-        //         document.body.innerHTML = '<p></p>';
-        //         document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-        //         const accession = 'MGYA00140023';
-        //         const chart = new SeqFeatSumChart(containerID,
-        //             {accession: accession, apiConfig: apiConfig});
-        //         chart.loaded.done(() => {
-        //             const $svg = $('svg').html();
-        //             expect($svg).to.contain('Contigs with predicted CDS');
-        //             expect($svg).to.contain('Contigs with predicted rRNA');
-        //             expect($svg).to.contain('Contigs with InterProScan match');
-        //             done();
-        //         });
-        //     });
-        // });
+         context('Assembly labels', function() {
+             it('Should display correct contig label when displaying an assembly', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v5});
+                chart.loaded.done(() => {
+                    expect($('svg').html()).to
+                        .match(/Contigs with predicted RNA/);
+                    expect($('svg').html()).to
+                        .match(/Contigs with predicted CDS/);
+                    expect($('svg').html()).to
+                        .match(/Contigs with InterProScan match/);
+                    done();
+                });
+             });
+             it('Should display correct contig label when displaying an assembly (data from API)', function(done) {
+                 this.timeout(20000);
+                 document.body.innerHTML = '<p></p>';
+                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                 const accession = 'MGYA00140023';
+                 const chart = new SeqFeatSumChart(containerID,
+                     {accession: accession, apiConfig: apiConfig});
+                 chart.loaded.done(() => {
+                     const $svg = $('svg').html();
+                     expect($svg).to.contain('Contigs with predicted CDS');
+                     expect($svg).to.contain('Contigs with predicted RNA');
+                     expect($svg).to.contain('Contigs with InterProScan match');
+                     done();
+                 });
+             });
+         });
     });
 });
