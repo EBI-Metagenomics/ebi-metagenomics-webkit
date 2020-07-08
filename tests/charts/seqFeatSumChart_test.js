@@ -127,107 +127,126 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         }
     };
 
-    describe('Seq feat chart charts', function() {
-        context('Data source tests', function() {
-            it('Should load raw data', function(done) {
+    describe('Sequence feature summary chart', function() {
+        context('Test RAW read - predefined test data source - version 2', function() {
+            it('Should load correct left hand side labels', function(done) {
                 this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v2});
+                chart.loaded.done(() => {
+                const $svg = $('svg').html();
+                expect($svg).to.contain('Reads with predicted CDS');
+                expect($svg).to.contain('Reads with predicted RNA');
+                expect($svg).to.contain('Reads with InterProScan match');
+                expect($svg).to.contain('Predicted CDS');
+                expect($svg).to.contain('Predicted CDS with InterProScan match');
+                done();
+                });
+            });
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v2});
                 chart.loaded.done(() => {
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html()).to
-                        .match(/Predicted CDS with InterProScan match.+12 488 689/);
-                    done();
-                });
-            });
-            it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(20000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = data_raw_read_v4['accession'];
-                const chart = new SeqFeatSumChart(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
-                        .trigger('mouseover');
-                    expect($('.highcharts-tooltip').html()).to
-                        .match(/Predicted CDS with InterProScan match.+12 488 689/);
-                    done();
-                });
-            });
-            it('Chart label should read Reads with predicted RNA', function(done) {
-                this.timeout(20000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = data_raw_read_v4['accession'];
-                const chart = new SeqFeatSumChart(containerID,
-                    {accession: accession, apiConfig: apiConfig});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
-                        .trigger('mouseover');
-                    expect($('.highcharts-tooltip').html()).to
-                        .match(/Reads with predicted RNA.+7 159 621/);
-                    done();
-                });
-            });
-            it('Should display correct label for pipeline >= 3.0', function(done) {
-                this.timeout(20000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
-                chart.loaded.done(() => {
-                    expect($('svg').html()).to
-                        .match(/Reads with predicted rRNA/);
-                    done();
-                });
-            });
-            it('Should display correct label for pipeline < 3.0', function(done) {
-                this.timeout(20000);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const modData = data_raw_read_v4;
-                modData['pipeline_version'] = '2.0';
-                const chart = new SeqFeatSumChart(containerID, {data: modData});
-                chart.loaded.done(() => {
-                    expect($('svg').html()).to
-                        .match(/Reads with predicted RNA/);
+                        .match(/Predicted CDS with InterProScan match.+346 885/);
                     done();
                 });
             });
         });
-         context('Assembly labels', function() {
-             it('Should display correct contig label when displaying an assembly', function(done) {
+        context('Test RAW read - predefined test data source - version 4', function() {
+            it('Should load correct left hand side labels', function(done) {
                 this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v5});
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
                 chart.loaded.done(() => {
-                    expect($('svg').html()).to
-                        .match(/Contigs with predicted RNA/);
-                    expect($('svg').html()).to
-                        .match(/Contigs with predicted CDS/);
-                    expect($('svg').html()).to
-                        .match(/Contigs with InterProScan match/);
+                const $svg = $('svg').html();
+                expect($svg).to.contain('Reads with predicted CDS');
+                expect($svg).to.contain('Reads with predicted RNA');
+                expect($svg).to.contain('Reads with InterProScan match');
+                expect($svg).to.contain('Predicted CDS');
+                expect($svg).to.contain('Predicted CDS with InterProScan match');
+                done();
+                });
+            });
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+12 488 689/);
                     done();
                 });
-             });
-             it('Should display correct contig label when displaying an assembly (data from API )', function(done) {
-                 this.timeout(20000);
-                 document.body.innerHTML = '<p></p>';
-                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                 const accession = 'MGYA00140023';
-                 const chart = new SeqFeatSumChart(containerID,
-                     {accession: accession, apiConfig: apiConfig});
-                 chart.loaded.done(() => {
-                     const $svg = $('svg').html();
-                     expect($svg).to.contain('Contigs with predicted CDS');
-                     expect($svg).to.contain('Contigs with predicted RNA');
-                     expect($svg).to.contain('Contigs with InterProScan match');
-                     done();
-                 });
-             });
-         });
+            });
+        });
+        context('Test RAW read - predefined test data source - version 5', function() {
+            it('Should load correct left hand side labels', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v5});
+                chart.loaded.done(() => {
+                const $svg = $('svg').html();
+                expect($svg).to.contain('Reads with predicted CDS');
+                expect($svg).to.contain('Reads with predicted RNA');
+                expect($svg).to.contain('Reads with InterProScan match');
+                expect($svg).to.contain('Predicted CDS');
+                expect($svg).to.contain('Predicted CDS with InterProScan match');
+                done();
+                });
+            });
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v5});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+259 732/);
+                    done();
+                });
+            });
+        });
+        context('Test Assembly - predefined test data source - version 1', function() {
+            it('Should load correct left hand side labels', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
+                chart.loaded.done(() => {
+                const $svg = $('svg').html();
+                expect($svg).to.contain('Contigs with predicted CDS');
+                expect($svg).to.contain('Contigs with predicted RNA');
+                expect($svg).to.contain('Contigs with InterProScan match');
+                expect($svg).to.contain('Predicted CDS');
+                expect($svg).to.contain('Predicted CDS with InterProScan match');
+                done();
+                });
+            });
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(20000);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+573 798/);
+                    done();
+                });
+            });
+        });
     });
 });
