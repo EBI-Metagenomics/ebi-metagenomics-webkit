@@ -145,16 +145,12 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         }
     };
 
-    const raw_read_dataset = {
-        "1": data_raw_read_v1,
-        "2": data_raw_read_v1
-    }
+    const default_timeout = 40000
 
     describe('Sequence feature summary chart', function() {
 
         context('Test RAW read - predefined test data source - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v1});
@@ -169,7 +165,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v1});
@@ -185,7 +180,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 
         context('Test RAW read - predefined test data source - version 2', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v2});
@@ -200,7 +194,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v2});
@@ -216,7 +209,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 
         context('Test RAW read - predefined test data source - version 3', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v3});
@@ -231,7 +223,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v3});
@@ -247,7 +238,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
 
         context('Test RAW read - predefined test data source - version 4', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
@@ -262,7 +252,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v4});
@@ -277,7 +266,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - predefined test data source - version 5', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v5});
@@ -292,7 +280,6 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_raw_read_v5});
@@ -307,7 +294,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - API - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v1['accession'];
@@ -324,7 +311,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v1['accession'];
@@ -341,7 +328,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - API - version 2', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v2['accession'];
@@ -358,7 +345,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v2['accession'];
@@ -375,7 +362,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - API - version 3', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v3['accession'];
@@ -392,7 +379,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v3['accession'];
@@ -409,7 +396,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - API - version 4', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v4['accession'];
@@ -426,7 +413,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v4['accession'];
@@ -443,7 +430,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test RAW read - API - version 5', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v5['accession'];
@@ -460,7 +447,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_raw_read_v5['accession'];
@@ -477,7 +464,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - predefined test data source - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
@@ -492,7 +479,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
@@ -507,7 +494,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - predefined test data source - version 4.1', function() {
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v4_1});
@@ -522,7 +509,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - predefined test data source - version 5', function() {
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v5});
@@ -537,7 +524,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - API - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v1['accession'];
@@ -554,7 +541,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v1['accession'];
@@ -571,7 +558,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - API - version 2', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v2['accession'];
@@ -588,7 +575,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v2['accession'];
@@ -605,7 +592,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - API - version 3', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v3['accession'];
@@ -622,7 +609,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v3['accession'];
@@ -639,7 +626,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - API - version 4.1', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v4_1['accession'];
@@ -656,7 +643,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v4_1['accession'];
@@ -673,7 +660,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         });
         context('Test Assembly - API - version 5', function() {
             it('Should load correct left hand side labels', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v5['accession'];
@@ -690,7 +677,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
             it('Should load correct tooltip counts', function(done) {
-                this.timeout(20000);
+                this.timeout(default_timeout);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = data_assembly_v5['accession'];
