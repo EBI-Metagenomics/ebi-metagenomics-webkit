@@ -6,7 +6,7 @@ define(['api'], function(api) {
             const model = new api.Analysis({id: analysisAccession});
             const fetch = model.fetch();
             it('Models should have expected fields', function() {
-                this.timeout(5000);
+                this.timeout(20000);
                 let expectedAttributes = [
                     'study_accession',
                     'study_url',
@@ -104,6 +104,7 @@ define(['api'], function(api) {
         });
         context('Analysis downloads', function() {
             it('Should cluster analysis downloads', function() {
+                this.timeout(20000);
                 const downloads = new api.AnalysisDownloads({id: 'MGYA00011845'});
                 return downloads.fetch().done(() => {
                     const data = downloads.attributes['downloadGroups'];
