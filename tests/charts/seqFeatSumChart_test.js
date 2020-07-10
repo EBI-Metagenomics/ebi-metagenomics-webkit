@@ -145,7 +145,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
         }
     };
 
-    const default_timeout = 40000
+    const default_timeout = 25000
 
     describe('Sequence feature summary chart', function() {
 
@@ -292,6 +292,67 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
         });
+        context('Test Assembly - predefined test data source - version 1', function() {
+            it('Should load correct left hand side labels', function(done) {
+                this.timeout(default_timeout);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
+                chart.loaded.done(() => {
+                    const $svg = $('svg').html();
+                    expect($svg).to.contain('Contigs with predicted CDS');
+                    expect($svg).to.contain('Contigs with predicted RNA');
+                    expect($svg).to.contain('Contigs with InterProScan match');
+                    expect($svg).to.contain('Predicted CDS');
+                    expect($svg).to.contain('Predicted CDS with InterProScan match');
+                    done();
+                });
+            });
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(default_timeout);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+573 798/);
+                    done();
+                });
+            });
+        });
+        context('Test Assembly - predefined test data source - version 4.1', function() {
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(default_timeout);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v4_1});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+222 033/);
+                    done();
+                });
+            });
+        });
+        context('Test Assembly - predefined test data source - version 5', function() {
+            it('Should load correct tooltip counts', function(done) {
+                this.timeout(default_timeout);
+                document.body.innerHTML = '<p></p>';
+                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
+                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v5});
+                chart.loaded.done(() => {
+                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
+                        .trigger('mouseover');
+                    expect($('.highcharts-tooltip').html()).to
+                        .match(/Predicted CDS with InterProScan match.+4 372/);
+                    done();
+                });
+            });
+        });
+//        API tests
         context('Test RAW read - API - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
                 this.timeout(default_timeout);
@@ -462,66 +523,7 @@ define(['charts/seqFeatSumChart'], function(SeqFeatSumChart) {
                 });
             });
         });
-        context('Test Assembly - predefined test data source - version 1', function() {
-            it('Should load correct left hand side labels', function(done) {
-                this.timeout(default_timeout);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
-                chart.loaded.done(() => {
-                    const $svg = $('svg').html();
-                    expect($svg).to.contain('Contigs with predicted CDS');
-                    expect($svg).to.contain('Contigs with predicted RNA');
-                    expect($svg).to.contain('Contigs with InterProScan match');
-                    expect($svg).to.contain('Predicted CDS');
-                    expect($svg).to.contain('Predicted CDS with InterProScan match');
-                    done();
-                });
-            });
-            it('Should load correct tooltip counts', function(done) {
-                this.timeout(default_timeout);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v1});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
-                        .trigger('mouseover');
-                    expect($('.highcharts-tooltip').html()).to
-                        .match(/Predicted CDS with InterProScan match.+573 798/);
-                    done();
-                });
-            });
-        });
-        context('Test Assembly - predefined test data source - version 4.1', function() {
-            it('Should load correct tooltip counts', function(done) {
-                this.timeout(default_timeout);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v4_1});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
-                        .trigger('mouseover');
-                    expect($('.highcharts-tooltip').html()).to
-                        .match(/Predicted CDS with InterProScan match.+222 033/);
-                    done();
-                });
-            });
-        });
-        context('Test Assembly - predefined test data source - version 5', function() {
-            it('Should load correct tooltip counts', function(done) {
-                this.timeout(default_timeout);
-                document.body.innerHTML = '<p></p>';
-                document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const chart = new SeqFeatSumChart(containerID, {data: data_assembly_v5});
-                chart.loaded.done(() => {
-                    $('.highcharts-series.highcharts-series-0 > .highcharts-point')
-                        .trigger('mouseover');
-                    expect($('.highcharts-tooltip').html()).to
-                        .match(/Predicted CDS with InterProScan match.+4 372/);
-                    done();
-                });
-            });
-        });
+
         context('Test Assembly - API - version 1', function() {
             it('Should load correct left hand side labels', function(done) {
                 this.timeout(default_timeout);
