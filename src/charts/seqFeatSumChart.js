@@ -23,24 +23,23 @@ define([
                 }
                 const pipelineVersion = parseFloat(this.data['pipeline_version']);
 
-                const unit = this.data.is_assembly ? 'Contigs' : 'Reads';
+                const is_assembly = this.data['experiment_type'] === 'assembly'
+                const seq_type = is_assembly ? 'Contigs' : 'Reads';
 
-                const secondLabel = unit + (pipelineVersion >= 3.0 ? ' with predicted rRNA' : ' with predicted RNA');
-                
                 const categories = [
-                    unit + ' with predicted CDS',
-                    secondLabel,
-                    unit + ' with InterProScan match',
+                    seq_type + ' with predicted CDS',
+                    seq_type + ' with predicted RNA',
+                    seq_type + ' with InterProScan match',
                     'Predicted CDS',
                     'Predicted CDS with InterProScan match'
                 ];
 
                 const series = [
-                    seqData['Reads with predicted CDS'],
-                    seqData['Reads with predicted RNA'],
-                    seqData['Reads with InterProScan match'],
-                    seqData['Predicted CDS'],
-                    seqData['Predicted CDS with InterProScan match']
+                    seqData[categories[0]],
+                    seqData[categories[1]],
+                    seqData[categories[2]],
+                    seqData[categories[3]],
+                    seqData[categories[4]]
                 ].map((d) => parseInt(d));
 
                 let options = {
@@ -96,7 +95,6 @@ define([
             const analysis = new this.api.Analysis({id: params['accession']});
             return analysis.fetch().done(() => {
                 this.data = analysis['attributes'];
-                this.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
             });
         }
     }
