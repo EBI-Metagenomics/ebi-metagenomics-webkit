@@ -140,7 +140,11 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const group = attr['group-type'];
                 const label = attr.description.label;
                 const format = attr['file-format']['name'];
-                attr['links'] = [download.links.self];
+
+                download.attributes['links'] = [{
+                    link: download.links.self,
+                    checksum: download.attributes['file-checksum']
+                }];
 
                 if (!groups.hasOwnProperty(group)) {
                     groups[group] = [];
@@ -154,12 +158,19 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     const groupLabel = d.attributes.description.label;
                     const groupFormat = d.attributes['file-format']['name'];
                     if (groupLabel === label && groupFormat === format) {
-                        d.attributes.links = d.attributes.links.concat(download.links.self);
+                        d.attributes.links = d.attributes.links.concat({
+                            link: d.links.self,
+                            checksum: d.attributes['file-checksum']
+                        });
                         grouped = true;
                     }
                 });
                 if (!grouped) {
                     groups[group] = groups[group].concat(download);
+                }
+                const checksum = attr['file-checksum'];
+                if (checksum && checksum['checksum']) {
+                    groups[group]['has_checksum'] = true;
                 }
             });
             _.each(groups, function(group) {
