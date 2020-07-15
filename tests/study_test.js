@@ -6,6 +6,7 @@ define(['api'], function(api) {
             const model = new api.Study({id: studyAcc});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
+                this.timeout(20000);
                 let expectedAttributes = [
                     'biomes',
                     'study_url',
@@ -123,6 +124,7 @@ define(['api'], function(api) {
         });
         context('Study downloads', function() {
             it('Should cluster study downloads', function() {
+                this.timeout(20000);
                 const downloads = new api.StudyDownloads({id: 'MGYS00000462'});
                 return downloads.fetch().always(() => {
                     const data = downloads.attributes['pipelineFiles'];
