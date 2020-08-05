@@ -125,7 +125,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
          */
         function clusterAnalysisDownloads(downloads) {
             const groups = {};
-            const filteredDownloads =_.filter(downloads, (dl) => {
+            const filteredDownloads = _.filter(downloads, (dl) => {
                 const attributes = dl.attributes;
                 const passed = attributes &&
                     _.has(attributes, 'description') &&
@@ -157,12 +157,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 _.each(groups[group], function(d) {
                     const groupLabel = d.attributes.description.label;
                     const groupFormat = d.attributes['file-format']['name'];
-                    if (groupLabel === label && groupFormat === format) {
-                        d.attributes.links = d.attributes.links.concat({
-                            link: d.links.self,
-                            checksum: d.attributes['file-checksum']
+                    grouped = groupLabel === label && groupFormat === format;
+                    if (grouped) {
+                        d.attributes.links.push({
+                            link: download.links.self,
+                            checksum: download.attributes['file-checksum']
                         });
-                        grouped = true;
                     }
                 });
                 if (!grouped) {
