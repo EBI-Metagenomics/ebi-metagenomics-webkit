@@ -1,6 +1,7 @@
 define([
-    './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
-], function(GenericChart, Highcharts, exporting, util) {
+    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
+], function(underscore, GenericChart, Highcharts, exporting, util) {
+    const _ = underscore;
     exporting(Highcharts);
 
     /**
