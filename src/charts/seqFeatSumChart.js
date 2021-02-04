@@ -14,33 +14,38 @@ define([
          */
         constructor(containerId, options) {
             super(containerId, options);
+            
             this.loaded = $.Deferred();
+
             this.dataReady.done(() => {
                 const seqData = this.data['analysis_summary'];
                 if (Object.keys(seqData).length === 0) {
                     this.loaded.reject();
                     return;
                 }
-                const pipelineVersion = parseFloat(this.data['pipeline_version']);
+                const isAssembly = this.data['experiment_type'] === 'assembly'
 
-                const is_assembly = this.data['experiment_type'] === 'assembly'
-                const seq_type = is_assembly ? 'Contigs' : 'Reads';
-
-                const categories = [
-                    seq_type + ' with predicted CDS',
-                    seq_type + ' with predicted RNA',
-                    seq_type + ' with InterProScan match',
+                // TODO: remove mapping when https://www.ebi.ac.uk/panda/jira/browse/EMG-1672
+                let categories = [
+                    ' with predicted CDS',
+                    ' with predicted RNA',
+                    ' with InterProScan match',
                     'Predicted CDS',
                     'Predicted CDS with InterProScan match'
                 ];
 
                 const series = [
-                    seqData[categories[0]],
-                    seqData[categories[1]],
-                    seqData[categories[2]],
-                    seqData[categories[3]],
-                    seqData[categories[4]]
+                    this.getSeriesCategory(seqData, categories[0]),
+                    this.getSeriesCategory(seqData, categories[1]),
+                    this.getSeriesCategory(seqData, categories[2]),
+                    this.getSeriesCategory(seqData, categories[3]),
+                    this.getSeriesCategory(seqData, categories[4])
                 ].map((d) => parseInt(d));
+
+                const prefix = isAssembly ? 'Contigs' : 'Reads';
+                categories[0] = prefix + categories[0];
+                categories[1] = prefix + categories[1];
+                categories[2] = prefix + categories[2];
 
                 let options = {
                     chart: {
@@ -72,11 +77,10 @@ define([
                     tooltip: {
                         pointFormat: '<b>{point.y}</b>'
                     },
-                    series: [
-                        {
-                            data: series,
-                            color: '#058dc7'
-                        }]
+                    series: [{
+                        data: series,
+                        color: '#058dc7'
+                    }]
                 };
                 this.chart = Highcharts.chart(containerId, options);
             }).done(() => {
@@ -84,6 +88,23 @@ define([
             }).fail(() => {
                 this.loaded.reject();
             });
+        }
+
+        /**
+         * Get the series for a category.
+         * This method will check if the series contains "contigs" or "reads".
+         * Falling back to "reads" if "contigs" is missingg in seqData && isAssembly
+         */
+        getSeriesCategory(seqData, category) {
+            var series = _.get(seqData, category);
+            if (!_.isUndefined(series)) {
+                return series;
+            }
+            series = _.get(seqData, 'Contigs' + category);
+            if (!_.isUndefined(series)) {
+                return series;
+            }
+            return _.get(seqData, 'Reads' + category);
         }
 
         /**
