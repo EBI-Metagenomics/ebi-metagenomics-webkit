@@ -31,7 +31,7 @@
   "bundleDependencies": false,
   "dependencies": {
     "backbone": "^1.4.0",
-    "highcharts": "^6.2.0",
+    "highcharts": "^7.2.2",
     "jquery": "^3.5.1",
     "underscore": "^1.12.0"
   },
