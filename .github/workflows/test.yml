@@ -104,9 +104,7 @@ jobs:
           emgcli collectstatic --noinput
           emgcli check --deploy
           emgdeploy --daemon -p ~/emg.pid emgcli.wsgi:application --workers 5
-          curl http://127.0.0.1:8000/v1/
           curl http://127.0.0.1:9000/v1/
-          curl http://127.0.0.1:8000/metagenomics/api/v1/
           curl http://127.0.0.1:9000/metagenomics/api/v1/
       - name: 🔧 - Install
         run: |
