@@ -36,7 +36,6 @@ jobs:
           ls -l
 
       - name: 💾 - Setting MySQL
-        continue-on-error: true
         run: |
           sudo systemctl start mysql
           mysql --version
@@ -108,7 +107,6 @@ jobs:
       - name: 🔧 - Install
         run: |
           npm ci
-
       - name: 🧪 - Testing
         run: |
           node --version
