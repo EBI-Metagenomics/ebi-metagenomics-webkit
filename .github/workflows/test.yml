@@ -35,7 +35,7 @@ jobs:
           pip install "git+git://github.com/EBI-metagenomics/emgapi@to_django_3#egg=emgcli"
           ls -l
 
-      - name: 💾 - Setting MySQL and Fixtures
+      - name: 💾 - Setting MySQL
         continue-on-error: true
         run: |
           sudo systemctl start mysql
@@ -46,7 +46,7 @@ jobs:
           emgcli migrate
           mysql -uroot -proot --database=emg -e "SET FOREIGN_KEY_CHECKS = 0;"
           for SQL_FIXTURE in ci/emg_sql_fixtures/*.sql; do echo "SQL >>>> $SQL_FIXTURE"; mysql -uroot -proot --database=emg < "$SQL_FIXTURE"; done
-          mysql -uroot --proot --database=emg -e "SET FOREIGN_KEY_CHECKS = 1;"
+          mysql -uroot -proot --database=emg -e "SET FOREIGN_KEY_CHECKS = 1;"
       - name: 🪜 - Setting up Fixtures
         run: |
           ci/create_download_files.sh
@@ -99,7 +99,7 @@ jobs:
 
           echo "33/33"
 
-          mysql ena < ${{ github.workspace }}/ci/ena_db.sql
+          mysql -uroot -proot --database=ena < ${{ github.workspace }}/ci/ena_db.sql
       - name: 🔬 - Start EMG API
         run: |
           emgcli collectstatic --noinput
