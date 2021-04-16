@@ -97,6 +97,7 @@ jobs:
           emgcli import_genomes ${{ github.workspace }}/ci/emg_api_datafiles/genomes/ 1.0
 
           echo "33/33"
+          git clone --single-branch --branch to_django_3 https://github.com/EBI-Metagenomics/emgapi.git
 
           mysql -uroot -proot --database=ena < ${{ github.workspace }}/ci/ena_db.sql
       - name: 🔬 - Start EMG API
