@@ -36,6 +36,7 @@ jobs:
           ls -l
 
       - name: 💾 - Setting MySQL and Fixtures
+        continue-on-error: true
         run: |
           sudo systemctl start mysql
           mysql --version
