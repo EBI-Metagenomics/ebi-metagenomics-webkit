@@ -50,6 +50,8 @@ jobs:
       - name: 🪜 - Setting up Fixtures
         run: |
           ci/create_download_files.sh
+          ls -lh ~/results
+
           emgcli import_taxonomy ERR1022502 ~/results --pipeline 4.0
           emgcli import_qc ERR1022502 ~/results --pipeline 4.0
           emgcli import_summary ERR1022502 ~/results .ipr --pipeline 4.0
@@ -61,6 +63,8 @@ jobs:
           emgcli import_summary ERR1022502 ~/results .ipr --pipeline 2.0
           emgcli import_summary ERR1022502 ~/results .go_slim --pipeline 2.0
           emgcli import_summary ERR1022502 ~/results .go --pipeline 2.0
+
+          echo "10/33"
 
           emgcli import_taxonomy ERR867655 ~/results --pipeline 4.0
           emgcli import_qc ERR867655 ~/results --pipeline 4.0
@@ -74,6 +78,8 @@ jobs:
           emgcli import_summary ERP104236 ~/results .go_slim --pipeline 4.0
           emgcli import_summary ERP104236 ~/results .go --pipeline 4.0
 
+          echo "20/33"
+
           emgcli import_taxonomy ERZ477576 ~/results --pipeline 5.0
           emgcli import_qc ERZ477576 ~/results --pipeline 5.0
           emgcli import_contigs ERZ477576 ~/results --pipeline 5.0
@@ -84,10 +90,14 @@ jobs:
           emgcli import_summary ERZ477576 ~/results .gprops --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .antismash --pipeline 5.0
 
+          echo "29/33"
+
           emgcli import_kegg_modules ${{ github.workspace }}/ci/fixtures/kegg_module_orthology.json
           emgcli import_kegg_classes ${{ github.workspace }}/ci/fixtures/kegg_class_orthology.json
           emgcli import_cog_descriptions ${{ github.workspace }}/ci/fixtures/cog.csv
           emgcli import_genomes ${{ github.workspace }}/ci/emg_api_datafiles/genomes/ 1.0
+
+          echo "33/33"
 
           mysql ena < ${{ github.workspace }}/ci/ena_db.sql
       - name: 🔬 - Start EMG API
