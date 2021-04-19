@@ -30,7 +30,7 @@ define(["api"], function (api) {
     });
     context("Assembly collection tests", function () {
       const collection = new api.AssembliesCollection();
-      console.log("collection", collection.url());
+      console.log("collections", collection.url);
 
       const fetch = collection.fetch();
       it("Models should have expected fields", function () {
