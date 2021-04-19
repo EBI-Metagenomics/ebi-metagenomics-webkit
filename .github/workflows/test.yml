@@ -111,7 +111,7 @@ jobs:
         run: |
           export API_URL=http://localhost:9000/v1/
           node --version
-          curl --silent http://localhost:9000/v1/assemblies/
+          curl --silent http://localhost:9000/v1/assemblies
           echo "----"
           curl --silent http://localhost:9000/v1/assemblies/ERZ477708
           npm run test:single

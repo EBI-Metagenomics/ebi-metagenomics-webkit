@@ -21,7 +21,9 @@ define(["api"], function (api) {
       const fetch = model.fetch();
       it("Should have expected fields", function () {
         return fetch.always(() => {
+          console.log(model);
           expectedAttributes.forEach((attr) => {
+            console.log(attr, model.attributes[attr]);
             expect(model.attributes).to.have.property(attr);
             expect(model.attributes[attr]).to.not.equal(null);
           });
