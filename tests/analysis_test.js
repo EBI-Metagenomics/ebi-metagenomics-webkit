@@ -4,7 +4,6 @@ define(["api"], function (api) {
     context("Model tests", function () {
       const analysisAccession = "MGYA00011845";
       const model = new api.Analysis({ id: analysisAccession });
-      console.log(model.url());
       const fetch = model.fetch();
       it("Models should have expected fields", function () {
         this.timeout(20000);
@@ -26,6 +25,12 @@ define(["api"], function (api) {
           "pipeline_url",
           "download",
         ];
+        fetch.fail(function (jqXHR, textStatus, errorThrown) {
+          console.log("Request failed: " + textStatus);
+          console.log("errorThrown: " + errorThrown);
+          console.log(jqXHR.getAllResponseHeaders());
+          console.log(fetch.status);
+        });
         return fetch.done(() => {
           expectedAttributes.forEach((attr) => {
             expect(model.attributes).to.have.property(attr);
