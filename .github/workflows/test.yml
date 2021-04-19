@@ -102,7 +102,6 @@ jobs:
           export GUNICORN_CMD_ARGS="--bind 127.0.0.1:9000 --workers=1 --daemon -p emg.pid --error-logfile error.log" 
           emgdeploy emgcli.wsgi:application
           ps aux | grep emgdeploy
-          ls -l
           cd ..
           curl --silent http://localhost:9000/v1/
       - name: 🔧 - Install
@@ -112,7 +111,6 @@ jobs:
         run: |
           export API_URL=http://localhost:9000/v1/
           node --version
-          curl --silent http://localhost:9000/v1/analyses
           curl --silent http://localhost:9000/v1/analyses/MGYA00011845
           npm run test:single
 
