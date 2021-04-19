@@ -108,13 +108,13 @@ jobs:
         run: |
           npm ci
       - name: 🧪 - Testing
+        continue-on-error: true
         run: |
           export API_URL=http://localhost:9000/v1/
-          node --version
-          curl --silent http://localhost:9000/v1/assemblies
-          echo "----"
-          curl --silent http://localhost:9000/v1/assemblies/ERZ477708
           npm run test:single
+      - name: 🐞 - Error log
+        run: |
+          cat emgapi/error.log
 
     # - name: 📮 - Slack Notification
     #   uses: rtCamp/action-slack-notify@v2
