@@ -28,8 +28,12 @@ define(["api"], function (api) {
         fetch.fail(function (jqXHR, textStatus, errorThrown) {
           console.log("Request failed: " + textStatus);
           console.log("errorThrown: " + errorThrown);
-          console.log(jqXHR.getAllResponseHeaders());
-          console.log(fetch.status);
+          console.log("fetch s", fetch.status);
+          console.log("fetch rt", fetch.responseText);
+          console.log("fetch st", fetch.statusText);
+          console.log("xhr s", jqXHR.status);
+          console.log("xhr rt", jqXHR.responseText);
+          console.log("xhr st", jqXHR.statusText);
         });
         return fetch.done(() => {
           expectedAttributes.forEach((attr) => {
