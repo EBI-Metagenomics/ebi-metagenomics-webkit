@@ -20,9 +20,11 @@ define(["api"], function (api) {
       console.log("model", model.url());
       const fetch = model.fetch();
       it("Should have expected fields", function () {
-        fetch.fail(function (jqXHR, textStatus) {
+        fetch.fail(function (jqXHR, textStatus, errorThrown) {
           console.log("Request failed: " + textStatus);
-          console.log(fetch.getAllResponseHeaders());
+          console.log("errorThrown: " + errorThrown);
+          console.log(jqXHR.getAllResponseHeaders());
+          console.log(fetch.status);
         });
         return fetch.always(() => {
           console.log(model);
