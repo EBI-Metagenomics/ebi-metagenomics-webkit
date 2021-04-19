@@ -4,6 +4,7 @@ define(["api"], function (api) {
     context("Model tests", function () {
       const analysisAccession = "MGYA00011845";
       const model = new api.Analysis({ id: analysisAccession });
+      console.log(model.url());
       const fetch = model.fetch();
       it("Models should have expected fields", function () {
         this.timeout(20000);

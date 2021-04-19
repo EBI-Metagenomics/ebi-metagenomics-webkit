@@ -99,7 +99,7 @@ jobs:
           emgcli collectstatic --noinput
           emgcli check --deploy
           cd emgapi
-          export GUNICORN_CMD_ARGS="--127.0.0.1:9000 --workers=5 --daemon -p emg.pid --error-logfile error.log" 
+          export GUNICORN_CMD_ARGS="--bind 127.0.0.1:9000 --workers=5 --daemon -p emg.pid --error-logfile error.log" 
           emgdeploy emgcli.wsgi:application
           ls -l
           cd ..
