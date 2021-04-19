@@ -34,6 +34,7 @@ define(["api"], function (api) {
           console.log("xhr s", jqXHR.status);
           console.log("xhr rt", jqXHR.responseText);
           console.log("xhr st", jqXHR.statusText);
+          console.log("fetch url", fetch.url);
         });
         return fetch.done(() => {
           expectedAttributes.forEach((attr) => {
