@@ -99,7 +99,7 @@ jobs:
           emgcli collectstatic --noinput
           emgcli check --deploy
           cd emgapi
-          export GUNICORN_CMD_ARGS="--bind 127.0.0.1:9000 --workers=1 --daemon -p emg.pid --error-logfile error.log" 
+          export GUNICORN_CMD_ARGS="--bind 127.0.0.1:9000 --workers=1 --daemon -p emg.pid --error-logfile error.log --access-logfile access.log" 
           emgdeploy emgcli.wsgi:application
           ps aux | grep emgdeploy
           cd ..
@@ -115,6 +115,7 @@ jobs:
       - name: 🐞 - Error log
         run: |
           cat emgapi/error.log
+          cat emgapi/access.log
 
     # - name: 📮 - Slack Notification
     #   uses: rtCamp/action-slack-notify@v2
