@@ -112,6 +112,8 @@ jobs:
         run: |
           export API_URL=http://localhost:9000/v1/
           node --version
+          curl --silent http://localhost:9000/v1/analyses
+          curl --silent http://localhost:9000/v1/analyses/MGYA00011845
           npm run test:single
 
     # - name: 📮 - Slack Notification
