@@ -63,8 +63,6 @@ jobs:
           emgcli import_summary ERR1022502 ~/results .go_slim --pipeline 2.0
           emgcli import_summary ERR1022502 ~/results .go --pipeline 2.0
 
-          echo "10/33"
-
           emgcli import_taxonomy ERR867655 ~/results --pipeline 4.0
           emgcli import_qc ERR867655 ~/results --pipeline 4.0
           emgcli import_summary ERR867655 ~/results .ipr --pipeline 4.0
@@ -77,26 +75,22 @@ jobs:
           emgcli import_summary ERP104236 ~/results .go_slim --pipeline 4.0
           emgcli import_summary ERP104236 ~/results .go --pipeline 4.0
 
-          echo "20/33"
-
           emgcli import_taxonomy ERZ477576 ~/results --pipeline 5.0
           emgcli import_qc ERZ477576 ~/results --pipeline 5.0
           emgcli import_contigs ERZ477576 ~/results --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .ipr --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .go --pipeline 5.0
+
           emgcli import_summary ERZ477576 ~/results .go_slim --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .pfam --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .gprops --pipeline 5.0
           emgcli import_summary ERZ477576 ~/results .antismash --pipeline 5.0
-
-          echo "29/33"
 
           emgcli import_kegg_modules ${{ github.workspace }}/ci/fixtures/kegg_module_orthology.json
           emgcli import_kegg_classes ${{ github.workspace }}/ci/fixtures/kegg_class_orthology.json
           emgcli import_cog_descriptions ${{ github.workspace }}/ci/fixtures/cog.csv
           emgcli import_genomes ${{ github.workspace }}/ci/emg_api_datafiles/genomes/ 1.0
 
-          echo "33/33"
           git clone --single-branch --branch to_django_3 https://github.com/EBI-Metagenomics/emgapi.git
 
           mysql -uroot -proot --database=ena < ${{ github.workspace }}/ci/ena_db.sql
@@ -105,7 +99,8 @@ jobs:
           emgcli collectstatic --noinput
           emgcli check --deploy
           cd emgapi
-          emgdeploy --daemon -p emg.pid emgcli.wsgi:application --workers 5 -b 127.0.0.1:9000 --error-logfile error.log
+          export GUNICORN_CMD_ARGS="--127.0.0.1:9000 --workers=5 --daemon -p emg.pid --error-logfile error.log" 
+          emgdeploy emgcli.wsgi:application
           ls -l
           cd ..
       - name: 🔧 - Install
