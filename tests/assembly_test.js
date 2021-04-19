@@ -20,6 +20,10 @@ define(["api"], function (api) {
       console.log("model", model.url());
       const fetch = model.fetch();
       it("Should have expected fields", function () {
+        fetch.fail(function (jqXHR, textStatus) {
+          console.log("Request failed: " + textStatus);
+          console.log(fetch.getAllResponseHeaders());
+        });
         return fetch.always(() => {
           console.log(model);
           expectedAttributes.forEach((attr) => {
