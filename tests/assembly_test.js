@@ -17,20 +17,8 @@ define(["api"], function (api) {
     context("Model tests", function () {
       const assemblyAccession = "ERZ477708";
       const model = new api.Assembly({ id: assemblyAccession });
-      console.log("model", model.url());
       const fetch = model.fetch();
       it("Should have expected fields", function () {
-        fetch.fail(function (jqXHR, textStatus, errorThrown) {
-          console.log("Request failed: " + textStatus);
-          console.log("errorThrown: " + errorThrown);
-          console.log("fetch s", fetch.status);
-          console.log("fetch rt", fetch.responseText);
-          console.log("fetch st", fetch.statusText);
-          console.log("xhr s", jqXHR.status);
-          console.log("xhr rt", jqXHR.responseText);
-          console.log("xhr st", jqXHR.statusText);
-          console.log("fetch url", fetch.url);
-        });
         return fetch.always(() => {
           console.log(model);
           expectedAttributes.forEach((attr) => {

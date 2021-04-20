@@ -25,17 +25,6 @@ define(["api"], function (api) {
           "pipeline_url",
           "download",
         ];
-        fetch.fail(function (jqXHR, textStatus, errorThrown) {
-          console.log("Request failed: " + textStatus);
-          console.log("errorThrown: " + errorThrown);
-          console.log("fetch s", fetch.status);
-          console.log("fetch rt", fetch.responseText);
-          console.log("fetch st", fetch.statusText);
-          console.log("xhr s", jqXHR.status);
-          console.log("xhr rt", jqXHR.responseText);
-          console.log("xhr st", jqXHR.statusText);
-          console.log("fetch url", fetch.url);
-        });
         return fetch.done(() => {
           expectedAttributes.forEach((attr) => {
             expect(model.attributes).to.have.property(attr);
@@ -120,6 +109,7 @@ define(["api"], function (api) {
     context("Go-slim annotations", function () {
       it("Should retrieve goslim  data", function () {
         const goSlimData = new api.GoSlim({ id: "MGYA00141547" });
+        console.log("goSlimData", goSlimData.url());
         return goSlimData.fetch().done(() => {
           const goSlimIdentifiers = goSlimData.attributes.data;
           expect(goSlimIdentifiers.length).to.equal(116);
