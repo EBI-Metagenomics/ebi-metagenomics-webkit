@@ -434,7 +434,6 @@ define(["backbone", "underscore", "./util"], function (
         const data = d.data !== undefined ? d.data : d;
         const attr = data.attributes;
         const rel = data.relationships;
-        console.log("Parsing Assembly");
         return {
           assembly_id: attr["accession"],
           ena_url: ENA_VIEW_URL + attr["accession"],
