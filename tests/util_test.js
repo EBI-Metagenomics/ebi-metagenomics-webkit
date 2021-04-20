@@ -2,7 +2,7 @@ define(["util"], function (apiUtil) {
   describe("Util tests", function () {
     context("fetch call", function () {
       it("Should get the root API endpoint", async function () {
-        const response = await fetch("http://localhost:8000/v1/");
+        const response = await fetch(window.__env__["API_URL"]);
         if (!response.ok) {
           console.log(response);
         }
