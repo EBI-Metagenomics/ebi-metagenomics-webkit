@@ -109,7 +109,6 @@ define(["api"], function (api) {
     context("Go-slim annotations", function () {
       it("Should retrieve goslim  data", function () {
         const goSlimData = new api.GoSlim({ id: "MGYA00141547" });
-        console.log("goSlimData", goSlimData.url());
         return goSlimData.fetch().done(() => {
           const goSlimIdentifiers = goSlimData.attributes.data;
           expect(goSlimIdentifiers.length).to.equal(116);

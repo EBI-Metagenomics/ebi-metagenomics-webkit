@@ -48,7 +48,7 @@ jobs:
           mysql -uroot -proot --database=emg -e "SET FOREIGN_KEY_CHECKS = 1;"
       - name: 🪜 - Setting up Fixtures
         run: |
-          ci/create_download_files.sh
+          source ci/create_download_files.sh
           ls -lh ~/results
 
           emgcli import_taxonomy ERR1022502 ~/results --pipeline 4.0
