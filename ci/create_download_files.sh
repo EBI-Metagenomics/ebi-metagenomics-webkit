@@ -30,4 +30,7 @@ touch ci/emg_api_datafiles/results/2015/03/ERP009703/version_4.0/project-summary
 touch ci/emg_api_datafiles/results/2015/03/ERP009703/version_4.0/project-summary/taxonomy_abundances_LSU_v4.0.tsv;
 touch ci/emg_api_datafiles/results/2015/03/ERP009703/version_4.0/project-summary/taxonomy_abundances_SSU_v4.0.tsv
 
+ls ci/emg_api_datafiles/results
 mv ci/emg_api_datafiles/results ~/results
+ls ~/
+ls ~/results
