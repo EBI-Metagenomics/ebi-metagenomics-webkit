@@ -4,7 +4,7 @@ define(["util"], function (apiUtil) {
       it("Should get the root API endpoint", async function () {
         const response = await fetch(window.__env__["API_URL"]);
         if (!response.ok) {
-          console.log(response);
+          console.error(response);
         }
         expect(response.status).to.equal(200);
         const json = await response.json();
