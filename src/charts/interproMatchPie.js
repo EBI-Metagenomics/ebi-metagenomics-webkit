@@ -1,6 +1,9 @@
 define([
-    '../util', './genericChart', 'highcharts', 'highcharts/modules/exporting'
-], function(util, GenericChart, Highcharts, exporting) {
+    '../util',
+    './genericChart',
+    'highcharts',
+    'highcharts/modules/exporting'
+], function (util, GenericChart, Highcharts, exporting) {
     exporting(Highcharts);
 
     /**
@@ -17,51 +20,59 @@ define([
             this.groupingDepth = dataOptions['groupingDepth'] || 0;
             this.loaded = $.Deferred();
 
-            this.dataReady.done(() => {
-                let totalCount = util.sumProp(this.data, 'y');
+            this.dataReady
+                .done(() => {
+                    let totalCount = util.sumProp(this.data, 'y');
 
-                let options = {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'InterPro match summary'
-                    },
-                    subtitle: {
-                        text: 'Total: ' + totalCount + ' InterPro matches'
-                    },
-                    tooltip: {
-                        pointFormat: '<b>{point.y}</b> {series.name} ({point.percentage:.2f}%)'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: false
-                            },
-                            colors: util.duplicateLastColor(util.TAXONOMY_COLOURS, this.data)
-                        }
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    series: [
-                        {
-                            name: 'pCDS matched',
-                            colorByPoint: true,
-                            data: this.data
-                        }]
-                };
-                this.chart = Highcharts.chart(containerId, options);
-            }).done(() => {
-                this.loaded.resolve();
-            }).fail(() => {
-                this.loaded.reject();
-            });
+                    let options = {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'InterPro match summary'
+                        },
+                        subtitle: {
+                            text: 'Total: ' + totalCount + ' InterPro matches'
+                        },
+                        tooltip: {
+                            pointFormat:
+                                '<b>{point.y}</b> {series.name} ({point.percentage:.2f}%)'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                colors: util.duplicateLastColor(
+                                    util.TAXONOMY_COLOURS,
+                                    this.data
+                                )
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [
+                            {
+                                name: 'pCDS matched',
+                                colorByPoint: true,
+                                data: this.data
+                            }
+                        ]
+                    };
+                    this.chart = Highcharts.chart(containerId, options);
+                })
+                .done(() => {
+                    this.loaded.resolve();
+                })
+                .fail(() => {
+                    this.loaded.reject();
+                });
         }
 
         /**
@@ -70,10 +81,12 @@ define([
          * @return {jQuery.promise}
          */
         fetchModel(params) {
-            const model = new this.api.InterproIden({id: params['accession']});
+            const model = new this.api.InterproIden({
+                id: params['accession']
+            });
             return model.fetch().then((data) => {
                 this.raw_data = data;
-                data = data.map(function(d) {
+                data = data.map(function (d) {
                     const attr = d.attributes;
                     return {
                         name: attr['description'],
