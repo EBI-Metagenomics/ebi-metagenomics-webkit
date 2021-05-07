@@ -2,3 +2,5 @@
 node_modules/
 coverage/
 travis/emg_sql_fixtures/merged.sql
+.DS_Store
+*.sha1.sha1
