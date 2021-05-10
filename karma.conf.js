@@ -3,9 +3,8 @@
 
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function(config) {
+module.exports = function (config) {
     let configuration = {
-
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
@@ -21,16 +20,19 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: 'tests/test-main.js', included: true},
-            {pattern: 'src/*.js', included: false},
-            {pattern: 'tests/*_test.js', included: false},
-            {pattern: 'src/charts/*.js', included: false},
-            {pattern: 'tests/charts/*_test.js', included: false},
-            {pattern: 'node_modules/underscore/underscore.js', included: false},
-            {pattern: 'node_modules/backbone/backbone.js', included: false},
-            {pattern: 'node_modules/jquery/*/*.js', included: false},
-            {pattern: 'node_modules/*/*/*.js', included: false},
-            {pattern: 'node_modules/*/*.js', included: false}
+            { pattern: 'tests/test-main.js', included: true },
+            { pattern: 'src/*.js', included: false },
+            { pattern: 'tests/*_test.js', included: false },
+            { pattern: 'src/charts/*.js', included: false },
+            { pattern: 'tests/charts/*_test.js', included: false },
+            {
+                pattern: 'node_modules/underscore/underscore.js',
+                included: false
+            },
+            { pattern: 'node_modules/backbone/backbone.js', included: false },
+            { pattern: 'node_modules/jquery/*/*.js', included: false },
+            { pattern: 'node_modules/*/*/*.js', included: false },
+            { pattern: 'node_modules/*/*.js', included: false }
         ],
 
         // list of files / patterns to exclude
@@ -43,9 +45,7 @@ module.exports = function(config) {
             'src/*/*.js': 'coverage',
             '**/*.js': 'env'
         },
-        envPreprocessor: [
-            'API_URL'
-        ],
+        envPreprocessor: ['API_URL'],
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -70,8 +70,7 @@ module.exports = function(config) {
 
         coverageReporter: {
             dir: 'coverage/',
-            reporters: [
-                {type: 'lcov'}]
+            reporters: [{ type: 'lcov' }]
         },
         // web server port
         port: 9876,
@@ -89,9 +88,19 @@ module.exports = function(config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ['Chrome_without_security'],
         customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
+            Chrome_ci: {
+                base: 'ChromiumHeadless',
+                flags: [
+                    '--no-sandbox',
+                    '--remote-debugging-port=9222',
+                    '--enable-logging',
+                    '--user-data-dir=./karma-chrome',
+                    '--v=1',
+                    '--disable-background-timer-throttling',
+                    '--disable-renderer-backgrounding',
+                    '--proxy-bypass-list=*',
+                    "--proxy-server='direct://'"
+                ]
             },
             Chrome_without_security: {
                 base: 'Chrome',
@@ -109,11 +118,11 @@ module.exports = function(config) {
 
         browserDisconnectTimeout: 20000,
         browserConsoleLogOptions: {
-            'terminal': true
+            terminal: true
         }
     };
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
+    if (process.env.TRAVIS || process.env.CI) {
+        configuration.browsers = ['Chrome_ci'];
     }
 
     config.set(configuration);

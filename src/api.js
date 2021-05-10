@@ -6,7 +6,8 @@ const DX_DOI_URL = 'http://dx.doi.org/';
 const EBI_BIOSAMPLE_URL = 'https://www.ebi.ac.uk/biosamples/';
 const MGNIFY_URL = 'https://www.ebi.ac.uk/metagenomics';
 
-const IMG_URL = ' https://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=TaxonDetail&page=taxonDetail&taxon_oid=';
+const IMG_URL =
+    ' https://img.jgi.doe.gov/cgi-bin/m/main.cgi?section=TaxonDetail&page=taxonDetail&taxon_oid=';
 const NCBI_ASSEMBLY_URL = 'https://www.ncbi.nlm.nih.gov/assembly/';
 const NCBI_SAMPLE_URL = 'https://www.ncbi.nlm.nih.gov/biosample/?term=';
 const NCBI_PROJECT_URL = 'https://www.ncbi.nlm.nih.gov/bioproject/';
@@ -15,17 +16,23 @@ const PATRIC_URL = 'https://www.patricbrc.org/view/Genome/';
 // Based off of CommonJS / AMD compatible template:
 // https://github.com/umdjs/umd/blob/master/templates/commonjsAdapter.js
 
-define(['backbone', 'underscore', './util'], function(Backbone, underscore, util) {
+define(['backbone', 'underscore', './util'], function (
+    Backbone,
+    underscore,
+    util
+) {
     const _ = underscore;
 
-    let init = function(options) {
+    let init = function (options) {
         // Prioritize env variables over options
-        const API_URL = (typeof process !== 'undefined' && typeof process.env !== 'undefined')
-            ? process.env.API_URL
-            : options['API_URL'];
-        const subfolder = (typeof process !== 'undefined' && typeof process.env !== undefined)
-            ? process.env.DEPLOYMENT_SUBFOLDER
-            : options['SUBFOLDER'] || MGNIFY_URL;
+        const API_URL =
+            typeof process !== 'undefined' && typeof process.env !== 'undefined'
+                ? process.env.API_URL
+                : options['API_URL'];
+        const subfolder =
+            typeof process !== 'undefined' && typeof process.env !== undefined
+                ? process.env.DEPLOYMENT_SUBFOLDER
+                : options['SUBFOLDER'] || MGNIFY_URL;
 
         /**
          * Raw jQuery method used when complete set of paginated data is required
@@ -52,11 +59,19 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                                     })
                                 );
                             }
-                            $.when(...requests).done(function() {
-                                _.each(requests, function(response) {
-                                    if (response.hasOwnProperty('responseJSON') &&
-                                        response.responseJSON.hasOwnProperty('data')) {
-                                        data = data.concat(response.responseJSON.data);
+                            $.when(...requests).done(function () {
+                                _.each(requests, function (response) {
+                                    if (
+                                        response.hasOwnProperty(
+                                            'responseJSON'
+                                        ) &&
+                                        response.responseJSON.hasOwnProperty(
+                                            'data'
+                                        )
+                                    ) {
+                                        data = data.concat(
+                                            response.responseJSON.data
+                                        );
                                     }
                                 });
                                 deferred.resolve(data);
@@ -79,10 +94,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
          */
         function clusterStudyDownloads(downloads) {
             const pipelines = {};
-            _.each(downloads, function(download) {
+            _.each(downloads, function (download) {
                 const attr = download.attributes;
                 const group = attr['group-type'];
-                const pipeline = download.relationships.pipeline.data.id;
+                const pipeline =
+                    download.relationships.pipeline.data &&
+                    download.relationships.pipeline.data.id;
 
                 attr['link'] = download.links.self;
                 if (!pipelines.hasOwnProperty(pipeline)) {
@@ -92,13 +109,18 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     pipelines[pipeline][group] = [];
                 }
 
-                pipelines[pipeline][group] = pipelines[pipeline][group].concat(download);
+                pipelines[pipeline][group] = pipelines[pipeline][group].concat(
+                    download
+                );
             });
 
             return pipelines;
         }
 
-        let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+        let collator = new Intl.Collator(undefined, {
+            numeric: true,
+            sensitivity: 'base'
+        });
 
         /**
          * Reformat included samples in response
@@ -108,7 +130,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         function collectSamples(response) {
             let samples;
             if (response.hasOwnProperty('included')) {
-                samples = response.included.reduce(function(obj, x) {
+                samples = response.included.reduce(function (obj, x) {
                     obj[x.id] = Sample.prototype.parse(x);
                     return obj;
                 }, {});
@@ -127,11 +149,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             const groups = {};
             const filteredDownloads = _.filter(downloads, (dl) => {
                 const attributes = dl.attributes;
-                const passed = attributes &&
+                const passed =
+                    attributes &&
                     _.has(attributes, 'description') &&
                     _.has(attributes, 'file-format');
                 if (!passed && console && console.warn) {
-                    console.warn('Download entry has missing values.')
+                    console.warn('Download entry has missing values.');
                 }
                 return passed;
             });
@@ -141,20 +164,23 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const label = attr.description.label;
                 const format = attr['file-format']['name'];
 
-                download.attributes['links'] = [{
-                    link: download.links.self,
-                    checksum: download.attributes['file-checksum']
-                }];
+                download.attributes['links'] = [
+                    {
+                        link: download.links.self,
+                        checksum: download.attributes['file-checksum']
+                    }
+                ];
 
                 if (!groups.hasOwnProperty(group)) {
                     groups[group] = [];
                 }
                 if (attr['file-format']['compression']) {
-                    attr['file-format']['compExtension'] = attr.alias.split('.')
+                    attr['file-format']['compExtension'] = attr.alias
+                        .split('.')
                         .slice(-1)[0];
                 }
                 let grouped = false;
-                _.each(groups[group], function(d) {
+                _.each(groups[group], function (d) {
                     const groupLabel = d.attributes.description.label;
                     const groupFormat = d.attributes['file-format']['name'];
                     grouped = groupLabel === label && groupFormat === format;
@@ -173,8 +199,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     groups[group]['has_checksum'] = true;
                 }
             });
-            _.each(groups, function(group) {
-                _.each(group, function(entry) {
+            _.each(groups, function (group) {
+                _.each(group, function (entry) {
                     entry.attributes.links.sort(collator.compare);
                 });
             });
@@ -191,7 +217,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
                 const biomes = util.simplifyBiomeIcons(
-                    data.relationships.biomes.data.map(util.getBiomeIconData));
+                    data.relationships.biomes.data.map(util.getBiomeIconData)
+                );
                 let relatedStudies = [];
                 if (data.relationships.hasOwnProperty('studies')) {
                     data.relationships.studies.data.forEach((study) => {
@@ -207,8 +234,11 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     // Processed fields
                     biomes: biomes,
                     study_url: subfolder + '/studies/' + attr['accession'],
-                    samples_url: subfolder + '/studies/' + attr['accession'] +
-                    '#samples-section',
+                    samples_url:
+                        subfolder +
+                        '/studies/' +
+                        attr['accession'] +
+                        '#samples-section',
                     ena_url: ENA_VIEW_URL + attr['secondary-accession'],
                     related_studies: relatedStudies,
                     is_public: attr['is-public'],
@@ -238,8 +268,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const StudyGeoCoordinates = Backbone.Model.extend({
             url() {
-                return API_URL + 'studies/' + this.id +
-                    '/geocoordinates?page_size=500';
+                return (
+                    API_URL +
+                    'studies/' +
+                    this.id +
+                    '/geocoordinates?page_size=500'
+                );
             },
             fetch() {
                 return multiPageFetch(this);
@@ -249,7 +283,11 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const SampleStudiesCollection = Backbone.Collection.extend({
             model: Study,
             initialize(params) {
-                this.url = API_URL + 'samples/' + params['sample_accession'] + '/studies';
+                this.url =
+                    API_URL +
+                    'samples/' +
+                    params['sample_accession'] +
+                    '/studies';
             },
             parse(response) {
                 return response.data;
@@ -263,14 +301,15 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
-                const url = subfolder + '/super-studies/' + attr['super-study-id'];
+                const url =
+                    subfolder + '/super-studies/' + attr['super-study-id'];
                 return {
                     // Standard fields
                     superstudy_id: attr['super-study-id'],
                     superstudy_url: url,
                     superstudy_title: attr['title'],
                     superstudy_description: attr['description'],
-                    superstudy_image_url: attr['image-url'],
+                    superstudy_image_url: attr['image-url']
                 };
             }
         });
@@ -286,8 +325,11 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const SuperStudyFlagshipStudiesCollection = Backbone.Collection.extend({
             model: Study,
             initialize(params) {
-                this.url = API_URL + 'super-studies/' + params['super_study_id']
-                           + '/flagship-studies';
+                this.url =
+                    API_URL +
+                    'super-studies/' +
+                    params['super_study_id'] +
+                    '/flagship-studies';
             },
             parse(response) {
                 return response.data;
@@ -297,8 +339,11 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         const SuperStudyRelatedStudiesCollection = Backbone.Collection.extend({
             model: Study,
             initialize(params) {
-                this.url = API_URL + 'super-studies/' + params['super_study_id']
-                           + '/related-studies';
+                this.url =
+                    API_URL +
+                    'super-studies/' +
+                    params['super_study_id'] +
+                    '/related-studies';
             },
             parse(response) {
                 return response.data;
@@ -313,7 +358,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
 
-                let metadatas = _.map(attr['sample-metadata'], function(el) {
+                let metadatas = _.map(attr['sample-metadata'], function (el) {
                     const key = el.key;
                     return {
                         name: key[0].toUpperCase() + key.slice(1),
@@ -323,11 +368,16 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 });
 
                 // Adaption to handle 'includes' on API calls which would wrap the response
-                const biome = util.getBiomeIconData(data.relationships.biome.data);
-                const biomeName = data.relationships.biome.data.id;
+                const biome = util.getBiomeIconData(
+                    data.relationships.biome.data
+                );
+                const biomeName =
+                    data.relationships.biome.data &&
+                    data.relationships.biome.data.id;
                 return {
                     biosample: attr['biosample'],
-                    biosample_url: EBI_BIOSAMPLE_URL + 'samples/' + attr['biosample'],
+                    biosample_url:
+                        EBI_BIOSAMPLE_URL + 'samples/' + attr['biosample'],
                     biome: biome,
                     biome_icon: util.getBiomeIcon(biomeName),
                     biome_name: util.formatLineage(biomeName, true),
@@ -336,8 +386,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     sample_url: subfolder + '/samples/' + attr['accession'],
                     ena_url: ENA_VIEW_URL + attr['accession'],
                     sample_accession: attr['accession'] || NO_DATA_MSG,
-                    lineage: util.formatLineage(data.relationships.biome.data.id || NO_DATA_MSG,
-                        true),
+                    lineage: util.formatLineage(
+                        (data.relationships.biome.data &&
+                            data.relationships.biome.data.id) ||
+                            NO_DATA_MSG,
+                        true
+                    ),
                     metadatas: metadatas,
                     runs: d.included,
                     last_update: util.formatDate(attr['last-update']),
@@ -368,15 +422,15 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const attr = data.attributes;
                 const rel = data.relationships;
                 const pipelines = rel.pipelines;
-                const sampleId = rel.sample.data.id;
-                const studyId = rel.study.data.id;
+                const sampleId = rel.sample.data && rel.sample.data.id;
+                const studyId = rel.study.data && rel.study.data.id;
                 return {
                     // Processed fields
                     ena_url: ENA_VIEW_URL + attr['accession'],
                     sample_accession: sampleId,
                     sample_url: subfolder + '/samples/' + sampleId,
                     analysis_url: subfolder + '/runs/' + attr.accession,
-                    pipeline_versions: pipelines.data.map(function(x) {
+                    pipeline_versions: pipelines.data.map(function (x) {
                         return x.id;
                     }),
                     analysis_results: 'TAXONOMIC / FUNCTION / DOWNLOAD',
@@ -402,22 +456,22 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
                 const rel = data.relationships;
-                // const pipelines = rel.pipelines;
-                // const sampleId = rel.samples.data.id;
-                // const studyId = rel.study.data.id;
                 return {
                     assembly_id: attr['accession'],
                     ena_url: ENA_VIEW_URL + attr['accession'],
                     analysis_url: subfolder + '/assemblies/' + attr.accession,
                     experiment_type: attr['experiment-type'],
-                    runs: rel.runs.data.map(function(x) {
-                        return {id: x.id, url: subfolder + '/runs/' + x.id};
+                    runs: rel.runs.data.map(function (x) {
+                        return { id: x.id, url: subfolder + '/runs/' + x.id };
                     }),
-                    samples: rel.samples.data.map(function(x) {
-                        return {id: x.id, url: subfolder + '/samples/' + x.id};
+                    samples: rel.samples.data.map(function (x) {
+                        return {
+                            id: x.id,
+                            url: subfolder + '/samples/' + x.id
+                        };
                     }),
                     analysis_results: 'TAXONOMIC / FUNCTION / DOWNLOAD',
-                    pipeline_versions: rel.pipelines.data.map(function(x) {
+                    pipeline_versions: rel.pipelines.data.map(function (x) {
                         return x.id;
                     }),
                     wgs_id: attr['wgs-accession'],
@@ -433,7 +487,14 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
          * @return {string} url
          */
         function getKronaURL(analysisID, ssuOrLsu) {
-            return API_URL + 'analyses/' + analysisID + '/krona' + ssuOrLsu + '?collapse=false';
+            return (
+                API_URL +
+                'analyses/' +
+                analysisID +
+                '/krona' +
+                ssuOrLsu +
+                '?collapse=false'
+            );
         }
 
         const RunsCollection = Backbone.Collection.extend({
@@ -441,12 +502,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             model: Run,
             initialize(params) {
                 // Project/sample ID
-                if (typeof(params) !== 'undefined') {
-                    if (params.hasOwnProperty(('study_accession'))) {
+                if (typeof params !== 'undefined') {
+                    if (params.hasOwnProperty('study_accession')) {
                         this.study_accession = params.study_accession;
                     }
                     // Sample ID
-                    if (params.hasOwnProperty(('sample_accession'))) {
+                    if (params.hasOwnProperty('sample_accession')) {
                         this.sample_accession = params.sample_accession;
                     }
                     this.params = params;
@@ -462,12 +523,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             model: Assembly,
             initialize(params) {
                 // Project/sample ID
-                if (typeof(params) !== 'undefined') {
-                    if (params.hasOwnProperty(('study_accession'))) {
+                if (typeof params !== 'undefined') {
+                    if (params.hasOwnProperty('study_accession')) {
                         this.study_accession = params.study_accession;
                     }
                     // Sample ID
-                    if (params.hasOwnProperty(('sample_accession'))) {
+                    if (params.hasOwnProperty('sample_accession')) {
                         this.sample_accession = params.sample_accession;
                     }
                     this.params = params;
@@ -480,7 +541,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const AssemblyAnalyses = Backbone.Collection.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
             },
             url() {
                 return API_URL + 'assemblies/' + this.id + '/analyses';
@@ -504,13 +565,13 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     has_pfam: data.attributes['has-pfam'],
                     has_interpro: data.attributes['has-interpro'],
                     has_go: data.attributes['has-go'],
-                    has_antismash: data.attributes['has-antismash'],
+                    has_antismash: data.attributes['has-antismash']
                     // TODO: this property is not used at the moment.
                     // has_kegg_modules: data.attributes['has-kegg-modules'],
                 };
             }
         });
-        
+
         let ContigCollection = Backbone.Collection.extend({
             model: AnalysesContig,
             initialize(options) {
@@ -540,7 +601,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     icon: util.getBiomeIcon(lineage),
                     lineage: lineage,
                     samples_count: attr['samples-count'],
-                    biome_studies_url: subfolder + '/browse?lineage=' + lineage + '#studies'
+                    biome_studies_url:
+                        subfolder + '/browse?lineage=' + lineage + '#studies'
                 };
             }
         });
@@ -572,12 +634,18 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const Analysis = Backbone.Model.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
                 this.params = data.params;
             },
             url() {
                 if (this.params) {
-                    return API_URL + 'analyses/' + this.id + '?' + $.param(this.params);
+                    return (
+                        API_URL +
+                        'analyses/' +
+                        this.id +
+                        '?' +
+                        $.param(this.params)
+                    );
                 } else {
                     return API_URL + 'analyses/' + this.id;
                 }
@@ -585,14 +653,26 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
-                let studyID = data.relationships.study.data.id;
-                let sampleID = data.relationships.sample.data.id;
-                let runID = data.relationships.run.data.id;
-                attr['analysis-summary'] = _.reduce(attr['analysis-summary'], function(obj, e) {
-                    obj[e['key']] = e['value'];
-                    return obj;
-                }, {});
-                let assemblyID = data.relationships.assembly.data.id;
+                let studyID =
+                    data.relationships.study.data &&
+                    data.relationships.study.data.id;
+                let sampleID =
+                    data.relationships.sample.data &&
+                    data.relationships.sample.data.id;
+                let runID =
+                    data.relationships.run.data &&
+                    data.relationships.run.data.id;
+                attr['analysis-summary'] = _.reduce(
+                    attr['analysis-summary'],
+                    function (obj, e) {
+                        obj[e['key']] = e['value'];
+                        return obj;
+                    },
+                    {}
+                );
+                let assemblyID =
+                    data.relationships.assembly.data &&
+                    data.relationships.assembly.data.id;
                 let pipelineVersion = parseFloat(attr['pipeline-version']);
                 if (_.isNumber(pipelineVersion)) {
                     pipelineVersion = pipelineVersion.toFixed(1);
@@ -615,16 +695,17 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     instrument_model: attr['instrument-model'],
                     instrument_platform: attr['instrument-platform'],
                     pipeline_version: pipelineVersion,
-                    pipeline_url: subfolder + '/pipelines/' + attr['pipeline-version'],
+                    pipeline_url:
+                        subfolder + '/pipelines/' + attr['pipeline-version'],
                     download: attr['download'],
-                    included: d.included,
+                    included: d.included
                 };
             }
         });
 
         const RunAnalyses = Backbone.Collection.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
             },
             url() {
                 return API_URL + 'runs/' + this.id + '/analyses';
@@ -643,7 +724,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const RunAssemblies = Backbone.Collection.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
             },
             url() {
                 return API_URL + 'runs/' + this.id + '/assemblies';
@@ -659,7 +740,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
         // Retrieve analyses of a study
         const StudyAnalyses = Backbone.Collection.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
                 this.assemblies = data.assemblies; // Set to only || exclude || null
             },
             url() {
@@ -670,7 +751,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 let samples = collectSamples(response);
 
                 analyses = _.map(analyses, (analysis) => {
-                    const sample = samples[analysis.relationships.sample.data.id];
+                    const sample =
+                        samples[analysis.relationships.sample.data.id];
                     analysis = Analysis.prototype.parse(analysis);
                     analysis['biome'] = sample['biome'];
                     analysis['sample_desc'] = sample['sample_desc'];
@@ -698,7 +780,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const Taxonomy = GenericAnalysisResult.extend({
             url() {
-                return API_URL + 'analyses/' + this.id + '/taxonomy' + this.type;
+                return (
+                    API_URL + 'analyses/' + this.id + '/taxonomy' + this.type
+                );
             },
             fetch() {
                 return multiPageFetch(this);
@@ -719,7 +803,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const InterproIden = GenericAnalysisResult.extend({
             url() {
-                return API_URL + 'analyses/' + this.id + '/interpro-identifiers';
+                return (
+                    API_URL + 'analyses/' + this.id + '/interpro-identifiers'
+                );
             },
             fetch() {
                 return multiPageFetch(this);
@@ -752,7 +838,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const AntiSMASHGeneCluster = GenericAnalysisResult.extend({
             url() {
-                return API_URL + 'analyses/' + this.id + '/antismash-gene-clusters';
+                return (
+                    API_URL + 'analyses/' + this.id + '/antismash-gene-clusters'
+                );
             }
         });
 
@@ -767,7 +855,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return API_URL + 'studies/' + this.id + '/downloads';
             },
             parse(response) {
-                this.attributes.pipelineFiles = clusterStudyDownloads(response.data);
+                this.attributes.pipelineFiles = clusterStudyDownloads(
+                    response.data
+                );
             }
         });
 
@@ -776,7 +866,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return API_URL + 'analyses/' + this.id + '/downloads';
             },
             parse(response) {
-                this.attributes.downloadGroups = clusterAnalysisDownloads(response.data);
+                this.attributes.downloadGroups = clusterAnalysisDownloads(
+                    response.data
+                );
             },
             load(data) {
                 this.attributes.downloadGroups = clusterAnalysisDownloads(data);
@@ -785,7 +877,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const QcChartData = Backbone.Model.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
                 this.type = data.type;
             },
             url() {
@@ -795,13 +887,13 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
 
         const QcChartStats = QcChartData.extend({
             initialize(data) {
-                this.id = data.id;
+                this.id = data && data.id;
                 this.type = 'summary';
             },
             parse(data) {
                 const rows = data.split('\n');
                 let vals = {};
-                _.each(rows, function(row) {
+                _.each(rows, function (row) {
                     let keyVal = row.split('\t');
                     vals[keyVal[0]] = parseFloat(keyVal[1]);
                 });
@@ -839,7 +931,8 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     pubURLsrc: attr['pub-url'],
                     pmc_url: EUROPE_PMC_ENTRY_URL + attr['pubmed-id'],
                     doi_url: DX_DOI_URL + attr['doi'],
-                    pubMgnifyURL: subfolder + '/publications/' + attr['pubmed-id'],
+                    pubMgnifyURL:
+                        subfolder + '/publications/' + attr['pubmed-id'],
                     studiesCount: attr['studies-count'],
                     samplesCount: attr['samples-count']
                 };
@@ -876,8 +969,12 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             parse(d) {
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
-                const biome = util.getBiomeIconData(data.relationships.biome.data);
-                const biomeName = data.relationships.biome.data.id;
+                const biome = util.getBiomeIconData(
+                    data.relationships.biome.data
+                );
+                const biomeName =
+                    data.relationships.biome.data &&
+                    data.relationships.biome.data.id;
                 return {
                     accession: attr['accession'],
                     ena_genome_accession: attr['ena-genome-accession'],
@@ -891,13 +988,16 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                     img_genome_url: IMG_URL + attr['igm-genome-accession'],
 
                     ncbi_genome_accession: attr['ncbi-genome-accession'],
-                    ncbi_genome_url: NCBI_ASSEMBLY_URL + attr['ncbi-genome-accession'],
+                    ncbi_genome_url:
+                        NCBI_ASSEMBLY_URL + attr['ncbi-genome-accession'],
 
                     ncbi_sample_accession: attr['ncbi-sample-accession'],
-                    ncbi_sample_url: NCBI_SAMPLE_URL + attr['ncbi-sample-accession'],
+                    ncbi_sample_url:
+                        NCBI_SAMPLE_URL + attr['ncbi-sample-accession'],
 
                     ncbi_study_accession: attr['ncbi-study-accession'],
-                    ncbi_study_url: NCBI_PROJECT_URL + attr['ncbi-study-accession'],
+                    ncbi_study_url:
+                        NCBI_PROJECT_URL + attr['ncbi-study-accession'],
 
                     patric_genome_accession: attr['patric-genome-accession'],
                     patric_url: PATRIC_URL + attr['patric-genome-accession'],
@@ -984,7 +1084,9 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return API_URL + 'genomes/' + this.id + '/downloads';
             },
             parse(response) {
-                this.attributes.genomeFiles = clusterAnalysisDownloads(response.data);
+                this.attributes.genomeFiles = clusterAnalysisDownloads(
+                    response.data
+                );
             }
         });
 
@@ -995,7 +1097,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             },
             fetch() {
                 const that = this;
-                let reqData = {'page_size': 100};
+                let reqData = { page_size: 100 };
                 if (this.pangenome) {
                     reqData['pangenome'] = this.pangenome;
                 }
@@ -1010,7 +1112,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             },
 
             parse(data) {
-                data = data.map(function(kegg) {
+                data = data.map(function (kegg) {
                     return kegg['attributes'];
                 });
                 this.data = data;
@@ -1023,7 +1125,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
             },
 
             parse(data) {
-                data = data.map(function(kegg) {
+                data = data.map(function (kegg) {
                     return kegg['attributes'];
                 });
                 this.data = data;
@@ -1035,7 +1137,7 @@ define(['backbone', 'underscore', './util'], function(Backbone, underscore, util
                 return API_URL + 'genomes/' + this.id + '/cogs';
             },
             parse(data) {
-                data = data.map(function(cog) {
+                data = data.map(function (cog) {
                     return cog.attributes;
                 });
                 this.data = data;
