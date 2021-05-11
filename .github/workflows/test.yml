@@ -115,12 +115,6 @@ jobs:
               run: |
                   cat emgapi/error.log
                   cat emgapi/access.log
-            - name: 🚀 - Deploy on NPM (only master with new version)
-              uses: JS-DevTools/npm-publish@v1
-              if: github.ref == 'refs/heads/master'
-              with:
-                  token: ${{ secrets.NPM_TOKEN }}
-                  check-version: false
             - name: 📮 - Slack Notification
               uses: rtCamp/action-slack-notify@v2
               continue-on-error: true
