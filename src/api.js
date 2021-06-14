@@ -302,11 +302,12 @@ define(['backbone', 'underscore', './util'], function (
                 const data = d.data !== undefined ? d.data : d;
                 const attr = data.attributes;
                 const url =
-                    subfolder + '/super-studies/' + attr['super-study-id'];
+                    subfolder + '/super-studies/' + attr['url-slug'];
                 return {
                     // Standard fields
                     superstudy_id: attr['super-study-id'],
                     superstudy_url: url,
+                    superstudy_url_slug: attr['url-slug'],
                     superstudy_title: attr['title'],
                     superstudy_description: attr['description'],
                     superstudy_image_url: attr['image-url']
