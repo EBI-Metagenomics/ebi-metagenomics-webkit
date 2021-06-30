@@ -4,6 +4,7 @@ define(['api'], function(api) {
     describe('Super Study tests', function() {
         context('Model tests', function() {
             const superStudyId = 1;
+            const superStudyUrlSlug = 'human-microbiome';
             const model = new api.SuperStudy({id: superStudyId});
             const fetch = model.fetch();
 
@@ -14,6 +15,7 @@ define(['api'], function(api) {
                     'superstudy_title',
                     'superstudy_description',
                     'superstudy_image_url',
+                    'superstudy_url_slug',
                 ];
                 return fetch.always(() => {
                     expectedAttributes.forEach((attr) => {
@@ -26,22 +28,21 @@ define(['api'], function(api) {
             it('Should construct urls correctly', function() {
                 return fetch.always(() => {
                     expect(model.attributes['superstudy_url'])
-                        .to.equal('/metagenomics/super-studies/' + superStudyId);
+                        .to.equal('/metagenomics/super-studies/' + superStudyUrlSlug);
                 });
             });
 
-            if('Should have the correct image property', function() {
+            it('Should have the correct image property', function() {
                 return fetch.always(() => {
                     expect(model.attributes['superstudy_image_url'])
-                        .to.have.string('/results/images/test_6sWQrNG.jpg');
+                        .to.have.string('data:image/svg+xml;base64,');
                 });
-            })
+            });
 
             it('Should fetch the flagship studies for the Super Study', function() {
                 const collection = new api.SuperStudyFlagshipStudiesCollection(
                     {super_study_id: superStudyId});
                 const fetch = collection.fetch();
-
                 expect(collection.url).to
                     .equal(api.API_URL + 'super-studies/' + superStudyId + '/flagship-studies');
 
