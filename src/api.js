@@ -1201,7 +1201,7 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
-        const GenomeCatalogueGenomesCollection = Backbone.Collection.extend({
+        const GenomeCatalogueGenomeCollection = Backbone.Collection.extend({
             model: Genome,
             initialize(params) {
                 this.url =
@@ -1276,7 +1276,7 @@ define(['backbone', 'underscore', './util'], function (
             GenomeCogs,
             GenomeCatalogue,
             GenomeCataloguesCollection,
-            GenomeCatalogueGenomesCollection,
+            GenomeCatalogueGenomeCollection,
             Release,
             Releases,
             ReleaseGenomes,
