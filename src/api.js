@@ -1184,6 +1184,7 @@ define(['backbone', 'underscore', './util'], function (
                     catalogue_url: url,
                     catalogue_name: attr['name'],
                     catalogue_description: attr['description'],
+                    last_updated: util.formatDate(attr['last-update']),
                     biome: biome,
                     biome_icon: util.getBiomeIcon(biomeName),
                     biome_name: util.formatLineage(biomeName, true),
@@ -1215,9 +1216,23 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
-        const ReleaseDownloads = Backbone.Model.extend({
+        const GenomeGenomeCatalogueCollection = Backbone.Collection.extend({
+            model: GenomeCatalogue,
+            initialize(params) {
+                this.url =
+                    API_URL +
+                    'genomes/' +
+                    params['id'] +
+                    '/genome-catalogues';
+            },
+            parse(response) {
+                return response.data;
+            }
+        });
+
+        const GenomeCatalogueDownloads = Backbone.Model.extend({
             url() {
-                return API_URL + 'release/' + this.id + '/downloads';
+                return API_URL + 'genome-catalogues/' + this.id + '/downloads';
             },
             parse(response) {
                 this.attributes.files = clusterAnalysisDownloads(response.data);
@@ -1277,12 +1292,13 @@ define(['backbone', 'underscore', './util'], function (
             GenomeCatalogue,
             GenomeCataloguesCollection,
             GenomeCatalogueGenomeCollection,
+            GenomeGenomeCatalogueCollection,
             Release,
             Releases,
             ReleaseGenomes,
             GenomeSet,
             GenomeSets,
-            ReleaseDownloads
+            GenomeCatalogueDownloads
         };
     };
     return init;
