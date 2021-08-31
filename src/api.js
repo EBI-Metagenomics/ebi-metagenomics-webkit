@@ -1184,6 +1184,8 @@ define(['backbone', 'underscore', './util'], function (
                     catalogue_url: url,
                     catalogue_name: attr['name'],
                     catalogue_description: attr['description'],
+                    catalogue_version: attr['version'],
+                    genome_count: attr['genome-count'],
                     last_updated: util.formatDate(attr['last-update']),
                     biome: biome,
                     biome_icon: util.getBiomeIcon(biomeName),
