@@ -1053,34 +1053,6 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
-        const Release = Backbone.Model.extend({
-            url() {
-                return API_URL + 'release/' + this.id;
-            },
-            parse(response) {
-                const attr = response.attributes;
-                return {
-                    version: attr['version'],
-                    last_updated: util.formatDate(attr['last-update']),
-                    first_created: util.formatDate(attr['first-created']),
-                    num_genomes: attr['genome-count']
-                };
-            }
-        });
-        const Releases = Backbone.Collection.extend({
-            url: API_URL + 'release',
-            model: Release,
-            parse(response) {
-                return response.data;
-            }
-        });
-
-        const ReleaseGenomes = GenomesCollection.extend({
-            url() {
-                return API_URL + 'release/' + this.id + '/genomes';
-            }
-        });
-
         const GenomeDownloads = Backbone.Model.extend({
             url() {
                 return API_URL + 'genomes/' + this.id + '/downloads';
@@ -1295,9 +1267,6 @@ define(['backbone', 'underscore', './util'], function (
             GenomeCataloguesCollection,
             GenomeCatalogueGenomeCollection,
             GenomeGenomeCatalogueCollection,
-            Release,
-            Releases,
-            ReleaseGenomes,
             GenomeSet,
             GenomeSets,
             GenomeCatalogueDownloads

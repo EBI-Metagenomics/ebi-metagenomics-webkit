@@ -1,4 +1,4 @@
-let expectedAttributes = [
+let expectedGenomeAttributes = [
     'accession',
     'ena_genome_accession',
     'ena_sample_accession',
@@ -47,6 +47,21 @@ let expectedAttributes = [
     'genome_url'
 ];
 
+expectedCatalogueAttributes = [
+    'catalogue_id',
+    'catalogue_url',
+    'catalogue_name',
+    'catalogue_description',
+    'catalogue_version',
+    'genome_count',
+    'last_updated',
+    'biome',
+    'biome_icon',
+    'biome_name',
+    'protein_catalogue_name',
+    'protein_catalogue_description'
+]
+
 define(['api'], function(api) {
     api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
     describe('Genome tests', function() {
@@ -56,7 +71,7 @@ define(['api'], function(api) {
             const fetch = model.fetch();
             it('Should have expected fields', function() {
                 return fetch.always(() => {
-                    expectedAttributes.forEach((attr) => {
+                    expectedGenomeAttributes.forEach((attr) => {
                         expect(model.attributes).to.have.property(attr);
                     });
                 });
@@ -68,7 +83,7 @@ define(['api'], function(api) {
             it('Models should have expected fields', function() {
                 return fetch.always(() => {
                     collection.models.forEach((model) => {
-                        expectedAttributes.forEach((attr) => {
+                        expectedGenomeAttributes.forEach((attr) => {
                             expect(model.attributes).to.have.property(attr);
                         });
                     });
@@ -131,5 +146,45 @@ define(['api'], function(api) {
                 });
             });
         });
+        context('Catalogue model tests', function() {
+            const catalogueId = 'human-gut-v1-0';
+            const model = new api.GenomeCatalogue({id: catalogueId});
+            const fetch = model.fetch();
+            it('Should have expected fields', function() {
+                return fetch.always(() => {
+                    expectedCatalogueAttributes.forEach((attr) => {
+                        expect(model.attributes).to.have.property(attr);
+                    });
+                });
+            });
+        });
+        context('Catalogue collection tests', function() {
+            const collection = new api.GenomeCataloguesCollection();
+            const fetch = collection.fetch();
+            it('Models should have expected fields', function() {
+                return fetch.always(() => {
+                    collection.models.forEach((model) => {
+                        expectedCatalogueAttributes.forEach((attr) => {
+                            expect(model.attributes).to.have.property(attr);
+                        });
+                    });
+                });
+            });
+        });
+        context('Catalogue Genome collection tests', function() {
+            const catalogueId = 'human-gut-v1-0';
+            const collection = new api.GenomeCatalogueGenomeCollection({catalogue_id: catalogueId});
+            const fetch = collection.fetch();
+            it('Genome models should have expected fields', function() {
+                return fetch.always(() => {
+                    collection.models.forEach((model) => {
+                        expectedGenomeAttributes.forEach((attr) => {
+                            expect(model.attributes).to.have.property(attr);
+                        });
+                    });
+                });
+            });
+        });
     });
+
 });
