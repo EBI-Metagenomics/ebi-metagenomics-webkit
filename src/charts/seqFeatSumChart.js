@@ -1,6 +1,6 @@
 define([
-    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
-], function(underscore, GenericChart, Highcharts, exporting, util) {
+    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting',
+], function(underscore, GenericChart, Highcharts, exporting) {
     const _ = underscore;
     exporting(Highcharts);
 
@@ -24,7 +24,11 @@ define([
                     this.loaded.reject();
                     return;
                 }
-                const isAssembly = this.data['experiment_type'] === 'assembly'
+
+                const isAssembly = _.contains(
+                    ['assembly','hybrid_assembly','long_reads_assembly'],
+                    this.data['experiment_type']
+                );
 
                 // TODO: remove mapping when https://www.ebi.ac.uk/panda/jira/browse/EMG-1672
                 let categories = [

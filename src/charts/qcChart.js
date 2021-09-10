@@ -1,6 +1,7 @@
 define([
-    './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
-], function(GenericChart, Highcharts, exporting, util) {
+    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting', '../util'
+], function(underscore, GenericChart, Highcharts, exporting, util) {
+    const _ = underscore;
     exporting(Highcharts);
 
     /**
@@ -102,7 +103,11 @@ define([
             if (params.analysesModel) {
                 const analysis = params.analysesModel;
                 that.data = analysis.get('analysis_summary');
-                that.data.is_assembly = analysis.get('experiment_type') === 'assembly';
+                that.data.is_assembly = _.contains(
+                    ['assembly','hybrid_assembly','long_reads_assembly'],
+                    analysis.get('experiment_type')
+                );
+
                 if (parseFloat(analysis.get('pipeline_version')) > 3.0) {
                     return qcStats.fetch({dataType: 'text'}).then(() => {
                         that.data.sequence_count = qcStats.get('sequence_count');
@@ -114,7 +119,10 @@ define([
                 const analysis = new this.api.Analysis({id: params['accession']});
                 return analysis.fetch().then(() => {
                     that.data = analysis['attributes']['analysis_summary'];
-                    that.data['is_assembly'] = analysis['attributes']['experiment_type'] === 'assembly';
+                    that.data.is_assembly = _.contains(
+                        ['assembly','hybrid_assembly','long_reads_assembly'],
+                        analysis['attributes']['experiment_type']
+                    );
                     if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
                         return qcStats.fetch({dataType: 'text'});
                     } else {
