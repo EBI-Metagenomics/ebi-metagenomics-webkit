@@ -119,10 +119,7 @@ define([
                 const analysis = new this.api.Analysis({id: params['accession']});
                 return analysis.fetch().then(() => {
                     that.data = analysis['attributes']['analysis_summary'];
-                    that.data.is_assembly = _.contains(
-                        ['assembly','hybrid_assembly','long_reads_assembly'],
-                        analysis['attributes']['experiment_type']
-                    );
+                    that.data.is_assembly = analysis.isAssembly();
                     if (parseFloat(analysis['attributes']['pipeline_version']) > 3.0) {
                         return qcStats.fetch({dataType: 'text'});
                     } else {

@@ -669,6 +669,27 @@ define(['backbone', 'underscore', './util'], function (
                     return API_URL + 'analyses/' + this.id;
                 }
             },
+            /**
+             * Returns true if analysis experiment type is either:
+             * - assembly
+             * - hybrid_assembly
+             * - long_read_assembly
+             * @param experimentType: if provided will return the value based on this value,
+             * otherwise on the model's instance data
+             * @returns boolean
+             */
+            isAssembly(experimentType) {
+                let et = "";
+                if (_.isString(experimentType) && !_.isEmpty(experimentType)) {
+                    et = experimentType;
+                } else {
+                    et = this.get('experiment_type');
+                }
+                return _.contains(
+                    ['assembly','hybrid_assembly','long_reads_assembly'],
+                    et
+                );
+            },
             parse(response) {
                 const data = response.data !== undefined ? response.data : response;
                 const attr = data.attributes;
@@ -720,14 +741,20 @@ define(['backbone', 'underscore', './util'], function (
                 };
 
                 // Parse the included models //
+                const downloads = [];
                 if (_.isArray(response.included)) {
                     _.each(response.included, (element) => {
                         switch (element['type']) {
                             case 'assemblies':
                                 parsedModel.assembly = new Assembly(Assembly.prototype.parse(element));
+                            case 'analysis-job-downloads':
+                                downloads.push(element);
                         }
                     });
                 }
+
+                parsedModel.downloads = new AnalysisDownloads();
+                parsedModel.downloads.load(downloads);
 
                 return parsedModel;
             }
