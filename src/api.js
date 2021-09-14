@@ -672,7 +672,7 @@ define(['backbone', 'underscore', './util'], function (
              * Returns true if analysis experiment type is either:
              * - assembly
              * - hybrid_assembly
-             * - long_read_assembly
+             * - long_reads_assembly
              * @param experimentType: if provided will return the value based on this value,
              * otherwise on the model's instance data
              * @returns boolean

@@ -25,11 +25,11 @@ define([
                     return;
                 }
 
-                // This is repeated with the model. I didn't merge the code
+                // This is repeated in the Analysis model. I didn't merge the code
                 // because the GenericChart method doesn't include the api if
-                // the data is passed as parameter. Changing that could cause
-                // other problems. Considering how close we are to migrate the whole app
-                // I would spend time re-factoring this.
+                // the data is passed as a parameter. Changing that could cause
+                // other problems. Considering how close we are to the migration
+                // of the whole app, I would not spend time re-factoring this.
                 const isAssembly = _.contains(
                     ['assembly','hybrid_assembly','long_reads_assembly'],
                     this.data['experiment_type']
