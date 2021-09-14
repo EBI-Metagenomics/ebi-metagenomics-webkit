@@ -103,11 +103,7 @@ define([
             if (params.analysesModel) {
                 const analysis = params.analysesModel;
                 that.data = analysis.get('analysis_summary');
-                that.data.is_assembly = _.contains(
-                    ['assembly','hybrid_assembly','long_reads_assembly'],
-                    analysis.get('experiment_type')
-                );
-
+                that.data.is_assembly = analysis.isAssembly();
                 if (parseFloat(analysis.get('pipeline_version')) > 3.0) {
                     return qcStats.fetch({dataType: 'text'}).then(() => {
                         that.data.sequence_count = qcStats.get('sequence_count');

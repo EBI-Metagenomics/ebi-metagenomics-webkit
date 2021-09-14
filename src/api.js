@@ -483,7 +483,7 @@ define(['backbone', 'underscore', './util'], function (
         });
 
         /**
-         * 
+         * Assembly - Runs collection
          */
         const AssemblyRuns = Backbone.Collection.extend({
             model: Run,
@@ -772,10 +772,7 @@ define(['backbone', 'underscore', './util'], function (
                     return Analysis.prototype.parse(analysis);
                 });
                 analyses = _.filter(analyses, (analysis) => {
-                    return !_.contains(
-                        ['assembly','hybrid_assembly','long_reads_assembly'],
-                        analysis['experiment_type']
-                    );
+                    return !analysis.isAssembly();
                 });
                 return analyses;
             }
@@ -819,10 +816,7 @@ define(['backbone', 'underscore', './util'], function (
                 });
                 if (this.assemblies === 'exclude') {
                     analyses = _.filter(analyses, (analysis) => {
-                        return !_.contains(
-                            ['assembly','hybrid_assembly','long_reads_assembly'],
-                            analysis['experiment_type']
-                        );
+                        return !Analysis.prototype.isAssembly(analysis['experiment_type']);
                     });
                 }
                 return analyses;
