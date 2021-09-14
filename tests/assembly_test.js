@@ -55,7 +55,7 @@ define(['api'], function (api) {
             });
         });
         context('Assembly analyses', function () {
-            it('Should only retrieve analyses of experiment type  assembly', function (done) {
+            it('Should only retrieve analyses of experiment type assembly', function (done) {
                 const assemblyAccession = 'ERZ477708';
                 const collection = new api.AssemblyAnalyses({
                     id: assemblyAccession

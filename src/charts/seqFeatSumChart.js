@@ -1,5 +1,5 @@
 define([
-    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting',
+    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting', '../api'
 ], function(underscore, GenericChart, Highcharts, exporting, api) {
     const _ = underscore;
     exporting(Highcharts);
@@ -25,7 +25,7 @@ define([
                     return;
                 }
 
-                const isAssembly = this.api.Analysis.prototype.isAssembly(this.data['experiment_type']);
+                const isAssembly = api.Analysis.prototype.isAssembly(this.data['experiment_type']);
 
                 // TODO: remove mapping when https://www.ebi.ac.uk/panda/jira/browse/EMG-1672
                 let categories = [

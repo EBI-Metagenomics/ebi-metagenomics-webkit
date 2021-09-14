@@ -478,7 +478,6 @@ define(['backbone', 'underscore', './util'], function (
                     }),
                     wgs_id: attr['wgs-accession'],
                     legacy_id: attr['legacy-accession'],
-                    hybrid: attr['hybrid'],
                 };
             }
         });
