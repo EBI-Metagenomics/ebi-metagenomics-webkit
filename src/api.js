@@ -772,7 +772,7 @@ define(['backbone', 'underscore', './util'], function (
                     return Analysis.prototype.parse(analysis);
                 });
                 analyses = _.filter(analyses, (analysis) => {
-                    return !analysis.isAssembly();
+                    return !Analysis.prototype.isAssembly(analysis['experiment_type']);
                 });
                 return analyses;
             }
