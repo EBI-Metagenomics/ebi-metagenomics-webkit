@@ -1,6 +1,6 @@
 define([
-    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting', '../api'
-], function(underscore, GenericChart, Highcharts, exporting, api) {
+    'underscore', './genericChart', 'highcharts', 'highcharts/modules/exporting',
+], function(underscore, GenericChart, Highcharts, exporting) {
     const _ = underscore;
     exporting(Highcharts);
 
@@ -25,7 +25,15 @@ define([
                     return;
                 }
 
-                const isAssembly = api.Analysis.prototype.isAssembly(this.data['experiment_type']);
+                // This is repeated with the model. I didn't merge the code
+                // because the GenericChart method doesn't include the api if
+                // the data is passed as parameter. Changing that could cause
+                // other problems. Considering how close we are to migrate the whole app
+                // I would spend time re-factoring this.
+                const isAssembly = _.contains(
+                    ['assembly','hybrid_assembly','long_reads_assembly'],
+                    this.data['experiment_type']
+                );
 
                 // TODO: remove mapping when https://www.ebi.ac.uk/panda/jira/browse/EMG-1672
                 let categories = [
