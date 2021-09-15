@@ -477,8 +477,24 @@ define(['backbone', 'underscore', './util'], function (
                         return x.id;
                     }),
                     wgs_id: attr['wgs-accession'],
-                    legacy_id: attr['legacy-accession']
+                    legacy_id: attr['legacy-accession'],
                 };
+            }
+        });
+
+        /**
+         * Assembly - Runs collection
+         */
+        const AssemblyRuns = Backbone.Collection.extend({
+            model: Run,
+            initialize(assemblyAccession) {
+                this.assemblyAccession = assemblyAccession;
+            },
+            url() {
+                return API_URL + 'assemblies/' + this.assemblyAccession + '/runs';
+            },
+            parse(response) {
+                return response.data;
             }
         });
 
@@ -652,8 +668,29 @@ define(['backbone', 'underscore', './util'], function (
                     return API_URL + 'analyses/' + this.id;
                 }
             },
-            parse(d) {
-                const data = d.data !== undefined ? d.data : d;
+            /**
+             * Returns true if analysis experiment type is either:
+             * - assembly
+             * - hybrid_assembly
+             * - long_reads_assembly
+             * @param experimentType: if provided will return the value based on this value,
+             * otherwise on the model's instance data
+             * @returns boolean
+             */
+            isAssembly(experimentType) {
+                let et = "";
+                if (_.isString(experimentType) && !_.isEmpty(experimentType)) {
+                    et = experimentType;
+                } else {
+                    et = this.get('experiment_type');
+                }
+                return _.contains(
+                    ['assembly','hybrid_assembly','long_reads_assembly'],
+                    et
+                );
+            },
+            parse(response) {
+                const data = response.data !== undefined ? response.data : response;
                 const attr = data.attributes;
                 let studyID =
                     data.relationships.study.data &&
@@ -675,12 +712,13 @@ define(['backbone', 'underscore', './util'], function (
                 let assemblyID =
                     data.relationships.assembly.data &&
                     data.relationships.assembly.data.id;
+
                 let pipelineVersion = parseFloat(attr['pipeline-version']);
                 if (_.isNumber(pipelineVersion)) {
                     pipelineVersion = pipelineVersion.toFixed(1);
                 }
 
-                return {
+                let parsedModel = {
                     study_accession: studyID,
                     study_url: subfolder + '/studies/' + studyID,
                     sample_accession: sampleID,
@@ -697,11 +735,27 @@ define(['backbone', 'underscore', './util'], function (
                     instrument_model: attr['instrument-model'],
                     instrument_platform: attr['instrument-platform'],
                     pipeline_version: pipelineVersion,
-                    pipeline_url:
-                        subfolder + '/pipelines/' + attr['pipeline-version'],
-                    download: attr['download'],
-                    included: d.included
+                    pipeline_url: subfolder + '/pipelines/' + attr['pipeline-version'],
+                    download: attr['download']
                 };
+
+                // Parse the included models //
+                const downloads = [];
+                if (_.isArray(response.included)) {
+                    _.each(response.included, (element) => {
+                        switch (element['type']) {
+                            case 'assemblies':
+                                parsedModel.assembly = new Assembly(Assembly.prototype.parse(element));
+                            case 'analysis-job-downloads':
+                                downloads.push(element);
+                        }
+                    });
+                }
+
+                parsedModel.downloads = new AnalysisDownloads();
+                parsedModel.downloads.load(downloads);
+
+                return parsedModel;
             }
         });
 
@@ -718,7 +772,7 @@ define(['backbone', 'underscore', './util'], function (
                     return Analysis.prototype.parse(analysis);
                 });
                 analyses = _.filter(analyses, (analysis) => {
-                    return analysis['experiment_type'] !== 'assembly';
+                    return !Analysis.prototype.isAssembly(analysis['experiment_type']);
                 });
                 return analyses;
             }
@@ -762,7 +816,7 @@ define(['backbone', 'underscore', './util'], function (
                 });
                 if (this.assemblies === 'exclude') {
                     analyses = _.filter(analyses, (analysis) => {
-                        return analysis['experiment_type'] !== 'assembly';
+                        return !Analysis.prototype.isAssembly(analysis['experiment_type']);
                     });
                 }
                 return analyses;
@@ -1224,6 +1278,7 @@ define(['backbone', 'underscore', './util'], function (
             SampleStudiesCollection,
             Run,
             Assembly,
+            AssemblyRuns,
             RunsCollection,
             AssembliesCollection,
             AssemblyAnalyses,
