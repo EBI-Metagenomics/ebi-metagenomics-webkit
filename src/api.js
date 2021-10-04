@@ -1018,6 +1018,28 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
+        const PublicationEuropePMCAnnotations = Backbone.Model.extend({
+            url() {
+                return API_URL + 'publications/' + this.id + '/europe_pmc_annotations';
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+
+                let annotations = data['annotation_types'];
+
+                _.mapObject(annotations, function (annotationIncidences) {
+                    return _.map(annotationIncidences, function(annotation) {
+                        annotation.sectionName = annotation.section.split(" (")[0];
+                        return annotation
+                    });
+                });
+
+                return {
+                    annotations: annotations,
+                }
+            }
+        })
+
         const Genome = Backbone.Model.extend({
             url() {
                 return API_URL + 'genomes/' + this.id;
@@ -1312,6 +1334,7 @@ define(['backbone', 'underscore', './util'], function (
             Publication,
             PublicationsCollection,
             PublicationStudies,
+            PublicationEuropePMCAnnotations,
             Genome,
             GenomesCollection,
             GenomeDownloads,
