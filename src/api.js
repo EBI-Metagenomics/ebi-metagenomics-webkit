@@ -1031,6 +1031,9 @@ define(['backbone', 'underscore', './util'], function (
                     return _.map(annotationTypeGroups, function (annotationTypeGroup) {
                         annotationTypeGroup.annotations = _.map(annotationTypeGroup.annotations, function (annotation) {
                             annotation.sectionName = annotation.section.split(" (")[0];
+                            // Example of the section property: "section": "Methods (http://purl.org/orb/Methods)"
+                            // This extracts => annotation.sectionName = "Methods"
+                            // The URL is dropped because sometimes it can be a dead link
                             return annotation
                         });
                         return annotationTypeGroup;
