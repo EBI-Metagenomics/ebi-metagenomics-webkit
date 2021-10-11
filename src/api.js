@@ -1041,6 +1041,7 @@ define(['backbone', 'underscore', './util'], function (
                 });
 
                 return {
+                    pmid: this.id,
                     annotations: [
                         {
                             'sectionTitle': 'Sample processing',
