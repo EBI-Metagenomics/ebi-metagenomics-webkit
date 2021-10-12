@@ -1018,6 +1018,44 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
+        const PublicationEuropePMCAnnotations = Backbone.Model.extend({
+            url() {
+                return API_URL + 'publications/' + this.id + '/europe_pmc_annotations';
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+
+                let annotations = data;
+
+                _.mapObject(annotations, function(annotationTypeGroups) {
+                    return _.map(annotationTypeGroups, function (annotationTypeGroup) {
+                        annotationTypeGroup.annotations = _.map(annotationTypeGroup.annotations, function (annotation) {
+                            annotation.sectionName = annotation.section.split(" (")[0];
+                            // Example of the section property: "section": "Methods (http://purl.org/orb/Methods)"
+                            // This extracts => annotation.sectionName = "Methods"
+                            // The URL is dropped because sometimes it can be a dead link
+                            return annotation
+                        });
+                        return annotationTypeGroup;
+                    });
+                });
+
+                return {
+                    pmid: this.id,
+                    annotations: [
+                        {
+                            'sectionTitle': 'Sample processing',
+                            'groupedAnnotations': annotations.sample_processing
+                        },
+                        {
+                            'sectionTitle': 'Other annotations',
+                            'groupedAnnotations': annotations.other
+                        }
+                    ],
+                }
+            }
+        })
+
         const Genome = Backbone.Model.extend({
             url() {
                 return API_URL + 'genomes/' + this.id;
@@ -1312,6 +1350,7 @@ define(['backbone', 'underscore', './util'], function (
             Publication,
             PublicationsCollection,
             PublicationStudies,
+            PublicationEuropePMCAnnotations,
             Genome,
             GenomesCollection,
             GenomeDownloads,
