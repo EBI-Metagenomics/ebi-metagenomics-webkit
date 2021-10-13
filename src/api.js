@@ -1029,11 +1029,17 @@ define(['backbone', 'underscore', './util'], function (
 
                 _.mapObject(annotations, function(annotationTypeGroups) {
                     return _.map(annotationTypeGroups, function (annotationTypeGroup) {
+                        annotationTypeGroup.mentionsCount = _.reduce(annotationTypeGroup.annotations, function(memo, annotation) {
+                            return memo + annotation.mentions.length;
+                        }, 0);
                         annotationTypeGroup.annotations = _.map(annotationTypeGroup.annotations, function (annotation) {
-                            annotation.sectionName = annotation.section.split(" (")[0];
-                            // Example of the section property: "section": "Methods (http://purl.org/orb/Methods)"
-                            // This extracts => annotation.sectionName = "Methods"
-                            // The URL is dropped because sometimes it can be a dead link
+                            annotation.mentions = _.map(annotation.mentions, function(mention) {
+                                mention.sectionName = mention.section.split(" (")[0];
+                                return mention;
+                                // Example of the section property: "section": "Methods (http://purl.org/orb/Methods)"
+                                // This extracts => mention.sectionName = "Methods"
+                                // The URL is dropped because sometimes it can be a dead link
+                            });
                             return annotation
                         });
                         return annotationTypeGroup;
@@ -1042,6 +1048,9 @@ define(['backbone', 'underscore', './util'], function (
 
                 return {
                     pmid: this.id,
+                    hasAnnotations: (
+                        annotations.sample_processing.length +
+                        annotations.other.length) > 0 ,
                     annotations: [
                         {
                             'sectionTitle': 'Sample processing',
