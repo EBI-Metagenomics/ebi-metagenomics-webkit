@@ -414,6 +414,32 @@ define(['backbone', 'underscore', './util'], function (
             }
         });
 
+        const SampleStudiesPublicationsAnnotationsExistence = Backbone.Model.extend({
+            url() {
+                return API_URL + 'samples/' + this.id + '/studies_publications_annotations_existence';
+            },
+            parse(d) {
+                const data = d.data !== undefined ? d.data : d;
+
+                let studiesWithAnnotations = [];
+                if (data.study_has_annotations) {
+                    _.each(data.study_has_annotations, function(hasAnnotation, studyAccession) {
+                        if (hasAnnotation) {
+                            studiesWithAnnotations.push({
+                                accession: studyAccession,
+                                study_url: subfolder + '/studies/' + studyAccession
+                            });
+                        }
+                    });
+                }
+                return {
+                    sample: this.id,
+                    studies_with_annotations: studiesWithAnnotations,
+                    ...data
+                }
+            }
+        });
+
         const Run = Backbone.Model.extend({
             url() {
                 return API_URL + 'runs/' + this.id;
@@ -1334,6 +1360,7 @@ define(['backbone', 'underscore', './util'], function (
             BiomeWithChildren,
             Sample,
             SamplesCollection,
+            SampleStudiesPublicationsAnnotationsExistence,
             GenericAnalysisResult,
             getKronaURL,
             Analysis,
