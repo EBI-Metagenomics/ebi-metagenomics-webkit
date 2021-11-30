@@ -33,7 +33,6 @@ define([
                     total += c;
                     return c;
                 });
-                let pangenomeSeries = this.data.map((d) => {return d['pangenome-count']});
 
                 let options = {
                     chart: {
@@ -91,14 +90,6 @@ define([
                         stack: 'genome'
                     }]
                 };
-                if (chartOptions.includePangenome) {
-                    options.series.push({
-                        name: 'Pan-genome',
-                        data: pangenomeSeries.slice(0, 10),
-                        colors: util.TAXONOMY_COLOURS[2],
-                        stack: 'pangenome'
-                    });
-                }
                 this.chart = Highcharts.chart(containerId, options);
             }).done(() => {
                 this.loaded.resolve();
