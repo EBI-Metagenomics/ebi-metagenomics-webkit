@@ -63,7 +63,7 @@ define(['api'], function(api) {
     api = api({API_URL: window.__env__['API_URL'], SUBFOLDER: '/metagenomics'});
     describe('Genome tests', function() {
         context('Model tests', function() {
-            const genomeAcc = 'MGYG-HGUT-00279';
+            const genomeAcc = 'MGYG000000001';
             const model = new api.Genome({id: genomeAcc});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
@@ -88,11 +88,11 @@ define(['api'], function(api) {
             });
         });
         context('Kegg Module tests', function() {
-            const collection = new api.GenomeKeggModules({id: 'MGYG-HGUT-00279'});
+            const collection = new api.GenomeKeggModules({id: 'MGYG000000001'});
             const fetch = collection.fetch();
             it('Should have correct number of kegg matches', function() {
                 return fetch.always(() => {
-                    expect(collection.data.length).to.eq(163);
+                    expect(collection.data.length).to.eq(181);
                 });
             });
             it('Should have correct fields for keggs', function() {
@@ -116,11 +116,11 @@ define(['api'], function(api) {
             });
         });
         context('Cog tests', function() {
-            const collection = new api.GenomeCogs({id: 'MGYG-HGUT-00279'});
+            const collection = new api.GenomeCogs({id: 'MGYG000000001'});
             const fetch = collection.fetch();
             it('Should have correct number of cog matches', function() {
                 return fetch.always(() => {
-                    expect(collection.data.length).to.eq(22);
+                    expect(collection.data.length).to.eq(21);
                 });
             });
             it('Should have correct fields for cog', function() {
@@ -144,7 +144,7 @@ define(['api'], function(api) {
             });
         });
         context('Catalogue model tests', function() {
-            const catalogueId = 'human-gut-v1-0';
+            const catalogueId = 'human-gut-v2-0';
             const model = new api.GenomeCatalogue({id: catalogueId});
             const fetch = model.fetch();
             it('Should have expected fields', function() {
@@ -169,7 +169,7 @@ define(['api'], function(api) {
             });
         });
         context('Catalogue Genome collection tests', function() {
-            const catalogueId = 'human-gut-v1-0';
+            const catalogueId = 'human-gut-v2-0';
             const collection = new api.GenomeCatalogueGenomeCollection({catalogue_id: catalogueId});
             const fetch = collection.fetch();
             it('Genome models should have expected fields', function() {
