@@ -11,7 +11,7 @@ define(['charts/genomeCogColumnChart'], function(GenomeCogColumnChart) {
                 this.timeout(2000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYG-HGUT-00279';
+                const accession = 'MGYG000000001';
                 const chart = new GenomeCogColumnChart(
                     containerID,
                     {accession: accession, apiConfig: apiConfig},
@@ -21,7 +21,7 @@ define(['charts/genomeCogColumnChart'], function(GenomeCogColumnChart) {
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html())
-                        .to.match(/Genome.+Count: 326/);
+                        .to.match(/Genome.+Count: 656/);
                     done();
                 });
             });
