@@ -14,8 +14,7 @@ define(['charts/genomeKeggClassColumnChart'], function(GenomeKeggClassColumnChar
                 const accession = 'MGYG000000001';
                 const chart = new GenomeKeggClassColumnChart(
                     containerID,
-                    {accession: accession, apiConfig: apiConfig},
-                    {includePangenome: true});
+                    {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
                     expect($('.highcharts-series-group .highcharts-point').length).to.equal(20);
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
