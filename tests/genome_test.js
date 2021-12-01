@@ -14,7 +14,6 @@ let expectedGenomeAttributes = [
     'patric_genome_accession',
     'patric_url',
     'taxon_lineage',
-    'taxincons',
     'biome',
     'biome_icon',
     'biome_name',
@@ -40,8 +39,6 @@ let expectedGenomeAttributes = [
     'pangenome_size',
     'pangenome_core_size',
     'pangenome_accessory_size',
-    'pangenome_eggnog_cov',
-    'pangenome_ipr_cov',
     'last_updated',
     'first_created',
     'genome_url'
@@ -99,7 +96,7 @@ define(['api'], function(api) {
                 });
             });
             it('Should have correct fields for keggs', function() {
-                const expectedFields = ['name', 'description', 'genome-count', 'pangenome-count'];
+                const expectedFields = ['name', 'description', 'genome-count'];
                 return fetch.always(() => {
                     const firstKegg = collection.data[0];
                     expectedFields.forEach((attr) => {
@@ -127,7 +124,7 @@ define(['api'], function(api) {
                 });
             });
             it('Should have correct fields for cog', function() {
-                const expectedFields = ['name', 'description', 'genome-count', 'pangenome-count'];
+                const expectedFields = ['name', 'description', 'genome-count'];
                 return fetch.always(() => {
                     const firstCog = collection.data[0];
                     expectedFields.forEach((attr) => {
