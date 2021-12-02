@@ -8,7 +8,7 @@ define(['charts/genomeCogColumnChart'], function(GenomeCogColumnChart) {
     describe('Genome Cog Column chart', function() {
         context('Data source tests', function() {
             it('Should fetch data from MGnify api with accession', function(done) {
-                this.timeout(2000);
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
                 const accession = 'MGYG000000001';
@@ -16,7 +16,7 @@ define(['charts/genomeCogColumnChart'], function(GenomeCogColumnChart) {
                     containerID,
                     {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('.highcharts-series-group .highcharts-point').length).to.equal(20);
+                    expect($('.highcharts-series-group .highcharts-point').length).to.equal(10);
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html())
