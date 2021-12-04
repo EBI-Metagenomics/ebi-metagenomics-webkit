@@ -11,10 +11,9 @@ define([
          * Constructor for GenomeIPRColumnChart; provide accession OR this.data to generate chart.
          * @param {string} containerId id (without #) of container
          * @param {object} dataOptions to configure chart data source
-         * @param {object} chartOptions to configure chart
          * (this.data or fetch parameters)
          */
-        constructor(containerId, dataOptions, chartOptions) {
+        constructor(containerId, dataOptions) {
             super(containerId, dataOptions);
             this.loaded = $.Deferred();
             this.dataReady.done(() => {
@@ -33,7 +32,6 @@ define([
                     total += c;
                     return c;
                 });
-                let pangenomeSeries = this.data.map((d) => {return d['pangenome-count']});
 
                 let options = {
                     chart: {
@@ -91,14 +89,6 @@ define([
                         stack: 'genome'
                     }]
                 };
-                if (chartOptions.includePangenome) {
-                    options.series.push({
-                        name: 'Pan-genome',
-                        data: pangenomeSeries.slice(0, 10),
-                        colors: util.TAXONOMY_COLOURS[2],
-                        stack: 'pangenome'
-                    });
-                }
                 this.chart = Highcharts.chart(containerId, options);
             }).done(() => {
                 this.loaded.resolve();

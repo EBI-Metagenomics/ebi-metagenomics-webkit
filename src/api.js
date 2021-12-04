@@ -1156,14 +1156,10 @@ define(['backbone', 'underscore', './util'], function (
                     ipr_cov: attr['ipr-coverage'],
                     num_genomes_total: attr['num-genomes-total'],
                     num_genomes_nr: attr['num-genomes-non-redundant'],
-                    cmseq: attr['cmseq'],
-                    taxincons: attr['taxincons'],
 
                     pangenome_size: attr['pangenome-size'],
                     pangenome_core_size: attr['pangenome-core-size'],
                     pangenome_accessory_size: attr['pangenome-accessory-size'],
-                    pangenome_eggnog_cov: attr['pangenome-eggnog-coverage'],
-                    pangenome_ipr_cov: attr['pangenome-ipr-coverage'],
 
                     last_updated: util.formatDate(attr['last-update']),
                     first_created: util.formatDate(attr['first-created']),
@@ -1194,14 +1190,10 @@ define(['backbone', 'underscore', './util'], function (
         const GenomeDatasetCollection = Backbone.Collection.extend({
             initialize(params) {
                 this.id = params['id'];
-                this.pangenome = params['pangenome'];
             },
             fetch() {
                 const that = this;
                 let reqData = { page_size: 100 };
-                if (this.pangenome) {
-                    reqData['pangenome'] = this.pangenome;
-                }
                 return multiPageFetch(this, reqData).done((data) => {
                     return that.parse(data);
                 });

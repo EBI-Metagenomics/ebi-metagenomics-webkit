@@ -8,19 +8,19 @@ define(['charts/genomeKeggModuleColumnChart'], function(GenomeKeggModuleColumnCh
     describe('Genome Kegg Module Column chart', function() {
         context('Data source tests', function() {
             it('Should fetch data from MGnify api with accession', function(done) {
+                this.timeout(20000);
                 document.body.innerHTML = '<p></p>';
                 document.body.innerHTML = ('<div id="' + containerID + '"></div>');
-                const accession = 'MGYG-HGUT-00279';
+                const accession = 'MGYG000000001';
                 const chart = new GenomeKeggModuleColumnChart(
                     containerID,
-                    {accession: accession, apiConfig: apiConfig},
-                    {includePangenome: true});
+                    {accession: accession, apiConfig: apiConfig});
                 chart.loaded.done(() => {
-                    expect($('.highcharts-series-group .highcharts-point').length).to.equal(20);
+                    expect($('.highcharts-series-group .highcharts-point').length).to.equal(10);
                     $('.highcharts-series.highcharts-series-0 > .highcharts-point:nth-child(1)')
                         .trigger('mouseover');
                     expect($('.highcharts-tooltip').html())
-                        .to.match(/Genome.+Count: 58/);
+                        .to.match(/Genome.+Count: 55/);
                     done();
                 });
             });
