@@ -35,7 +35,6 @@ let expectedGenomeAttributes = [
     'eggnog_cov',
     'ipr_cov',
     'num_genomes_total',
-    'num_genomes_nr',
     'pangenome_size',
     'pangenome_core_size',
     'pangenome_accessory_size',

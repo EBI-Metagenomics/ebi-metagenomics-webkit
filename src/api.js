@@ -1155,7 +1155,6 @@ define(['backbone', 'underscore', './util'], function (
                     eggnog_cov: attr['eggnog-coverage'],
                     ipr_cov: attr['ipr-coverage'],
                     num_genomes_total: attr['num-genomes-total'],
-                    num_genomes_nr: attr['num-genomes-non-redundant'],
 
                     pangenome_size: attr['pangenome-size'],
                     pangenome_core_size: attr['pangenome-core-size'],
