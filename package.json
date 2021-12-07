@@ -82,5 +82,5 @@
     "test:local": "API_URL=http://localhost:9000/metagenomics/api/v1/ node_modules/.bin/karma start karma.conf.js",
     "coverage": "cat coverage/*/lcov.info | codacy-coverage"
   },
-  "version": "1.8.5"
+  "version": "1.8.6"
 }
